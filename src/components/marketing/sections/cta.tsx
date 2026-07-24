@@ -14,7 +14,7 @@ import {
 } from "@/components/marketing/motion";
 import { SIGN_UP_URL } from "@/lib/links";
 
-const trust = ["No credit card", "5,000 MAU free", "SOC 2 · GDPR ready"];
+const trust = ["No credit card", "25,000 MAU free", "SOC 2 · GDPR ready"];
 
 export function CTA() {
   return (
@@ -62,7 +62,7 @@ export function CTA() {
               >
                 <StaggerItem>
                   <p className="mt-6 max-w-xl text-base text-muted-foreground text-balance sm:text-lg">
-                    5,000 monthly active users on the house. Production-grade auth, no credit card,
+                    25,000 monthly active users on the house. Production-grade auth, no credit card,
                     no time limit.
                   </p>
                 </StaggerItem>

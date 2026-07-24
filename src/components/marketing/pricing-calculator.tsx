@@ -10,8 +10,8 @@ import { SIGN_UP_URL } from "@/lib/links";
 // We hard-code them so the marketing site stays deployable without
 // reaching the backend; if pricing ever moves server-side, swap to a
 // fetched config and degrade the calculator gracefully.
-const FREE_CAP = 5_000;
-const PRO_BASE = 99;
+const FREE_CAP = 25_000;
+const PRO_BASE = 25;
 const PRO_INCLUDED = 50_000;
 const PRO_PER_MAU = 0.02;
 const ENTERPRISE_THRESHOLD = 500_000;

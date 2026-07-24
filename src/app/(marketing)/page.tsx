@@ -12,6 +12,12 @@ import { Stats } from "@/components/marketing/sections/stats";
 import { Testimonials } from "@/components/marketing/sections/testimonials";
 import { StickyCtaBar } from "@/components/marketing/sticky-cta-bar";
 import { ProductJsonLd } from "@/components/marketing/structured-data";
+import type { Metadata } from "next";
+
+// Self-referencing canonical for the home page (root layout no longer sets one).
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   return (

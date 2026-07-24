@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: "Customers",
   description:
     "How platform, fintech, healthcare, and marketplace teams ship secure identity on Qeet ID — passkeys, SSO, SCIM, RBAC, and a tamper-evident audit trail.",
+  alternates: { canonical: "/customers" },
 };
 
 // Representative team archetypes — generic wordmarks, not claims about named

@@ -4,6 +4,7 @@ import { LegalPage, LegalSection } from "@/components/marketing/legal-page";
 export const metadata: Metadata = {
   title: "Data Processing Agreement",
   description: "The terms under which Qeet ID processes personal data on your behalf.",
+  alternates: { canonical: "/legal/dpa" },
 };
 
 export default function DpaPage() {

@@ -18,9 +18,9 @@ export const metadata: Metadata = {
   description:
     "Qeet ID is the identity platform for modern teams. SSO, MFA, passkeys, RBAC, and session management — built for developers, trusted by enterprises.",
   metadataBase: new URL("https://id.qeet.in"),
-  alternates: {
-    canonical: "/",
-  },
+  // NOTE: no site-wide `alternates.canonical` here — Next.js inherits it to
+  // every child route, which would canonicalize the whole site to "/" and drop
+  // inner pages from the index. Each page/route sets its own canonical instead.
   icons: {
     // Theme-adaptive favicon: dark artwork on light UI, light artwork on dark
     // UI. The .ico is the universal fallback for browsers without SVG support.

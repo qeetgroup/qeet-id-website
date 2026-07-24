@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   title: "Security & compliance",
   description:
     "Qeet ID's security posture: a hash-chained tamper-evident audit log, ES256 / JWKS token signing, passkeys / WebAuthn, Argon2id hashing, an encrypted secrets vault, RBAC + ABAC, and a compliance roadmap to SOC 2, ISO 27001, and GDPR.",
+  alternates: { canonical: "/security" },
 };
 
 /** The architectural pillars — every one is implemented and verified in source. */

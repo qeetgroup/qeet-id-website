@@ -15,12 +15,13 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Free for developers. Per-MAU pricing for growing teams. Custom contracts for enterprise.",
+  alternates: { canonical: "/pricing" },
 };
 
 const compare = [
   {
     feature: "Monthly active users",
-    free: "5,000",
+    free: "25,000",
     pro: "50,000 included",
     enterprise: "Unlimited",
   },
@@ -92,7 +93,7 @@ export default function PricingPage() {
         eyebrow="Pricing"
         title="Simple pricing."
         titleAccent="Real free tier."
-        subtitle="Free up to 5,000 MAU. No card required. Predictable per-MAU pricing as you grow — no tier-jump surprises."
+        subtitle="Free up to 25,000 MAU. No card required. Predictable per-MAU pricing as you grow — no tier-jump surprises."
       />
 
       <Section innerClassName="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">

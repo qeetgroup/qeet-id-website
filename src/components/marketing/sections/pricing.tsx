@@ -19,7 +19,7 @@ export function Pricing() {
         eyebrow="Pricing"
         title="Simple pricing."
         titleAccent="Real free tier."
-        subtitle="Free up to 5,000 MAU, no card required. Predictable per-MAU pricing as you grow — no tier-jump surprises."
+        subtitle="Free up to 25,000 MAU, no card required. Predictable per-MAU pricing as you grow — no tier-jump surprises."
       />
 
       <div className="relative mt-16">

@@ -167,7 +167,7 @@ export default async function BlogPostPage({ params }: Props) {
                 Want auth that gets out of your way?
               </span>
               <span className="text-sm text-muted-foreground">
-                Free up to 5,000 MAU. No card required.
+                Free up to 25,000 MAU. No card required.
               </span>
             </div>
             <Link

@@ -9,7 +9,7 @@ const faq: FaqItem[] = [
   },
   {
     q: "How long does it take to integrate?",
-    a: "Most teams ship a working sign-in flow in a day. We provide first-party SDKs for JavaScript, React, and Next.js (plus Go and Python), drop-in hosted pages, and a 100%-route-covered OpenAPI spec.",
+    a: "Most teams ship a working sign-in flow in a day. We provide first-party SDKs for React, Node, and Go, drop-in hosted pages, and a 100%-route-covered OpenAPI spec.",
   },
   {
     q: "Can I migrate from Auth0, Clerk, or another provider?",
@@ -25,7 +25,7 @@ const faq: FaqItem[] = [
   },
   {
     q: "How are you priced?",
-    a: "A real free tier up to 5,000 monthly active users, then linear per-MAU pricing with no surprise tier jumps. Enterprise is a custom annual contract. See the pricing page for the full breakdown and a calculator.",
+    a: "A real free tier up to 25,000 monthly active users, then linear per-MAU pricing with no surprise tier jumps. Enterprise is a custom annual contract. See the pricing page for the full breakdown and a calculator.",
   },
 ];
 

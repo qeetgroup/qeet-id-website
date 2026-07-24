@@ -5,6 +5,7 @@ import { LegalPage } from "@/components/marketing/legal-page";
 export const metadata: Metadata = {
   title: "Subprocessors",
   description: "The third-party subprocessors Qeet ID engages to deliver its services.",
+  alternates: { canonical: "/legal/subprocessors" },
 };
 
 const subprocessors = [

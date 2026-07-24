@@ -6,59 +6,59 @@ import { ButtonLink } from "@/components/marketing/button-link";
 export const metadata: Metadata = {
   title: "Documentation",
   description:
-    "Get started with Qeet ID. SDK quickstarts for TypeScript, Go, Python, and Rust, plus the full API reference and guides.",
+    "Get started with Qeet ID. SDK quickstarts for React, Node, and Go, plus the full API reference and guides.",
+  alternates: { canonical: "/docs" },
 };
 
 const quickstartTabs: CodeTab[] = [
   {
-    label: "TypeScript",
+    label: "React",
     language: "shell",
-    caption: "terminal",
-    value: `# Install the SDK
+    caption: "app.tsx",
+    value: `# Install the browser SDK
+bun add @qeet-id/react
+
+# Wrap your app, then drop in sign-in
+import { QeetIDProvider, SignedIn, SignedOut, SignInButton } from "@qeet-id/react";
+
+<QeetIDProvider loginUrl="/api/auth/login" logoutUrl="/api/auth/logout">
+  <SignedOut><SignInButton /></SignedOut>
+  <SignedIn>{children}</SignedIn>
+</QeetIDProvider>;`,
+  },
+  {
+    label: "Node.js",
+    language: "shell",
+    caption: "server.ts",
+    value: `# Install the server SDK
 bun add @qeet-id/node
 
-# Initialize the client
+# Verify a session and check a permission
 import { QeetID } from "@qeet-id/node";
 
-const qg = new QeetID({ tenant: "acme" });
-const session = await qg.signIn({ provider: "passkey" });`,
+const qeet = new QeetID({ apiKey: process.env.QEETID_API_KEY! });
+const claims = await qeet.sessions.verify(token);
+const ok = await qeet.permissions.check({
+  user: claims.userId!,
+  tenant: claims.tenantId!,
+  permission: "billing:write",
+});`,
   },
   {
     label: "Go",
     language: "shell",
-    caption: "terminal",
-    value: `# Install the SDK
-go get github.com/qeetid/qeetid-go
+    caption: "main.go",
+    value: `# Install the server SDK
+go get github.com/qeetgroup/qeet-id-go
 
-# Initialize the client
-client := qeetid.New(qeetid.Config{Tenant: "acme"})
-session, err := client.SignIn(ctx, qeetid.SignInOpts{
-    Provider: qeetid.ProviderPasskey,
+# Verify a session and check a permission
+client := qeetid.New(qeetid.Config{APIKey: os.Getenv("QEETID_API_KEY")})
+claims, _ := client.Sessions.Verify(ctx, token)
+ok, _ := client.Permissions.Check(ctx, qeetid.PermissionCheck{
+    User:       claims.UserID,
+    Tenant:     claims.TenantID,
+    Permission: "billing:write",
 })`,
-  },
-  {
-    label: "Python",
-    language: "shell",
-    caption: "terminal",
-    value: `# Install the SDK
-pip install qeetid
-
-# Initialize the client
-from qeetid import QeetID
-
-qg = QeetID(tenant="acme")
-session = qg.sign_in(provider="passkey")`,
-  },
-  {
-    label: "Rust",
-    language: "shell",
-    caption: "terminal",
-    value: `# Add the crate
-cargo add qeetid
-
-# Initialize the client
-let qg = QeetId::new(Config { tenant: "acme".into() });
-let session = qg.sign_in(SignIn::passkey()).await?;`,
   },
 ];
 
@@ -78,7 +78,7 @@ const resources = [
   {
     icon: PackageIcon,
     title: "SDKs",
-    body: "First-class TypeScript, Go, Python, and Rust clients.",
+    body: "A React SDK for the browser, plus typed Node and Go clients.",
     href: "#sdks",
   },
   {
@@ -102,8 +102,8 @@ export default function DocsPage() {
               Ship auth in an afternoon
             </h1>
             <p className="mt-5 text-muted-foreground text-balance sm:text-lg">
-              Pick your language, install the SDK, and drop in production-grade sign-in. Everything
-              you need is one config away.
+              Pick your SDK, install it, and wire up production-grade auth. Everything you need is
+              one config away.
             </p>
           </div>
 
@@ -134,11 +134,11 @@ export default function DocsPage() {
           <div className="flex flex-col gap-4">
             <p className="text-sm font-medium uppercase tracking-widest text-primary">Quickstart</p>
             <h2 className="font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Install the SDK and sign in
+              Install the SDK and ship auth
             </h2>
             <p className="text-muted-foreground text-balance">
-              The same three steps in every language: install, initialize a client with your tenant,
-              and call sign-in. Passkeys are the default.
+              Install, connect one client, then drop in sign-in on the frontend or verify sessions
+              on the backend. Passkeys are the default.
             </p>
             <ButtonLink variant="outline" className="mt-2 w-fit" href="#sdks">
               See all SDKs <ArrowRightIcon className="size-4" />
@@ -162,14 +162,20 @@ export default function DocsPage() {
               HTTP status codes. The full OpenAPI spec drives our SDKs and your generated clients.
             </p>
           </div>
-          <div id="sdks" className="mt-12 scroll-mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {["TypeScript", "Go", "Python", "Rust"].map((lang) => (
+          <div id="sdks" className="mt-12 scroll-mt-20 grid gap-4 sm:grid-cols-3">
+            {[
+              { name: "@qeet-id/react", version: "v0.1.0" },
+              { name: "@qeet-id/node", version: "v0.1.0" },
+              { name: "qeet-id-go", version: "v0.1.0" },
+            ].map((sdk) => (
               <div
-                key={lang}
+                key={sdk.name}
                 className="flex items-center justify-between rounded-xl border border-border/60 bg-card px-5 py-4"
               >
-                <span className="font-medium">{lang}</span>
-                <span className="font-mono text-xs text-muted-foreground">v1.x</span>
+                <span className="truncate font-mono text-sm font-medium">{sdk.name}</span>
+                <span className="ml-3 shrink-0 font-mono text-xs text-muted-foreground">
+                  {sdk.version}
+                </span>
               </div>
             ))}
           </div>

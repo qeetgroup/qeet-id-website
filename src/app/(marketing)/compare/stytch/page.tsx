@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Stytch",
   description:
     "Qeet ID vs. Stytch: open-source identity with the same passwordless-first methods, plus a built-in admin and self-hosting.",
+  alternates: { canonical: "/compare/stytch" },
 };
 
 const data: ComparisonData = {
@@ -206,7 +207,7 @@ const data: ComparisonData = {
     {
       section: "Pricing",
       feature: "Free tier",
-      qeetid: "5,000 MAU",
+      qeetid: "25,000 MAU",
       competitor: "1,000 MAU + 25 orgs (B2B)",
     },
     {

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "System status",
   description:
     "Illustrative operational status and 90-day uptime view for Qeet ID services — API, sign-in & SSO, RBAC, dashboard, webhooks, and audit export.",
+  alternates: { canonical: "/status" },
 };
 
 type ComponentStatus = "operational" | "degraded";

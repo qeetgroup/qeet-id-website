@@ -53,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/", "weekly", 1.0, now),
     entry("/features", "monthly", 0.9, now),
     entry("/pricing", "monthly", 0.9, now),
+    entry("/docs", "monthly", 0.8, now),
     entry("/security", "monthly", 0.8, now),
     entry("/customers", "weekly", 0.8, now),
     entry("/compare", "monthly", 0.7, now),
@@ -69,8 +70,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/legal/subprocessors", "yearly", 0.3, now),
   ];
 
-  // Competitor comparison landing pages — SEO bait for "Qeet ID vs X".
-  const compareRoutes: MetadataRoute.Sitemap = ["auth0", "clerk", "stytch", "workos"].map((slug) =>
+  // Competitor comparison landing pages — SEO bait for "Qeet ID vs X" and
+  // "<competitor> alternative" queries. Keep in lock-step with the page files
+  // under app/(marketing)/compare/<slug>/.
+  const compareSlugs = [
+    "auth0",
+    "okta",
+    "entra",
+    "ping",
+    "clerk",
+    "descope",
+    "propelauth",
+    "frontegg",
+    "workos",
+    "stytch",
+    "cognito",
+    "firebase",
+    "supabase",
+    "keycloak",
+    "zitadel",
+    "authentik",
+    "ory",
+    "fusionauth",
+    "supertokens",
+  ];
+  const compareRoutes: MetadataRoute.Sitemap = compareSlugs.map((slug) =>
     entry(`/compare/${slug}`, "monthly", 0.6, now),
   );
 

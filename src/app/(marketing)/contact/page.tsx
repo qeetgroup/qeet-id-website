@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Talk to Qeet ID sales, support, or press — or send a message and we'll route it. We reply within one business day.",
+  alternates: { canonical: "/contact" },
 };
 
 const channels = [
