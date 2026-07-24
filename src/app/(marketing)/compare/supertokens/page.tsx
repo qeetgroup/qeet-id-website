@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. SuperTokens",
   description:
     "Qeet ID vs. SuperTokens: MFA, multi-tenancy, and enterprise SSO included rather than paid add-ons, with a tamper-evident audit log and ABAC.",
+  alternates: { canonical: "/compare/supertokens" },
 };
 
 const data: ComparisonData = {

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Ory",
   description:
     "Qeet ID vs. Ory: an all-in-one open-source identity product — admin UI, hosted login, and SAML/SCIM included — versus Ory's composable, build-it-yourself primitives.",
+  alternates: { canonical: "/compare/ory" },
 };
 
 const data: ComparisonData = {

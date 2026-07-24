@@ -34,7 +34,7 @@ export function OrganizationJsonLd() {
         name: "Qeet ID",
         url: BASE,
         logo: `${BASE}/icon.png`,
-        sameAs: ["https://github.com/qeetid", "https://x.com/qeetid"],
+        sameAs: ["https://github.com/qeet-id", "https://x.com/qeetgroup"],
       }}
     />
   );

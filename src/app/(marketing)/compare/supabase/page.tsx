@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Supabase Auth",
   description:
     "Qeet ID vs. Supabase Auth: both open source, but Qeet ID is a dedicated identity product — first-class multi-tenancy, a real authz engine, SSO, SCIM, and a verifiable audit log.",
+  alternates: { canonical: "/compare/supabase" },
 };
 
 const data: ComparisonData = {

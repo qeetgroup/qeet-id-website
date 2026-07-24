@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Changelog",
   description:
     "Every release shipped to Qeet ID — passkeys, ES256 / JWKS signing, SAML IdP, SCIM groups, the device grant, OpenTelemetry, and more.",
+  alternates: { canonical: "/changelog" },
 };
 
 const tagVariant: Record<ChangelogTag, "default" | "secondary" | "success" | "warning"> = {

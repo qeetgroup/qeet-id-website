@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Descope",
   description:
     "Qeet ID vs. Descope: open-source, self-hostable identity with the same passkeys and enterprise SSO — from $25/mo instead of $249, plus a tamper-evident audit log.",
+  alternates: { canonical: "/compare/descope" },
 };
 
 const data: ComparisonData = {

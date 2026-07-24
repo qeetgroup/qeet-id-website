@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Auth0",
   description:
     "How Qeet ID compares to Auth0 (Okta): open-source / self-hostable, transparent per-MAU pricing, and a modern passkeys-first stack.",
+  alternates: { canonical: "/compare/auth0" },
 };
 
 const data: ComparisonData = {

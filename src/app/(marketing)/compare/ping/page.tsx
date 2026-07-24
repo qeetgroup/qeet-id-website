@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Ping Identity",
   description:
     "Qeet ID vs. Ping Identity: a lightweight open-source identity binary with transparent per-MAU pricing, versus Ping's deep but heavy, commercially-licensed enterprise federation stack.",
+  alternates: { canonical: "/compare/ping" },
 };
 
 const data: ComparisonData = {

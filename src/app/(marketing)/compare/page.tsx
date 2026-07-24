@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Compare Qeet ID",
   description:
     "Honest, side-by-side comparisons of Qeet ID against the whole identity field — Auth0, Clerk, WorkOS, Stytch, Cognito, Firebase, Supabase, Keycloak, Zitadel and more — on features, deployment model, and pricing, verified against what we ship.",
+  alternates: { canonical: "/compare" },
 };
 
 const competitors = [

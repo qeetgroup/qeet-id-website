@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Engineering blog",
   description:
     "Notes from the team building Qeet ID. Security, identity, and the boring infra it takes to make auth feel boring.",
+  alternates: { canonical: "/blog" },
   openGraph: {
     title: "Engineering blog",
     description:

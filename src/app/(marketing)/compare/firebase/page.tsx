@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Firebase Auth",
   description:
     "Qeet ID vs. Firebase Auth: the same fast auth methods plus built-in RBAC/ABAC, enterprise SSO without a pricing gate, an admin UI, and open-source self-hosting.",
+  alternates: { canonical: "/compare/firebase" },
 };
 
 const data: ComparisonData = {

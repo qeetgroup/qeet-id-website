@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Okta",
   description:
     "How Qeet ID compares to Okta: open-source and self-hostable, with transparent per-MAU pricing and no SSO tax — versus Okta's mature but proprietary, tier-gated platform.",
+  alternates: { canonical: "/compare/okta" },
 };
 
 const data: ComparisonData = {

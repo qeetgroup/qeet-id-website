@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Zitadel",
   description:
     "How Qeet ID compares to Zitadel: per-MAU (not per-DAU) pricing, a permissive MIT license, ABAC, and a tamper-evident audit chain — with an honest look at where Zitadel's GA maturity wins.",
+  alternates: { canonical: "/compare/zitadel" },
 };
 
 const data: ComparisonData = {

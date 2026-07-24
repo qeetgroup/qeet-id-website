@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Qeet ID is on a mission to make secure identity the default for every product team. Meet the people building it.",
+  alternates: { canonical: "/about" },
 };
 
 const values = [

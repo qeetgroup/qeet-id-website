@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Keycloak",
   description:
     "How Qeet ID compares to Keycloak, the canonical open-source identity server: a lighter Go runtime, a first-party managed cloud, and modern DX — with an honest look at where Keycloak's maturity wins.",
+  alternates: { canonical: "/compare/keycloak" },
 };
 
 const data: ComparisonData = {

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Free for developers. Per-MAU pricing for growing teams. Custom contracts for enterprise.",
+  alternates: { canonical: "/pricing" },
 };
 
 const compare = [

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. FusionAuth",
   description:
     "Qeet ID vs. FusionAuth: a truly MIT-licensed identity core with enterprise SSO included, versus FusionAuth's source-available license and paid SSO tiers.",
+  alternates: { canonical: "/compare/fusionauth" },
 };
 
 const data: ComparisonData = {

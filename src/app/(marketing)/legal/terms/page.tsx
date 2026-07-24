@@ -4,6 +4,7 @@ import { LegalPage, LegalSection } from "@/components/marketing/legal-page";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "The terms governing your use of Qeet ID.",
+  alternates: { canonical: "/legal/terms" },
 };
 
 export default function TermsPage() {

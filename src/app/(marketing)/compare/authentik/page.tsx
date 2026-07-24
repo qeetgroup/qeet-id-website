@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Authentik",
   description:
     "How Qeet ID compares to Authentik: a shared MIT license, plus a managed cloud option, typed SDKs, a hosted login, and a tamper-evident audit chain for customer-facing apps — with an honest look at Authentik's protocol breadth.",
+  alternates: { canonical: "/compare/authentik" },
 };
 
 const data: ComparisonData = {

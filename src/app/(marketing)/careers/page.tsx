@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   title: "Careers",
   description:
     "Help us make secure identity the default for every product team. Remote-first, async, deeply technical, and security-obsessed.",
+  alternates: { canonical: "/careers" },
 };
 
 const values = [

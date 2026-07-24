@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Microsoft Entra External ID",
   description:
     "Qeet ID vs. Microsoft Entra External ID: open-source, self-hostable identity with readable per-MAU pricing and no add-on metering, versus Microsoft's cloud-only, Azure-bound CIAM.",
+  alternates: { canonical: "/compare/entra" },
 };
 
 const data: ComparisonData = {

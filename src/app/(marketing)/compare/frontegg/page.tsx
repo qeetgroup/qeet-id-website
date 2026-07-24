@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Frontegg",
   description:
     "Qeet ID vs. Frontegg: open-source, self-hostable B2B identity with published per-MAU pricing instead of opaque usage-based billing.",
+  alternates: { canonical: "/compare/frontegg" },
 };
 
 const data: ComparisonData = {

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Clerk",
   description:
     "Qeet ID vs. Clerk: open-source identity for full-stack teams who want self-hosting, multi-tenant defaults, and the same drop-in DX.",
+  alternates: { canonical: "/compare/clerk" },
 };
 
 const data: ComparisonData = {

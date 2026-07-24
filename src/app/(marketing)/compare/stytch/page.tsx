@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. Stytch",
   description:
     "Qeet ID vs. Stytch: open-source identity with the same passwordless-first methods, plus a built-in admin and self-hosting.",
+  alternates: { canonical: "/compare/stytch" },
 };
 
 const data: ComparisonData = {

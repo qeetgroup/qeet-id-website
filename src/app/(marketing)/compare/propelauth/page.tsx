@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. PropelAuth",
   description:
     "Qeet ID vs. PropelAuth: open-source B2B identity you can self-host, at $0.02/MAU with a tamper-evident audit log built in rather than a paid add-on.",
+  alternates: { canonical: "/compare/propelauth" },
 };
 
 const data: ComparisonData = {

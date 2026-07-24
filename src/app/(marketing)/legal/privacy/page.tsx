@@ -4,6 +4,7 @@ import { LegalPage, LegalSection } from "@/components/marketing/legal-page";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How Qeet ID collects, uses, and protects personal data.",
+  alternates: { canonical: "/legal/privacy" },
 };
 
 export default function PrivacyPage() {

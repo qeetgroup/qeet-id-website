@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. WorkOS",
   description:
     "Qeet ID vs. WorkOS: complete identity for B2B SaaS — user store, SSO, SCIM, audit, and a brandable admin, in one open-source binary.",
+  alternates: { canonical: "/compare/workos" },
 };
 
 const data: ComparisonData = {

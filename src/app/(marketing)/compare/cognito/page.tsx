@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Qeet ID vs. AWS Cognito",
   description:
     "Qeet ID vs. AWS Cognito: the same OIDC/SAML core as open-source code you can run off-AWS, with a real admin UI and a built-in authorization engine.",
+  alternates: { canonical: "/compare/cognito" },
 };
 
 const data: ComparisonData = {

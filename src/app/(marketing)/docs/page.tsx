@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Documentation",
   description:
     "Get started with Qeet ID. SDK quickstarts for React, Node, and Go, plus the full API reference and guides.",
+  alternates: { canonical: "/docs" },
 };
 
 const quickstartTabs: CodeTab[] = [

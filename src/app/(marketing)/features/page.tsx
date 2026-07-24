@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   title: "Features",
   description:
     "SSO, MFA, passkeys, RBAC, sessions, and audit — every primitive you need to ship secure auth at scale.",
+  alternates: { canonical: "/features" },
 };
 
 const deepDive = [
