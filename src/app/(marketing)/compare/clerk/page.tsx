@@ -27,7 +27,7 @@ const data: ComparisonData = {
     { label: "Self-host", value: "First-class" },
     { label: "Stack", value: "Go + Postgres" },
     { label: "Multi-tenant", value: "Built-in" },
-    { label: "SDKs", value: "TS · Next · React · Go · Py" },
+    { label: "SDKs", value: "React · Node · Go" },
   ],
   factsCompetitor: [
     { label: "License", value: "Proprietary SaaS" },
@@ -82,7 +82,7 @@ const data: ComparisonData = {
       feature: "React SDK (sessions, silent refresh)",
       qeetid: true,
       competitor: true,
-      note: "@qeet-id/react + @qeet-id/nextjs with HttpOnly sealed-cookie sessions.",
+      note: "@qeet-id/react with HttpOnly sealed-cookie sessions.",
     },
     {
       section: "Frontend",
@@ -154,8 +154,8 @@ const data: ComparisonData = {
     {
       section: "Pricing",
       feature: "Free tier MAU cap",
-      qeetid: "5,000",
-      competitor: "10,000",
+      qeetid: "25,000",
+      competitor: "50,000",
     },
     {
       section: "Pricing",

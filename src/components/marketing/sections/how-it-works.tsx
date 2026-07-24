@@ -8,8 +8,8 @@ import { useId, useState } from "react";
 import { CodeBlock, Tok } from "@/components/marketing/effects/code-block";
 import { Reveal, Stagger, StaggerItem, WordReveal } from "@/components/marketing/motion";
 
-type Lang = "TypeScript" | "Next.js" | "Go" | "Python";
-const langs: Lang[] = ["TypeScript", "Next.js", "Go", "Python"];
+type Lang = "React" | "Node.js" | "Go";
+const langs: Lang[] = ["React", "Node.js", "Go"];
 
 type Step = {
   n: string;
@@ -32,7 +32,7 @@ function Prompt({ pm, pkg }: { pm: string; pkg: string }) {
 
 // ─── Step 01 — Install ───────────────────────────────────────────────────────
 const installCode: Record<Lang, ReactNode> = {
-  TypeScript: (
+  React: (
     <>
       <Prompt pm="bun add" pkg="@qeet-id/react" />
       {"\n\n"}
@@ -40,47 +40,61 @@ const installCode: Record<Lang, ReactNode> = {
       <Tok.c>{"✓ Added "}</Tok.c>
       <Tok.s>@qeet-id/react</Tok.s>
       <Tok.c>@</Tok.c>
-      <Tok.n>1.4.0</Tok.n>
+      <Tok.n>0.1.0</Tok.n>
       <Tok.c>{" in 1.2s"}</Tok.c>
     </>
   ),
-  "Next.js": (
+  "Node.js": (
     <>
-      <Prompt pm="bun add" pkg="@qeet-id/nextjs" />
+      <Prompt pm="bun add" pkg="@qeet-id/node" />
       {"\n\n"}
       <Tok.c>{"✓ Resolved 1 package\n"}</Tok.c>
       <Tok.c>{"✓ Added "}</Tok.c>
-      <Tok.s>@qeet-id/nextjs</Tok.s>
+      <Tok.s>@qeet-id/node</Tok.s>
       <Tok.c>@</Tok.c>
-      <Tok.n>1.4.0</Tok.n>
+      <Tok.n>0.1.0</Tok.n>
       <Tok.c>{" in 1.1s"}</Tok.c>
     </>
   ),
   Go: (
     <>
-      <Prompt pm="go get" pkg="github.com/qeetgroup/qeetid-go" />
+      <Prompt pm="go get" pkg="github.com/qeetgroup/qeet-id-go" />
       {"\n\n"}
       <Tok.c>{"go: added "}</Tok.c>
-      <Tok.s>github.com/qeetgroup/qeetid-go</Tok.s>
+      <Tok.s>github.com/qeetgroup/qeet-id-go</Tok.s>
       <Tok.c>{" v"}</Tok.c>
-      <Tok.n>1.4.0</Tok.n>
-    </>
-  ),
-  Python: (
-    <>
-      <Prompt pm="pip install" pkg="qeetid" />
-      {"\n\n"}
-      <Tok.c>{"Successfully installed "}</Tok.c>
-      <Tok.s>qeetid</Tok.s>
-      <Tok.c>-</Tok.c>
-      <Tok.n>1.4.0</Tok.n>
+      <Tok.n>0.1.0</Tok.n>
     </>
   ),
 };
 
 // ─── Step 02 — Configure ─────────────────────────────────────────────────────
 const configCode: Record<Lang, ReactNode> = {
-  TypeScript: (
+  React: (
+    <>
+      <Tok.k>import</Tok.k>
+      {" { "}
+      <Tok.f>QeetIDProvider</Tok.f>
+      {" } "}
+      <Tok.k>from</Tok.k> <Tok.s>{'"@qeet-id/react"'}</Tok.s>
+      {";\n\n<"}
+      <Tok.t>QeetIDProvider</Tok.t>
+      {"\n  "}
+      <Tok.p>loginUrl</Tok.p>
+      {"="}
+      <Tok.s>{'"/api/auth/login"'}</Tok.s>
+      {"\n  "}
+      <Tok.p>logoutUrl</Tok.p>
+      {"="}
+      <Tok.s>{'"/api/auth/logout"'}</Tok.s>
+      {"\n>\n  {"}
+      <Tok.v>children</Tok.v>
+      {"}\n</"}
+      <Tok.t>QeetIDProvider</Tok.t>
+      {">;"}
+    </>
+  ),
+  "Node.js": (
     <>
       <Tok.k>import</Tok.k>
       {" { "}
@@ -88,60 +102,18 @@ const configCode: Record<Lang, ReactNode> = {
       {" } "}
       <Tok.k>from</Tok.k> <Tok.s>{'"@qeet-id/node"'}</Tok.s>
       {";\n\n"}
-      <Tok.k>const</Tok.k> <Tok.v>qg</Tok.v>
+      <Tok.k>export const</Tok.k> <Tok.v>qeet</Tok.v>
       {" = "}
       <Tok.k>new</Tok.k> <Tok.f>QeetID</Tok.f>
-      {"({\n"}
-      {"  "}
-      <Tok.p>tenant</Tok.p>
+      {"({\n  "}
+      <Tok.p>apiKey</Tok.p>
       {": "}
-      <Tok.s>{'"acme"'}</Tok.s>
-      {",\n"}
-      {"  "}
-      <Tok.p>providers</Tok.p>
-      {": ["}
-      <Tok.s>{'"google"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"passkey"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"saml"'}</Tok.s>
-      {"],\n"}
-      {"});"}
-    </>
-  ),
-  "Next.js": (
-    <>
-      <Tok.k>import</Tok.k>
-      {" { "}
-      <Tok.f>qeetID</Tok.f>
-      {" } "}
-      <Tok.k>from</Tok.k> <Tok.s>{'"@qeet-id/nextjs"'}</Tok.s>
-      {";\n\n"}
-      <Tok.k>export const</Tok.k>
-      {" { "}
-      <Tok.v>auth</Tok.v>
-      {", "}
-      <Tok.v>signIn</Tok.v>
-      {", "}
-      <Tok.v>signOut</Tok.v>
-      {" } = "}
-      <Tok.f>qeetID</Tok.f>
-      {"({\n"}
-      {"  "}
-      <Tok.p>tenant</Tok.p>
-      {": "}
-      <Tok.s>{'"acme"'}</Tok.s>
-      {",\n"}
-      {"  "}
-      <Tok.p>providers</Tok.p>
-      {": ["}
-      <Tok.s>{'"google"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"passkey"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"saml"'}</Tok.s>
-      {"],\n"}
-      {"});"}
+      <Tok.v>process</Tok.v>
+      {"."}
+      <Tok.v>env</Tok.v>
+      {"."}
+      <Tok.v>QEETID_API_KEY</Tok.v>
+      {"!,\n});"}
     </>
   ),
   Go: (
@@ -151,136 +123,127 @@ const configCode: Record<Lang, ReactNode> = {
       <Tok.f>qeetid.New</Tok.f>
       {"("}
       <Tok.t>qeetid.Config</Tok.t>
-      {"{\n"}
-      {"    "}
-      <Tok.p>Tenant</Tok.p>
-      {":    "}
-      <Tok.s>{'"acme"'}</Tok.s>
-      {",\n"}
-      {"    "}
-      <Tok.p>Providers</Tok.p>
-      {": []"}
-      <Tok.t>string</Tok.t>
-      {"{\n"}
-      {"        "}
-      <Tok.s>{'"google"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"passkey"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"saml"'}</Tok.s>
-      {",\n"}
-      {"    },\n"}
-      {"})"}
-    </>
-  ),
-  Python: (
-    <>
-      <Tok.k>from</Tok.k> <Tok.v>qeetid</Tok.v> <Tok.k>import</Tok.k> <Tok.f>QeetID</Tok.f>
-      {"\n\n"}
-      <Tok.v>qg</Tok.v>
-      {" = "}
-      <Tok.f>QeetID</Tok.f>
-      {"(\n"}
-      {"    "}
-      <Tok.p>tenant</Tok.p>
-      {"="}
-      <Tok.s>{'"acme"'}</Tok.s>
-      {",\n"}
-      {"    "}
-      <Tok.p>providers</Tok.p>
-      {"=["}
-      <Tok.s>{'"google"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"passkey"'}</Tok.s>
-      {", "}
-      <Tok.s>{'"saml"'}</Tok.s>
-      {"],\n"}
-      {")"}
+      {"{\n    "}
+      <Tok.p>APIKey</Tok.p>
+      {": "}
+      <Tok.f>os.Getenv</Tok.f>
+      {"("}
+      <Tok.s>{'"QEETID_API_KEY"'}</Tok.s>
+      {"),\n})"}
     </>
   ),
 };
 
 // ─── Step 03 — Ship ───────────────────────────────────────────────────────────
 const shipCode: Record<Lang, ReactNode> = {
-  TypeScript: (
+  React: (
     <>
       <Tok.k>import</Tok.k>
       {" { "}
-      <Tok.t>SignIn</Tok.t>
+      <Tok.t>SignedIn</Tok.t>
+      {", "}
+      <Tok.t>SignedOut</Tok.t>
+      {", "}
+      <Tok.t>SignInButton</Tok.t>
+      {", "}
+      <Tok.t>UserButton</Tok.t>
       {" } "}
       <Tok.k>from</Tok.k> <Tok.s>{'"@qeet-id/react"'}</Tok.s>
-      {";\n\n"}
-      <Tok.k>export default function</Tok.k> <Tok.f>Page</Tok.f>
-      {"() {\n"}
-      {"  "}
-      <Tok.k>return</Tok.k>
-      {" <"}
-      <Tok.t>SignIn</Tok.t> <Tok.p>redirectTo</Tok.p>
-      {"="}
-      <Tok.s>{'"/dashboard"'}</Tok.s>
-      {" />;\n}"}
+      {";\n\n<"}
+      <Tok.t>SignedOut</Tok.t>
+      {">\n  <"}
+      <Tok.t>SignInButton</Tok.t>
+      {" />\n</"}
+      <Tok.t>SignedOut</Tok.t>
+      {">\n<"}
+      <Tok.t>SignedIn</Tok.t>
+      {">\n  <"}
+      <Tok.t>UserButton</Tok.t>
+      {" />\n</"}
+      <Tok.t>SignedIn</Tok.t>
+      {">"}
     </>
   ),
-  "Next.js": (
+  "Node.js": (
     <>
-      <Tok.k>import</Tok.k>
-      {" { "}
-      <Tok.t>SignIn</Tok.t>
-      {" } "}
-      <Tok.k>from</Tok.k> <Tok.s>{'"@qeet-id/nextjs"'}</Tok.s>
-      {";\n\n"}
-      <Tok.k>export default function</Tok.k> <Tok.f>Page</Tok.f>
-      {"() {\n"}
-      {"  "}
-      <Tok.k>return</Tok.k>
-      {" <"}
-      <Tok.t>SignIn</Tok.t> <Tok.p>redirectTo</Tok.p>
-      {"="}
-      <Tok.s>{'"/dashboard"'}</Tok.s>
-      {" />;\n}"}
+      <Tok.k>const</Tok.k> <Tok.v>claims</Tok.v>
+      {" = "}
+      <Tok.k>await</Tok.k> <Tok.v>qeet</Tok.v>
+      {"."}
+      <Tok.v>sessions</Tok.v>
+      {"."}
+      <Tok.f>verify</Tok.f>
+      {"("}
+      <Tok.v>token</Tok.v>
+      {");\n\n"}
+      <Tok.k>const</Tok.k> <Tok.v>ok</Tok.v>
+      {" = "}
+      <Tok.k>await</Tok.k> <Tok.v>qeet</Tok.v>
+      {"."}
+      <Tok.v>permissions</Tok.v>
+      {"."}
+      <Tok.f>check</Tok.f>
+      {"({\n  "}
+      <Tok.p>user</Tok.p>
+      {": "}
+      <Tok.v>claims</Tok.v>
+      {"."}
+      <Tok.v>userId</Tok.v>
+      {"!,\n  "}
+      <Tok.p>tenant</Tok.p>
+      {": "}
+      <Tok.v>claims</Tok.v>
+      {"."}
+      <Tok.v>tenantId</Tok.v>
+      {"!,\n  "}
+      <Tok.p>permission</Tok.p>
+      {": "}
+      <Tok.s>{'"billing:write"'}</Tok.s>
+      {",\n});"}
     </>
   ),
   Go: (
     <>
-      <Tok.v>http</Tok.v>
+      <Tok.v>claims</Tok.v>
+      {", _ := "}
+      <Tok.v>client</Tok.v>
       {"."}
-      <Tok.f>Handle</Tok.f>
+      <Tok.v>Sessions</Tok.v>
+      {"."}
+      <Tok.f>Verify</Tok.f>
       {"("}
-      <Tok.s>{'"/signin"'}</Tok.s>
-      {",\n"}
-      {"    "}
-      <Tok.f>qeetid.SignInHandler</Tok.f>
+      <Tok.v>ctx</Tok.v>
+      {", "}
+      <Tok.v>token</Tok.v>
+      {")\n\n"}
+      <Tok.v>ok</Tok.v>
+      {", _ := "}
+      <Tok.v>client</Tok.v>
+      {"."}
+      <Tok.v>Permissions</Tok.v>
+      {"."}
+      <Tok.f>Check</Tok.f>
       {"("}
-      <Tok.t>qeetid.SignIn</Tok.t>
-      {"{\n"}
-      {"        "}
-      <Tok.p>RedirectTo</Tok.p>
+      <Tok.v>ctx</Tok.v>
+      {", "}
+      <Tok.t>qeetid.PermissionCheck</Tok.t>
+      {"{\n    "}
+      <Tok.p>User</Tok.p>
+      {":       "}
+      <Tok.v>claims</Tok.v>
+      {"."}
+      <Tok.v>UserID</Tok.v>
+      {",\n    "}
+      <Tok.p>Tenant</Tok.p>
+      {":     "}
+      <Tok.v>claims</Tok.v>
+      {"."}
+      <Tok.v>TenantID</Tok.v>
+      {",\n    "}
+      <Tok.p>Permission</Tok.p>
       {": "}
-      <Tok.s>{'"/dashboard"'}</Tok.s>
-      {",\n"}
-      {"    }),\n"}
-      {")"}
-    </>
-  ),
-  Python: (
-    <>
-      <Tok.v>@app</Tok.v>
-      {"."}
-      <Tok.f>get</Tok.f>
-      {"("}
-      <Tok.s>{'"/signin"'}</Tok.s>
-      {")\n"}
-      <Tok.k>def</Tok.k> <Tok.f>signin</Tok.f>
-      {"():\n"}
-      {"    "}
-      <Tok.k>return</Tok.k> <Tok.v>qg</Tok.v>
-      {"."}
-      <Tok.f>sign_in</Tok.f>
-      {"(\n        "}
-      <Tok.p>redirect_to</Tok.p>
-      {"="}
-      <Tok.s>{'"/dashboard"'}</Tok.s>
-      {"\n    )"}
+      <Tok.s>{'"billing:write"'}</Tok.s>
+      {",\n})"}
     </>
   ),
 };
@@ -290,12 +253,11 @@ const steps: Step[] = [
   {
     n: "01",
     title: "Install the SDK",
-    body: "One line in your app. TypeScript, Next.js, Go, and Python — all first-class.",
+    body: "One line in your app. React on the front end, Node and Go on the back — all first-class.",
     filename: {
-      TypeScript: "terminal",
-      "Next.js": "terminal",
+      React: "terminal",
+      "Node.js": "terminal",
       Go: "terminal",
-      Python: "terminal",
     },
     code: installCode,
   },
@@ -304,10 +266,9 @@ const steps: Step[] = [
     title: "Configure providers",
     body: "Toggle SAML, OIDC, social, passwords, and passkeys from the dashboard — no deploys.",
     filename: {
-      TypeScript: "qeetid.ts",
-      "Next.js": "auth.ts",
+      React: "app.tsx",
+      "Node.js": "qeetid.ts",
       Go: "qeetid.go",
-      Python: "qeetid.py",
     },
     code: configCode,
   },
@@ -316,10 +277,9 @@ const steps: Step[] = [
     title: "Ship in days",
     body: "Drop-in components handle sign-in, MFA enrollment, and account recovery.",
     filename: {
-      TypeScript: "app/page.tsx",
-      "Next.js": "app/page.tsx",
+      React: "header.tsx",
+      "Node.js": "auth.ts",
       Go: "handler.go",
-      Python: "app.py",
     },
     code: shipCode,
   },
@@ -408,7 +368,7 @@ function StepCode({ filename, code }: { filename: string; code: ReactNode }) {
 
 // ─── Section ──────────────────────────────────────────────────────────────────
 export function HowItWorks() {
-  const [lang, setLang] = useState<Lang>("TypeScript");
+  const [lang, setLang] = useState<Lang>("React");
   const tablistId = useId();
 
   return (

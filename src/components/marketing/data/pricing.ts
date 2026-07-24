@@ -22,7 +22,7 @@ export const tiers: PricingTier[] = [
     period: "forever",
     cta: { label: "Start free", href: SIGN_UP_URL },
     features: [
-      "Up to 5,000 monthly active users",
+      "Up to 25,000 monthly active users",
       "Unlimited social providers",
       "Passkeys + TOTP MFA",
       "RBAC with up to 5 roles",
@@ -33,7 +33,7 @@ export const tiers: PricingTier[] = [
   {
     name: "Pro",
     description: "For teams shipping to real customers.",
-    price: "$99",
+    price: "$25",
     period: "/ month + $0.02 / MAU",
     cta: { label: "Start 14-day trial", href: `${SIGN_UP_URL}?plan=pro` },
     featured: true,

@@ -161,7 +161,7 @@ const data: ComparisonData = {
     {
       section: "Pricing",
       feature: "Free tier MAU cap",
-      qeetid: "5,000",
+      qeetid: "25,000",
       competitor: "25,000 (B2C) / 100 (B2B)",
     },
     {
@@ -255,7 +255,7 @@ const data: ComparisonData = {
     {
       section: "Developer experience",
       feature: "First-party SDKs",
-      qeetid: "TS · Next · React · Go · Python",
+      qeetid: "React · Node · Go",
       competitor: "20+ languages",
     },
     {

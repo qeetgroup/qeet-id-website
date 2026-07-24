@@ -54,7 +54,7 @@ export function StickyCtaBar() {
               </span>
               <p className="hidden flex-1 text-sm font-medium sm:block">
                 Ship production auth this week —{" "}
-                <span className="text-brand-text">free for 5,000 users</span>.
+                <span className="text-brand-text">free for 25,000 users</span>.
               </p>
               <div className="flex flex-1 items-center gap-2 sm:flex-none">
                 <ButtonLink size="sm" href={SIGN_UP_URL} className="flex-1 sm:flex-none">

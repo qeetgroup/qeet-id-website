@@ -181,7 +181,7 @@ const data: ComparisonData = {
     {
       section: "Pricing",
       feature: "Free tier",
-      qeetid: "5,000 MAU",
+      qeetid: "25,000 MAU",
       competitor: "1 million events / month",
     },
     {

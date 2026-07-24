@@ -86,14 +86,14 @@ export function ProductJsonLd() {
           {
             "@type": "Offer",
             name: "Pro",
-            price: "99",
+            price: "25",
             priceCurrency: "USD",
             priceSpecification: {
               "@type": "PriceSpecification",
-              price: "99",
+              price: "25",
               priceCurrency: "USD",
               valueAddedTaxIncluded: false,
-              description: "$99/month + $0.02/MAU",
+              description: "$25/month + $0.02/MAU",
             },
             availability: "https://schema.org/InStock",
             url: `${BASE}/pricing`,

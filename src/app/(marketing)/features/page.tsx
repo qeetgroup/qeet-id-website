@@ -96,8 +96,8 @@ const deepDive = [
     icon: CodeIcon,
     title: "Developer experience",
     points: [
-      "TypeScript, Go, Python, Rust SDKs — all first-class",
-      "React, Next.js, Remix, and React Native components",
+      "React, Node, and Go SDKs — all first-class",
+      "Prebuilt React components, headless hooks, and hosted pages",
       "Local dev mode with a single-binary emulator",
       "Codegen for OpenAPI clients and Terraform",
     ],
