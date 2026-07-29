@@ -10,11 +10,13 @@ import { SIGN_UP_URL } from "@/lib/links";
 // We hard-code them so the marketing site stays deployable without
 // reaching the backend; if pricing ever moves server-side, swap to a
 // fetched config and degrade the calculator gracefully.
-const FREE_CAP = 25_000;
-const PRO_BASE = 25;
-const PRO_INCLUDED = 50_000;
-const PRO_PER_MAU = 0.02;
-const ENTERPRISE_THRESHOLD = 500_000;
+const FREE_CAP = 10_000;
+const STARTER_CAP = 25_000;
+const STARTER_PRICE = 2_400; // ₹/mo flat
+const PRO_BASE = 8_000; // ₹/mo
+const PRO_INCLUDED = 100_000;
+const PRO_PER_MAU = 2; // ₹ per MAU over the included amount
+const ENTERPRISE_THRESHOLD = 1_000_000;
 
 // Log-scale slider. A linear scale crushes Free (5K) and Pro (50K)
 // into the first 5% of the track and is unusable. Log keeps every
@@ -43,7 +45,7 @@ function roundFriendly(n: number) {
 }
 
 interface ComputedPlan {
-  name: "Free" | "Pro" | "Enterprise";
+  name: "Free" | "Starter" | "Pro" | "Enterprise";
   blurb: string;
   monthly: number | null;
   breakdown?: string;
@@ -59,6 +61,15 @@ function computePlan(mau: number): ComputedPlan {
       cta: { label: "Start free", href: SIGN_UP_URL },
     };
   }
+  if (mau <= STARTER_CAP) {
+    return {
+      name: "Starter",
+      blurb: "A flat monthly plan for teams in production.",
+      monthly: STARTER_PRICE,
+      breakdown: `Flat ₹${STARTER_PRICE.toLocaleString("en-IN")} / mo · up to ${STARTER_CAP.toLocaleString("en-IN")} MAU`,
+      cta: { label: "Start 14-day trial", href: `${SIGN_UP_URL}?plan=starter` },
+    };
+  }
   if (mau > ENTERPRISE_THRESHOLD) {
     return {
       name: "Enterprise",
@@ -71,11 +82,11 @@ function computePlan(mau: number): ComputedPlan {
   const monthly = PRO_BASE + overage * PRO_PER_MAU;
   const breakdown =
     overage === 0
-      ? `$${PRO_BASE} base · first ${PRO_INCLUDED.toLocaleString("en-US")} MAU included`
-      : `$${PRO_BASE} base + $${PRO_PER_MAU.toFixed(2)} × ${overage.toLocaleString("en-US")} MAU over ${PRO_INCLUDED.toLocaleString("en-US")}`;
+      ? `₹${PRO_BASE.toLocaleString("en-IN")} base · first ${PRO_INCLUDED.toLocaleString("en-IN")} MAU included`
+      : `₹${PRO_BASE.toLocaleString("en-IN")} base + ₹${PRO_PER_MAU} × ${overage.toLocaleString("en-IN")} MAU over ${PRO_INCLUDED.toLocaleString("en-IN")}`;
   return {
     name: "Pro",
-    blurb: "Predictable per-MAU pricing.",
+    blurb: "Predictable per-MAU pricing — SSO included.",
     monthly,
     breakdown,
     cta: { label: "Start 14-day trial", href: `${SIGN_UP_URL}?plan=pro` },
@@ -172,7 +183,7 @@ export function PricingCalculator() {
                 {plan.name}
               </span>
               {plan.monthly !== null && (
-                <span className="text-xs text-muted-foreground">USD · billed monthly</span>
+                <span className="text-xs text-muted-foreground">INR · billed monthly</span>
               )}
             </div>
 
@@ -183,8 +194,8 @@ export function PricingCalculator() {
                 <>
                   <span className="font-display text-5xl font-semibold tracking-tight">
                     {plan.monthly === 0
-                      ? "$0"
-                      : `$${plan.monthly.toLocaleString("en-US", {
+                      ? "₹0"
+                      : `₹${plan.monthly.toLocaleString("en-IN", {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 2,
                         })}`}
@@ -206,8 +217,8 @@ export function PricingCalculator() {
               <p className="mt-3 text-xs text-muted-foreground">
                 ≈{" "}
                 <strong className="text-foreground">
-                  $
-                  {(plan.monthly * 12).toLocaleString("en-US", {
+                  ₹
+                  {(plan.monthly * 12).toLocaleString("en-IN", {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
                   })}
@@ -225,7 +236,8 @@ export function PricingCalculator() {
         </div>
 
         <p className="mt-4 text-center text-xs text-muted-foreground">
-          Estimates are illustrative. Volume discounts apply above 250,000 MAU — talk to sales.
+          Estimates are illustrative and cover core authentication. Overage applies above 100,000 MAU;
+          volume discounts above 500,000 — talk to sales.
         </p>
       </div>
     </section>
