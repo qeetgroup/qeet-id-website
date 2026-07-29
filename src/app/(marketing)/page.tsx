@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Compare } from "@/components/marketing/sections/compare";
 import { CTA } from "@/components/marketing/sections/cta";
 import { Faq } from "@/components/marketing/sections/faq";
@@ -12,7 +13,6 @@ import { Stats } from "@/components/marketing/sections/stats";
 import { Testimonials } from "@/components/marketing/sections/testimonials";
 import { StickyCtaBar } from "@/components/marketing/sticky-cta-bar";
 import { ProductJsonLd } from "@/components/marketing/structured-data";
-import type { Metadata } from "next";
 
 // Self-referencing canonical for the home page (root layout no longer sets one).
 export const metadata: Metadata = {

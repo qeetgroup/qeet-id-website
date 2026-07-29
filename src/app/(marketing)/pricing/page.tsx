@@ -1,6 +1,7 @@
 import { cn } from "@qeetrix/ui";
 import { CheckIcon } from "lucide-react";
 import type { Metadata } from "next";
+import { BezelCard } from "@/components/marketing/blocks/bezel-card";
 import { ButtonLink } from "@/components/marketing/button-link";
 import { tiers } from "@/components/marketing/data/pricing";
 import { BorderBeam } from "@/components/marketing/effects/border-beam";
@@ -21,50 +22,70 @@ export const metadata: Metadata = {
 const compare = [
   {
     feature: "Monthly active users",
-    free: "25,000",
-    pro: "50,000 included",
+    free: "10,000",
+    starter: "25,000",
+    pro: "100,000 + metered",
     enterprise: "Unlimited",
   },
-  { feature: "Social providers", free: "All", pro: "All", enterprise: "All" },
-  { feature: "Passkeys / WebAuthn", free: "✓", pro: "✓", enterprise: "✓" },
+  { feature: "Social providers", free: "All", starter: "All", pro: "All", enterprise: "All" },
+  { feature: "Passkeys / WebAuthn", free: "✓", starter: "✓", pro: "✓", enterprise: "✓" },
   {
     feature: "MFA (TOTP, SMS, Email OTP)",
     free: "TOTP only",
+    starter: "All",
     pro: "All",
     enterprise: "All",
   },
   {
     feature: "Enterprise SSO (SAML/OIDC)",
     free: "—",
-    pro: "Add-on",
+    starter: "—",
+    pro: "✓ Included",
+    enterprise: "✓ + enforcement",
+  },
+  {
+    feature: "SCIM / LDAP directory sync",
+    free: "—",
+    starter: "—",
+    pro: "—",
     enterprise: "✓",
   },
-  { feature: "SCIM / Directory sync", free: "—", pro: "—", enterprise: "✓" },
   {
     feature: "RBAC roles",
-    free: "5",
-    pro: "Unlimited",
-    enterprise: "Unlimited + ABAC",
+    free: "3",
+    starter: "Unlimited",
+    pro: "Unlimited + ABAC",
+    enterprise: "Unlimited + ABAC/ReBAC",
   },
   {
     feature: "Audit log retention",
     free: "7 days",
-    pro: "30 days + export",
-    enterprise: "Custom",
+    starter: "30 days",
+    pro: "90 days + export",
+    enterprise: "Custom + SIEM",
   },
   {
-    feature: "Data residency",
-    free: "US or EU",
-    pro: "US, EU, APAC",
-    enterprise: "Custom",
+    feature: "Custom branding & domain",
+    free: "—",
+    starter: "✓",
+    pro: "✓",
+    enterprise: "✓",
+  },
+  {
+    feature: "Data residency & BYOK",
+    free: "—",
+    starter: "—",
+    pro: "—",
+    enterprise: "✓",
   },
   {
     feature: "Support",
     free: "Community",
-    pro: "Email + chat, 24h",
-    enterprise: "Phone, 24/7",
+    starter: "Email, 48h",
+    pro: "Priority + chat, 24h",
+    enterprise: "24/7 + named CSM",
   },
-  { feature: "Uptime SLA", free: "—", pro: "99.95%", enterprise: "99.99%" },
+  { feature: "Uptime SLA", free: "—", starter: "99.9%", pro: "99.95%", enterprise: "99.99%" },
 ];
 
 const faq = [
@@ -93,32 +114,21 @@ export default function PricingPage() {
         eyebrow="Pricing"
         title="Simple pricing."
         titleAccent="Real free tier."
-        subtitle="Free up to 25,000 MAU. No card required. Predictable per-MAU pricing as you grow — no tier-jump surprises."
+        subtitle="Free up to 10,000 MAU, no card required. Enterprise SSO is included on Pro — no SSO tax. Predictable per-MAU pricing as you grow."
       />
 
       <Section innerClassName="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <Stagger staggerDelay={0.1} className="grid gap-6 lg:grid-cols-3">
+        <Stagger staggerDelay={0.1} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {tiers.map((t) => (
             <StaggerItem key={t.name} className="h-full">
-              <div
-                className={cn(
-                  "relative flex h-full flex-col gap-6 overflow-hidden rounded-2xl border bg-background p-6",
-                  t.featured ? "border-brand/40 shadow-xl shadow-brand/10" : "border-border/60",
-                )}
-              >
+              <BezelCard featured={t.featured} className="gap-6 p-7 shadow-xl shadow-black/5">
                 {t.featured && (
-                  <>
-                    <BorderBeam
-                      size={280}
-                      duration={9}
-                      colorFrom="var(--brand-500)"
-                      colorTo="var(--brand-300)"
-                    />
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-x-0 top-0 h-px bg-(image:--brand-gradient)"
-                    />
-                  </>
+                  <BorderBeam
+                    size={280}
+                    duration={9}
+                    colorFrom="var(--brand-500)"
+                    colorTo="var(--brand-300)"
+                  />
                 )}
                 <div className="flex items-center justify-between">
                   <h3 className="font-display text-xl font-semibold tracking-tight">{t.name}</h3>
@@ -156,7 +166,7 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </BezelCard>
             </StaggerItem>
           ))}
         </Stagger>
@@ -170,7 +180,7 @@ export default function PricingPage() {
         <Reveal className="mt-12 overflow-hidden rounded-2xl border border-border/60 bg-background">
           <table className="w-full text-left text-sm">
             <caption className="sr-only">
-              Feature comparison across Free, Pro, and Enterprise plans
+              Feature comparison across Free, Starter, Pro, and Enterprise plans
             </caption>
             <thead>
               <tr className="border-b border-border/60 bg-muted/40 text-xs uppercase tracking-widest text-muted-foreground">
@@ -179,6 +189,9 @@ export default function PricingPage() {
                 </th>
                 <th scope="col" className="px-4 py-3 font-medium">
                   Free
+                </th>
+                <th scope="col" className="px-4 py-3 font-medium">
+                  Starter
                 </th>
                 <th scope="col" className="px-4 py-3 font-medium">
                   <span className="text-gradient-brand font-semibold">Pro</span>
@@ -198,6 +211,7 @@ export default function PricingPage() {
                     {row.feature}
                   </th>
                   <td className="px-4 py-3 text-muted-foreground">{row.free}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{row.starter}</td>
                   <td className="px-4 py-3 text-muted-foreground">{row.pro}</td>
                   <td className="px-4 py-3 text-muted-foreground">{row.enterprise}</td>
                 </tr>

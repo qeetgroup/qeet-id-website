@@ -28,7 +28,7 @@ export function Pricing() {
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-1/2 size-152 max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--color-brand)/0.12,transparent_60%)] blur-3xl"
         />
-        <Stagger staggerDelay={0.1} className="relative grid gap-6 lg:grid-cols-3 lg:items-center">
+        <Stagger staggerDelay={0.1} className="relative grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:items-center">
           {tiers.map((t) => (
             <StaggerItem key={t.name} className="h-full">
               <BezelCard
