@@ -114,7 +114,7 @@ export function SiteHeader() {
           className="flex shrink-0 items-center gap-2 pl-1 font-semibold tracking-tight focus-ring-brand"
         >
           <QeetMark size={28} className="size-7" />
-          <span className="text-base">Identity</span>
+          <span className="text-base">Qeet ID</span>
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
