@@ -23,6 +23,7 @@ import { ArrowRightIcon, NetworkIcon } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { Eyebrow } from "@/components/marketing/blocks/eyebrow";
 import { Reveal, Stagger, StaggerItem, WordReveal } from "@/components/marketing/motion";
+import { DOCS_GUIDES_URL } from "@/lib/links";
 import { ButtonLink } from "../button-link";
 
 type ProviderItem = {
@@ -92,7 +93,7 @@ export function Integrations() {
               50+ identity providers and directories supported out of the box. Add your own SAML or
               OIDC source in minutes.
             </p>
-            <ButtonLink variant="outline" className="mt-2 w-fit" href="/docs#guides">
+            <ButtonLink variant="outline" className="mt-2 w-fit" href={DOCS_GUIDES_URL}>
               Browse all integrations <ArrowRightIcon className="size-4" />
             </ButtonLink>
           </Reveal>

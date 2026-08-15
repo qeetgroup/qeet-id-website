@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
+    "test": "bun test",
     "lint": "biome lint --diagnostic-level=error .",
     "format": "biome format --write .",
     "check": "biome check --diagnostic-level=error .",

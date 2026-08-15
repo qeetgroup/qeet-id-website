@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { API_REFERENCE_URL, DOCS_BASE_URL, DOCS_QUICKSTART_URL } from "@/lib/links";
 import { Reveal } from "./motion";
 import { QeetMark } from "./qeet-mark";
 
@@ -33,9 +34,9 @@ const columns = [
   {
     title: "Developers",
     links: [
-      { href: "/docs", label: "Documentation" },
-      { href: "/docs#quickstart", label: "Quickstart" },
-      { href: "/docs#api-reference", label: "API reference" },
+      { href: DOCS_BASE_URL, label: "Documentation" },
+      { href: DOCS_QUICKSTART_URL, label: "Quickstart" },
+      { href: API_REFERENCE_URL, label: "API reference" },
       { href: "https://github.com/qeetid", label: "GitHub" },
     ],
   },

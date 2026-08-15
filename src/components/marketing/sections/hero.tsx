@@ -31,7 +31,7 @@ import {
   Tilt,
   WordReveal,
 } from "@/components/marketing/motion";
-import { SIGN_UP_URL } from "@/lib/links";
+import { DOCS_BASE_URL, SIGN_UP_URL } from "@/lib/links";
 
 const trustPeople = [
   { name: "Priya Anand", photo: "/avatars/priya.jpg" },
@@ -345,7 +345,7 @@ export function Hero() {
               <ButtonLink
                 size="lg"
                 variant="ghost"
-                href="/docs"
+                href={DOCS_BASE_URL}
                 className="h-11 w-full px-5 text-sm sm:w-auto"
               >
                 Read the docs

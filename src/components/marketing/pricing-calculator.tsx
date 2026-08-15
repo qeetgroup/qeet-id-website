@@ -1,140 +1,79 @@
 "use client";
 
 import { Slider } from "@qeetrix/ui";
-import { useMemo, useState } from "react";
+import { ArrowRightIcon } from "lucide-react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { ButtonLink } from "@/components/marketing/button-link";
-import { SIGN_UP_URL } from "@/lib/links";
+import { track } from "@/lib/analytics";
+import {
+  clampMau,
+  formatCount,
+  formatPlanPrice,
+  MAU_PRESETS,
+  MAX_MAU,
+  MIN_MAU,
+  mauToSlider,
+  recommendPlan,
+  resolvePlanCtaHref,
+  roundFriendly,
+  sliderToMau,
+} from "@/lib/pricing";
 
-// Pricing knobs — keep aligned with the static tier cards on this page.
-// We hard-code them so the marketing site stays deployable without
-// reaching the backend; if pricing ever moves server-side, swap to a
-// fetched config and degrade the calculator gracefully.
-const FREE_CAP = 10_000;
-const STARTER_CAP = 25_000;
-const STARTER_PRICE = 2_400; // ₹/mo flat
-const PRO_BASE = 8_000; // ₹/mo
-const PRO_INCLUDED = 100_000;
-const PRO_PER_MAU = 2; // ₹ per MAU over the included amount
-const ENTERPRISE_THRESHOLD = 1_000_000;
-
-// Log-scale slider. A linear scale crushes Free (5K) and Pro (50K)
-// into the first 5% of the track and is unusable. Log keeps every
-// order of magnitude equally spaced.
-const MIN_MAU = 100;
-const MAX_MAU = 1_000_000;
-const EXP = Math.log10(MAX_MAU / MIN_MAU);
-
-function sliderToMau(s: number) {
-  return MIN_MAU * 10 ** ((s / 100) * EXP);
-}
-
-function mauToSlider(m: number) {
-  if (m <= MIN_MAU) return 0;
-  if (m >= MAX_MAU) return 100;
-  return (Math.log10(m / MIN_MAU) / EXP) * 100;
-}
-
-// Round to two significant figures so the read-out doesn't flicker
-// digits as the slider scrubs.
-function roundFriendly(n: number) {
-  if (n < 100) return Math.round(n);
-  const order = Math.floor(Math.log10(n));
-  const step = 10 ** Math.max(0, order - 1);
-  return Math.round(n / step) * step;
-}
-
-interface ComputedPlan {
-  name: "Free" | "Starter" | "Pro" | "Enterprise";
-  blurb: string;
-  monthly: number | null;
-  breakdown?: string;
-  cta: { label: string; href: string };
-}
-
-function computePlan(mau: number): ComputedPlan {
-  if (mau <= FREE_CAP) {
-    return {
-      name: "Free",
-      blurb: "Your usage fits in the free tier — no card required.",
-      monthly: 0,
-      cta: { label: "Start free", href: SIGN_UP_URL },
-    };
-  }
-  if (mau <= STARTER_CAP) {
-    return {
-      name: "Starter",
-      blurb: "A flat monthly plan for teams in production.",
-      monthly: STARTER_PRICE,
-      breakdown: `Flat ₹${STARTER_PRICE.toLocaleString("en-IN")} / mo · up to ${STARTER_CAP.toLocaleString("en-IN")} MAU`,
-      cta: { label: "Start 14-day trial", href: `${SIGN_UP_URL}?plan=starter` },
-    };
-  }
-  if (mau > ENTERPRISE_THRESHOLD) {
-    return {
-      name: "Enterprise",
-      blurb: "We'll size a contract to your traffic and compliance needs.",
-      monthly: null,
-      cta: { label: "Talk to sales", href: "/contact" },
-    };
-  }
-  const overage = Math.max(0, mau - PRO_INCLUDED);
-  const monthly = PRO_BASE + overage * PRO_PER_MAU;
-  const breakdown =
-    overage === 0
-      ? `₹${PRO_BASE.toLocaleString("en-IN")} base · first ${PRO_INCLUDED.toLocaleString("en-IN")} MAU included`
-      : `₹${PRO_BASE.toLocaleString("en-IN")} base + ₹${PRO_PER_MAU} × ${overage.toLocaleString("en-IN")} MAU over ${PRO_INCLUDED.toLocaleString("en-IN")}`;
-  return {
-    name: "Pro",
-    blurb: "Predictable per-MAU pricing — SSO included.",
-    monthly,
-    breakdown,
-    cta: { label: "Start 14-day trial", href: `${SIGN_UP_URL}?plan=pro` },
-  };
-}
-
-const PRESETS = [1_000, 10_000, 100_000, 1_000_000];
-
-function formatPreset(n: number) {
-  if (n >= 1_000_000) return `${n / 1_000_000}M`;
-  if (n >= 1_000) return `${n / 1_000}K`;
-  return `${n}`;
-}
-
+/**
+ * A usage estimator that recommends a plan from expected MAU (§12). It is a
+ * *recommender*, not a metered-bill calculator — Qeet ID doesn't bill paid-tier
+ * overages today, so we don't invent per-MAU math. All the maths lives in the
+ * pure, unit-tested `@/lib/pricing/calculator` helpers; this component is just
+ * the slider UI wired to them.
+ */
 export function PricingCalculator() {
-  const [sliderValue, setSliderValue] = useState(() => mauToSlider(25_000));
+  const [sliderValue, setSliderValue] = useState(() => mauToSlider(10_000));
+  const inputId = useId();
   const mau = useMemo(() => roundFriendly(sliderToMau(sliderValue)), [sliderValue]);
-  const plan = computePlan(mau);
+  const plan = recommendPlan(mau);
+  const price = formatPlanPrice(plan, "monthly");
+
+  // Track only when the recommendation actually changes, not on every scrub.
+  const lastPlan = useRef(plan.id);
+  useEffect(() => {
+    if (lastPlan.current !== plan.id) {
+      lastPlan.current = plan.id;
+      track("pricing_calculator_interaction", { mau, plan: plan.id });
+    }
+  }, [plan.id, mau]);
 
   function setMau(value: number) {
-    setSliderValue(mauToSlider(Math.max(MIN_MAU, Math.min(MAX_MAU, value))));
+    setSliderValue(mauToSlider(clampMau(value)));
   }
 
   return (
-    <section className="border-b border-border/60">
+    <section className="border-b border-border/60" aria-labelledby="calc-heading">
       <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Estimate your bill
+          <p className="text-sm font-medium uppercase tracking-widest text-brand-text">
+            Find your plan
           </p>
-          <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            How much will Qeet ID cost you?
+          <h2
+            id="calc-heading"
+            className="mt-2 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
+          >
+            How many users are you planning for?
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Drag the slider to your expected monthly active users. The estimate covers core
-            authentication; add-ons quoted separately.
+            Estimate your monthly active users and we&apos;ll point you to the plan that fits.
           </p>
         </div>
 
         <div className="mt-12 grid gap-6 rounded-2xl border border-border/60 bg-background p-6 sm:p-10 lg:grid-cols-[3fr_2fr] lg:gap-10">
-          {/* Slider column */}
+          {/* Input column */}
           <div>
-            <label className="text-sm font-medium text-muted-foreground" htmlFor="calc-mau">
+            <label className="text-sm font-medium text-muted-foreground" htmlFor={inputId}>
               Monthly active users
             </label>
             <div className="mt-1 flex items-baseline gap-3">
               <input
-                id="calc-mau"
+                id={inputId}
                 className="w-44 border-0 bg-transparent font-display text-4xl font-semibold tracking-tight outline-none [appearance:textfield] focus-visible:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none sm:text-5xl"
                 type="number"
                 inputMode="numeric"
@@ -145,7 +84,6 @@ export function PricingCalculator() {
                   const next = Number(e.target.value);
                   if (Number.isFinite(next)) setMau(next);
                 }}
-                aria-label="Monthly active users"
               />
               <span className="text-sm text-muted-foreground">MAU / month</span>
             </div>
@@ -159,17 +97,17 @@ export function PricingCalculator() {
                 min={0}
                 max={100}
                 step={0.5}
-                aria-label="MAU slider"
+                aria-label="Expected monthly active users"
               />
-              <div className="mt-4 flex justify-between gap-2 text-xs text-muted-foreground">
-                {PRESETS.map((p) => (
+              <div className="mt-4 flex flex-wrap justify-between gap-2 text-xs text-muted-foreground">
+                {MAU_PRESETS.map((p) => (
                   <button
-                    key={p}
+                    key={p.mau}
                     type="button"
-                    className="rounded-md px-2 py-1 transition-colors hover:bg-muted hover:text-foreground"
-                    onClick={() => setMau(p)}
+                    className="rounded-md px-2 py-1 transition-colors hover:bg-muted hover:text-foreground focus-ring-brand"
+                    onClick={() => setMau(p.mau)}
                   >
-                    {formatPreset(p)}
+                    {p.label}
                   </button>
                 ))}
               </div>
@@ -178,66 +116,48 @@ export function PricingCalculator() {
 
           {/* Result column */}
           <div className="rounded-2xl border border-border/60 bg-muted/20 p-6 sm:p-8">
-            <div className="flex items-center justify-between">
-              <span className="rounded-full bg-primary/15 px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-primary">
+            <p className="text-xs text-muted-foreground">Recommended plan</p>
+            <div className="mt-1 flex items-center justify-between gap-2">
+              <span className="font-display text-2xl font-semibold tracking-tight text-gradient-brand">
                 {plan.name}
               </span>
-              {plan.monthly !== null && (
-                <span className="text-xs text-muted-foreground">INR · billed monthly</span>
+              <span className="rounded-full bg-brand/15 px-2.5 py-1 text-xs font-medium text-brand-text">
+                {plan.mau == null ? "Custom scale" : `up to ${formatCount(plan.mau)} MAU`}
+              </span>
+            </div>
+
+            <div className="mt-4 flex items-baseline gap-1.5">
+              <span className="font-display text-4xl font-semibold tracking-tight">
+                {price.main}
+              </span>
+              {price.period && (
+                <span className="text-sm text-muted-foreground">{price.period}</span>
               )}
             </div>
 
-            <div className="mt-4 flex items-baseline gap-2">
-              {plan.monthly === null ? (
-                <span className="font-display text-4xl font-semibold tracking-tight">Custom</span>
-              ) : (
-                <>
-                  <span className="font-display text-5xl font-semibold tracking-tight">
-                    {plan.monthly === 0
-                      ? "₹0"
-                      : `₹${plan.monthly.toLocaleString("en-IN", {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 2,
-                        })}`}
-                  </span>
-                  <span className="text-sm text-muted-foreground">/ mo</span>
-                </>
-              )}
-            </div>
-
-            <p className="mt-3 text-sm text-muted-foreground">{plan.blurb}</p>
-
-            {plan.breakdown && (
-              <p className="mt-4 rounded-lg border border-border/60 bg-background px-3 py-2 text-xs text-muted-foreground">
-                {plan.breakdown}
-              </p>
-            )}
-
-            {plan.monthly !== null && plan.monthly > 0 && (
-              <p className="mt-3 text-xs text-muted-foreground">
-                ≈{" "}
-                <strong className="text-foreground">
-                  ₹
-                  {(plan.monthly * 12).toLocaleString("en-IN", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                  })}
-                </strong>{" "}
-                / year
-              </p>
-            )}
+            <p className="mt-3 text-sm text-muted-foreground">{plan.tagline}</p>
 
             <div className="mt-6">
-              <ButtonLink href={plan.cta.href} className="w-full">
-                {plan.cta.label}
+              <ButtonLink
+                href={resolvePlanCtaHref(plan)}
+                className="w-full"
+                onClick={() =>
+                  track("pricing_plan_cta_click", {
+                    plan: plan.id,
+                    period: "monthly",
+                    source: "calculator",
+                  })
+                }
+              >
+                {plan.cta.label} <ArrowRightIcon className="size-4" />
               </ButtonLink>
             </div>
           </div>
         </div>
 
         <p className="mt-4 text-center text-xs text-muted-foreground">
-          Estimates are illustrative and cover core authentication. Overage applies above 100,000 MAU;
-          volume discounts above 500,000 — talk to sales.
+          A guide, not a quote — MAU allowances reset monthly and machine-to-machine tokens
+          don&apos;t count. Above 100,000 MAU, talk to sales for volume pricing.
         </p>
       </div>
     </section>

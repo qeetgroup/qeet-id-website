@@ -7,7 +7,35 @@
  * Spec: https://schema.org / https://developers.google.com/search/docs/appearance/structured-data
  */
 
+import { DEFAULT_CURRENCY, plans } from "@/lib/pricing";
+
 const BASE = "https://id.qeet.in";
+
+/**
+ * Build a valid `AggregateOffer` from the authoritative pricing config so the
+ * structured data never drifts from the pricing page. Only plans with a real
+ * numeric monthly price become individual `Offer`s (Enterprise is custom and
+ * omitted); the aggregate carries the true low/high range and total plan count.
+ */
+function buildAggregateOffer() {
+  const priced = plans.filter((p) => !p.price.custom && p.price.monthly != null);
+  const monthly = priced.map((p) => p.price.monthly as number);
+  return {
+    "@type": "AggregateOffer",
+    priceCurrency: DEFAULT_CURRENCY,
+    lowPrice: String(Math.min(...monthly)),
+    highPrice: String(Math.max(...monthly)),
+    offerCount: plans.length,
+    offers: priced.map((p) => ({
+      "@type": "Offer",
+      name: p.name,
+      price: String(p.price.monthly),
+      priceCurrency: p.price.currency,
+      availability: "https://schema.org/InStock",
+      url: `${BASE}/pricing`,
+    })),
+  };
+}
 
 interface JsonLdProps {
   data: Record<string, unknown>;
@@ -61,8 +89,9 @@ export function WebSiteJsonLd() {
 }
 
 /**
- * Product block for the identity-platform offering. Helps Google show
- * the offer in product-search surfaces.
+ * Product block for the identity-platform offering, with an AggregateOffer
+ * derived from the live pricing config. Helps Google show the offering in
+ * product-search surfaces without hard-coding (or drifting from) prices.
  */
 export function ProductJsonLd() {
   return (
@@ -70,35 +99,33 @@ export function ProductJsonLd() {
       data={{
         "@context": "https://schema.org",
         "@type": "Product",
+        "@id": `${BASE}/#product`,
         name: "Qeet ID",
         description:
           "Identity platform for modern teams. SSO, MFA, passkeys, RBAC, and session management — open source and self-hostable.",
         brand: { "@type": "Brand", name: "Qeet ID" },
-        offers: [
-          {
-            "@type": "Offer",
-            name: "Free",
-            price: "0",
-            priceCurrency: "USD",
-            availability: "https://schema.org/InStock",
-            url: `${BASE}/pricing`,
-          },
-          {
-            "@type": "Offer",
-            name: "Pro",
-            price: "25",
-            priceCurrency: "USD",
-            priceSpecification: {
-              "@type": "PriceSpecification",
-              price: "25",
-              priceCurrency: "USD",
-              valueAddedTaxIncluded: false,
-              description: "$25/month + $0.02/MAU",
-            },
-            availability: "https://schema.org/InStock",
-            url: `${BASE}/pricing`,
-          },
-        ],
+        offers: buildAggregateOffer(),
+      }}
+    />
+  );
+}
+
+/**
+ * Pricing-page Offers block. Same Product `@id` as {@link ProductJsonLd} so
+ * search engines resolve it to one entity, but scoped to the `/pricing` route.
+ */
+export function PricingOffersJsonLd() {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "@id": `${BASE}/#product`,
+        name: "Qeet ID",
+        description:
+          "Authentication, authorization, SSO, MFA, passkeys and organizations — priced on monthly active users.",
+        brand: { "@type": "Brand", name: "Qeet ID" },
+        offers: buildAggregateOffer(),
       }}
     />
   );
