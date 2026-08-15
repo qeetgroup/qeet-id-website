@@ -7,8 +7,8 @@ export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return ogCard({
     eyebrow: "Pricing",
-    title: "Simple pricing. Real free tier.",
+    title: "Identity infrastructure that scales with you.",
     description:
-      "Free up to 25,000 MAU, no card required. Predictable per-MAU pricing as you grow.",
+      "Free for developers. Predictable plans as you grow. Enterprise SSO included — no SSO tax.",
   });
 }
