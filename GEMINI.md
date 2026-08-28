@@ -1,12 +1,10 @@
-@AGENTS.md
-
-# CLAUDE.md — qeet-id-website
+# GEMINI.md — qeet-id-website
 
 **Read [AGENTS.md](AGENTS.md) first.** It is the model-neutral instruction file and the source of
-truth for this repository. This file adds only Claude-specific guidance.
+truth for this repository. This file is a pointer and adds no architecture.
 
 ```text
-CLAUDE.md  →  AGENTS.md  →  docs/llm/*
+GEMINI.md  →  AGENTS.md  →  docs/llm/*
 ```
 
 ## Canonical context
@@ -21,9 +19,12 @@ CLAUDE.md  →  AGENTS.md  →  docs/llm/*
 | [docs/llm/architecture-map.md](docs/llm/architecture-map.md) | "Where is X?" — fastest path to a file |
 
 Parent context: **L0** `qeetgroup/qeet-context` · **L1** `qeetgroup/qeet-id-context`.
-Read them when a task needs organization or product understanding; this repository does not restate them.
 
-## The things most likely to trip you up here
+## What this repository is
+
+The **marketing site for Qeet ID** (`id.qeet.in`). Next.js 16 App Router, React 19, Tailwind v4, `@qeetrix/ui`, Biome, bun. **It does not call the Qeet ID backend** — there is no API client and no auth.
+
+## Non-negotiables
 
 1. **Never state a product capability you have not verified** against `qeet-id-context/PRODUCT.md`. This site restates claims; it never originates them.
 2. The product is **pre-1.0 (`v0.1.14`)** and **no SDK is published** — do not write "generally available" or "drop-in SDKs" (QID-009, QID-010).
@@ -32,20 +33,15 @@ Read them when a task needs organization or product understanding; this reposito
 5. **Never add an authenticated flow here** — that belongs to `qeet-id-login`.
 6. **Never write a competitor claim from memory.** Each `compare/` page is a public assertion about a named company.
 
-## Working style
+## Commands
 
-- **Read before editing.** Match the neighbouring file's shape rather than introducing an abstraction.
-- Use the architecture map instead of guessing a path.
-- **Do not read `.env*` or secret files** into anything you write.
+`bun run dev` · `bun run build` · `bun run typecheck` · `bun run lint` · `bun run check` · `bun test`
 
-## Finishing a change
+That list is complete — **do not invent commands.**
+
+## Before finishing
 
 ```bash
 bun run typecheck && bun run check && bun test && bun run build
 git diff
 ```
-
-## Escalate rather than proceed
-
-Stop and report if a task would weaken a security control, change a published contract, or require
-modifying another repository. Cross-repository impact: `qeet-id-context/CHANGE-MATRIX.md`.
