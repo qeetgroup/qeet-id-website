@@ -41,8 +41,9 @@ commands:
   check: bun run check
   typecheck: bun run typecheck
 ci:
-  workflows: []                          # NONE — Vercel build is the only gate
-  deploy: vercel.json
+  workflows: [deploy.yml]                # no ci.yml yet; deploy.yml gates before shipping
+  runner: ubuntu-latest
+  deploy: push main -> gate -> vercel build/deploy --prod -> tag vX.Y.Z + GitHub release
 security:
   no_auth: true
   no_secrets: true                       # NEXT_PUBLIC_* only, inlined at build
