@@ -21,7 +21,7 @@ export type Cell = true | false | "partial" | string;
 export interface ComparisonRow {
   /** Category section header — rows with the same `section` cluster. */
   section: string;
-  /** Capability label, e.g. "Self-hostable / open-source". */
+  /** Capability label, e.g. "Self-hostable deployment". */
   feature: string;
   /** What Qeet ID offers in this row. */
   qeetid: Cell;

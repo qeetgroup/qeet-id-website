@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Microsoft Entra External ID",
   description:
-    "Qeet ID vs. Microsoft Entra External ID: open-source, self-hostable identity with readable per-MAU pricing and no add-on metering, versus Microsoft's cloud-only, Azure-bound CIAM.",
+    "Qeet ID vs. Microsoft Entra External ID: self-hostable identity with readable per-MAU pricing and no add-on metering, versus Microsoft's cloud-only, Azure-bound CIAM.",
   alternates: { canonical: "/compare/entra" },
 };
 
 const data: ComparisonData = {
   competitor: "Microsoft Entra External ID",
   competitorBlurb:
-    "Microsoft Entra External ID is Microsoft's CIAM (the successor to Azure AD B2C, which is end-of-sale for new customers since May 2025). It's cloud-only and Azure-bound; choose Qeet ID when you want open-source code, self-hosting, readable pricing, and governance without separately-metered add-ons.",
+    "Microsoft Entra External ID is Microsoft's CIAM (the successor to Azure AD B2C, which is end-of-sale for new customers since May 2025). It's cloud-only and Azure-bound; choose Qeet ID when you want self-hosting, readable pricing, and governance without separately-metered add-ons.",
   pitch: {
-    headline: "CIAM you can read, run anywhere, and self-host.",
+    headline: "CIAM you can run anywhere and self-host.",
     subhead:
-      "Qeet ID matches Entra External ID's core protocols, but the code is open, the pricing is on the page, and governance isn't a separately-metered add-on.",
+      "Qeet ID matches Entra External ID's core protocols, but you can run it anywhere, the pricing is on the page, and governance isn't a separately-metered add-on.",
     bullets: [
-      "MIT-licensed core — no Azure subscription and no cloud lock-in.",
+      "Self-hostable core — no Azure subscription and no cloud lock-in.",
       "Readable per-MAU pricing instead of an Azure calculator estimate.",
       "Risk and audit controls built in, not billed as metered add-ons.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Linear per-MAU" },
     { label: "Stack", value: "Go + Postgres" },
@@ -106,12 +105,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",

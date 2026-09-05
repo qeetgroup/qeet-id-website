@@ -5,7 +5,7 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Authentik",
   description:
-    "How Qeet ID compares to Authentik: a shared MIT license, plus a managed cloud option, typed SDKs, a hosted login, and a tamper-evident audit chain for customer-facing apps — with an honest look at Authentik's protocol breadth.",
+    "How Qeet ID compares to Authentik: a managed cloud option, typed SDKs, a hosted login, and a tamper-evident audit chain for customer-facing apps — with an honest look at Authentik's protocol breadth.",
   alternates: { canonical: "/compare/authentik" },
 };
 
@@ -14,17 +14,16 @@ const data: ComparisonData = {
   competitorBlurb:
     "Authentik is a popular MIT-licensed, self-hosted identity provider with exceptionally broad protocol support — SAML, OIDC, LDAP, SCIM, RADIUS, and a forward-auth proxy — spanning homelab to enterprise. It has no managed cloud and is oriented more as an SSO gateway than a customer-facing CIAM. Choose Qeet ID when you want a managed cloud option, typed SDKs and a hosted login for your app, and a tamper-evident audit log.",
   pitch: {
-    headline: "Same MIT license. Built for customer-facing apps.",
+    headline: "Built for customer-facing apps.",
     subhead:
-      "Authentik is a strong, MIT-licensed self-hosted IdP with unusually broad protocol support (LDAP, RADIUS, forward-auth proxy). Qeet ID shares the MIT license but is built as a CIAM: a managed cloud option, typed SDKs, a hosted login app, and a tamper-evident audit chain.",
+      "Authentik is a strong, MIT-licensed self-hosted IdP with unusually broad protocol support (LDAP, RADIUS, forward-auth proxy). Qeet ID is built as a CIAM: a managed cloud option, typed SDKs, a hosted login app, and a tamper-evident audit chain.",
     bullets: [
       "A first-party managed cloud — Authentik is self-host only.",
       "CIAM developer experience: typed SDKs, hosted login, ABAC + explainable authz.",
-      "Tamper-evident hash-chained audit + /verify in the open-source core.",
+      "Tamper-evident hash-chained audit + /verify built into the core.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Managed cloud", value: "EU / US" },
     { label: "Focus", value: "CIAM" },
@@ -118,13 +117,6 @@ const data: ComparisonData = {
     // ---- Deployment ----
     {
       section: "Deployment",
-      feature: "Open-source core",
-      qeetid: "MIT",
-      competitor: "MIT",
-      note: "Both ship a permissively MIT-licensed core.",
-    },
-    {
-      section: "Deployment",
       feature: "Self-host first-class",
       qeetid: true,
       competitor: true,
@@ -142,7 +134,7 @@ const data: ComparisonData = {
     {
       section: "Pricing",
       feature: "Self-host cost",
-      qeetid: "Free (MIT)",
+      qeetid: "Free",
       competitor: "Free (MIT core)",
     },
     {
@@ -214,9 +206,9 @@ const data: ComparisonData = {
     },
   ],
   cta: {
-    headline: "MIT identity, built for your customers",
+    headline: "Identity built for your customers",
     subhead:
-      "Self-host the MIT core, or start free on our managed cloud up to 25,000 MAU. If you need Authentik's LDAP / RADIUS / proxy breadth for internal SSO, it is an excellent choice.",
+      "Self-host, or start free on our managed cloud up to 25,000 MAU. If you need Authentik's LDAP / RADIUS / proxy breadth for internal SSO, it is an excellent choice.",
   },
 };
 

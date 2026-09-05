@@ -24,7 +24,6 @@ const data: ComparisonData = {
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Enterprise SSO", value: "Included" },
     { label: "MFA", value: "Included" },
     { label: "Multi-tenant", value: "Built-in" },
@@ -119,13 +118,6 @@ const data: ComparisonData = {
     // ---- Deployment ----
     {
       section: "Deployment",
-      feature: "Open-source core (OSI)",
-      qeetid: true,
-      competitor: true,
-      note: "Both are open source — Qeet ID is MIT, SuperTokens is Apache-2.0.",
-    },
-    {
-      section: "Deployment",
       feature: "Self-host with unlimited MAU (free)",
       qeetid: true,
       competitor: true,
@@ -209,7 +201,7 @@ const data: ComparisonData = {
   cta: {
     headline: "Everything included, none of it metered",
     subhead:
-      "Self-host Qeet ID free under MIT, or start on managed cloud — MFA, multi-tenancy, and SAML SSO in every plan.",
+      "Self-host Qeet ID, or start on managed cloud — MFA, multi-tenancy, and SAML SSO in every plan.",
   },
 };
 

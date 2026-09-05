@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. AWS Cognito",
   description:
-    "Qeet ID vs. AWS Cognito: the same OIDC/SAML core as open-source code you can run off-AWS, with a real admin UI and a built-in authorization engine.",
+    "Qeet ID vs. AWS Cognito: the same OIDC/SAML core, runnable off-AWS, with a real admin UI and a built-in authorization engine.",
   alternates: { canonical: "/compare/cognito" },
 };
 
 const data: ComparisonData = {
   competitor: "AWS Cognito",
   competitorBlurb:
-    "AWS Cognito is Amazon's managed identity service — tightly integrated with the AWS ecosystem and proven at massive scale. Choose Qeet ID when you want open-source code, deployment outside AWS, a dedicated admin UI, and a first-class authorization engine.",
+    "AWS Cognito is Amazon's managed identity service — tightly integrated with the AWS ecosystem and proven at massive scale. Choose Qeet ID when you want deployment outside AWS, a dedicated admin UI, and a first-class authorization engine.",
   pitch: {
     headline: "The same standards, without the AWS lock-in.",
     subhead:
-      "Cognito is a solid choice if you already live in AWS. Qeet ID gives you the same OIDC / SAML core as open-source code you can run anywhere — plus a real admin UI and a proper authorization engine.",
+      "Cognito is a solid choice if you already live in AWS. Qeet ID gives you the same OIDC / SAML core, runnable anywhere — plus a real admin UI and a proper authorization engine.",
     bullets: [
-      "MIT-licensed core you can self-host on any infrastructure — not just AWS.",
+      "Self-host the core on any infrastructure — not just AWS.",
       "A dedicated identity admin UI, not the AWS console.",
       "Built-in RBAC + ABAC with a single-call /check and explainable grant paths.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Linear per-MAU" },
     { label: "Stack", value: "Go + Postgres" },
@@ -111,12 +110,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",

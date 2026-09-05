@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. FusionAuth",
   description:
-    "Qeet ID vs. FusionAuth: a truly MIT-licensed identity core with enterprise SSO included, versus FusionAuth's source-available license and paid SSO tiers.",
+    "Qeet ID vs. FusionAuth: enterprise SSO included in every tier, versus FusionAuth's paid SSO tiers.",
   alternates: { canonical: "/compare/fusionauth" },
 };
 
 const data: ComparisonData = {
   competitor: "FusionAuth",
   competitorBlurb:
-    "FusionAuth is a mature, feature-rich CIAM platform with a free, self-hostable Community edition that supports unlimited MAU. It is source-available (proprietary), not OSI open source, and reserves SAML IdP, SCIM, and threat detection for paid plans. Choose Qeet ID for a truly MIT-licensed core with enterprise SSO in every tier.",
+    "FusionAuth is a mature, feature-rich CIAM platform with a free, self-hostable Community edition that supports unlimited MAU. It is source-available (proprietary), not OSI open source, and reserves SAML IdP, SCIM, and threat detection for paid plans. Choose Qeet ID for enterprise SSO and SCIM in every tier.",
   pitch: {
-    headline: "Truly open source. Enterprise SSO without the tier tax.",
+    headline: "Enterprise SSO without the tier tax.",
     subhead:
-      "FusionAuth is battle-tested and its free self-hosted edition is genuinely unlimited. But it's source-available, not open source — and SAML IdP, SCIM, and threat detection live behind paid plans. Qeet ID is MIT and ships those in the box.",
+      "FusionAuth is battle-tested and its free self-hosted edition is genuinely unlimited. But it's source-available, not open source — and SAML IdP, SCIM, and threat detection live behind paid plans. Qeet ID ships those in the box.",
     bullets: [
-      "MIT-licensed — inspect, fork, and run the core with no license key.",
+      "Run the core with no license key or tier unlock.",
       "SAML IdP-initiated SSO and SCIM provisioning included, not tier-gated.",
       "Tamper-evident hash-chained audit log with a /verify integrity endpoint.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Enterprise SSO", value: "Included" },
     { label: "Pricing", value: "$25/mo Pro · $0.02/MAU" },
@@ -119,13 +118,6 @@ const data: ComparisonData = {
     // ---- Deployment ----
     {
       section: "Deployment",
-      feature: "Truly open-source (OSI) license",
-      qeetid: true,
-      competitor: "partial",
-      note: "FusionAuth is source-available (proprietary), not OSI open source; the Community edition is free.",
-    },
-    {
-      section: "Deployment",
       feature: "Self-host with unlimited MAU (free)",
       qeetid: true,
       competitor: true,
@@ -214,9 +206,9 @@ const data: ComparisonData = {
     },
   ],
   cta: {
-    headline: "MIT-licensed identity, enterprise SSO included",
+    headline: "Enterprise SSO included, in every plan",
     subhead:
-      "Self-host the full Qeet ID core for free under MIT, or start on managed cloud from $25/mo — SAML and SCIM in every plan.",
+      "Self-host the full Qeet ID core, or start on managed cloud from $25/mo — SAML and SCIM in every plan.",
   },
 };
 

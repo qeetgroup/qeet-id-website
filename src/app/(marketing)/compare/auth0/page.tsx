@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Auth0",
   description:
-    "How Qeet ID compares to Auth0 (Okta): open-source / self-hostable, transparent per-MAU pricing, and a modern passkeys-first stack.",
+    "How Qeet ID compares to Auth0 (Okta): self-hostable, with transparent per-MAU pricing and a modern passkeys-first stack.",
   alternates: { canonical: "/compare/auth0" },
 };
 
 const data: ComparisonData = {
   competitor: "Auth0",
   competitorBlurb:
-    "Auth0 is the enterprise CIAM market leader, acquired by Okta in 2021. It excels at federation and is widely adopted; choose Qeet ID when you want open-source code, single-tenant deployment, and pricing that scales linearly with users.",
+    "Auth0 is the enterprise CIAM market leader, acquired by Okta in 2021. It excels at federation and is widely adopted; choose Qeet ID when you want self-hosting, single-tenant deployment, and pricing that scales linearly with users.",
   pitch: {
     headline: "Same protocols. Fewer surprises on the bill.",
     subhead:
-      "Qeet ID speaks every OAuth / OIDC / SAML / SCIM dialect Auth0 does. The difference is transparency — the code, the pricing, and where your data lives.",
+      "Qeet ID speaks every OAuth / OIDC / SAML / SCIM dialect Auth0 does. The difference is transparency — the pricing, the deployment model, and where your data lives.",
     bullets: [
-      "MIT-licensed core you can self-host on your own infrastructure.",
+      "Self-host the core on your own infrastructure.",
       "Linear per-MAU pricing without sudden tier breakpoints.",
       "Single-tenant deploy option for healthcare, public sector, and on-prem teams.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Linear per-MAU" },
     { label: "Stack", value: "Go + Postgres" },
@@ -132,13 +131,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-      note: "Auth0 is closed source. SDKs are open; the core is not.",
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",

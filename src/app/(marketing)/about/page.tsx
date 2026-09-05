@@ -73,8 +73,8 @@ export default function AboutPage() {
             </p>
             <p>
               Qeet ID is the platform we wished we&apos;d had — passkeys-first, multi-tenant from
-              day one, and audit-ready by default. We build in the open, publish our compliance
-              posture, and treat every credential like it&apos;s our own.
+              day one, and audit-ready by default. We publish our compliance posture, and treat
+              every credential like it&apos;s our own.
             </p>
           </Reveal>
         </div>

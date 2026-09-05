@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. PropelAuth",
   description:
-    "Qeet ID vs. PropelAuth: open-source B2B identity you can self-host, at $0.02/MAU with a tamper-evident audit log built in rather than a paid add-on.",
+    "Qeet ID vs. PropelAuth: B2B identity you can self-host, at $0.02/MAU with a tamper-evident audit log built in rather than a paid add-on.",
   alternates: { canonical: "/compare/propelauth" },
 };
 
 const data: ComparisonData = {
   competitor: "PropelAuth",
   competitorBlurb:
-    "PropelAuth is a B2B-first identity platform with strong organization and team management and flat, unlimited enterprise SSO. Qeet ID offers the same B2B model as open-source, self-hostable software, at a lower per-MAU rate and with a tamper-evident audit log built in.",
+    "PropelAuth is a B2B-first identity platform with strong organization and team management and flat, unlimited enterprise SSO. Qeet ID offers the same B2B model as self-hostable software, at a lower per-MAU rate and with a tamper-evident audit log built in.",
   pitch: {
-    headline: "B2B auth you can read, run, and audit.",
+    headline: "B2B auth you can run, own, and audit.",
     subhead:
-      "PropelAuth nails B2B org management and flat, unlimited SSO. Qeet ID matches the B2B model as open source you can self-host, at a lower per-MAU rate with a tamper-evident audit log built in.",
+      "PropelAuth nails B2B org management and flat, unlimited SSO. Qeet ID matches the B2B model and you can self-host it, at a lower per-MAU rate with a tamper-evident audit log built in.",
     bullets: [
-      "MIT-licensed and self-hostable on your own Postgres — PropelAuth is managed-only.",
+      "Self-hostable on your own Postgres — PropelAuth is managed-only.",
       "$0.02 / MAU vs $0.05, with SCIM at the enterprise tier rather than a $500/mo plan.",
       "Hash-chained audit log + /verify is built in — PropelAuth's audit export is a paid add-on.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Per-MAU", value: "$0.02 / MAU" },
     { label: "Entry price", value: "$25 / mo" },
@@ -103,12 +102,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",
@@ -209,7 +202,7 @@ const data: ComparisonData = {
   cta: {
     headline: "Own your B2B identity stack",
     subhead:
-      "Keep the org-first model you like — get the source, self-hosting, and a lower per-MAU bill. Start free or self-host with one Docker command.",
+      "Keep the org-first model you like — get self-hosting and a lower per-MAU bill. Start free or self-host with one Docker command.",
   },
 };
 

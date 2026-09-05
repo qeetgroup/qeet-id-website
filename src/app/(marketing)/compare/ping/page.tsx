@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Ping Identity",
   description:
-    "Qeet ID vs. Ping Identity: a lightweight open-source identity binary with transparent per-MAU pricing, versus Ping's deep but heavy, commercially-licensed enterprise federation stack.",
+    "Qeet ID vs. Ping Identity: a lightweight identity binary with transparent per-MAU pricing, versus Ping's deep but heavy, commercially-licensed enterprise federation stack.",
   alternates: { canonical: "/compare/ping" },
 };
 
 const data: ComparisonData = {
   competitor: "Ping Identity",
   competitorBlurb:
-    "Ping Identity is an enterprise IAM vendor with PingOne (cloud) and self-managed commercial software (PingFederate / PingAM) known for deep federation. Choose Qeet ID when you want an open-source MIT binary, transparent per-MAU pricing, a real free tier, and developer-first setup.",
+    "Ping Identity is an enterprise IAM vendor with PingOne (cloud) and self-managed commercial software (PingFederate / PingAM) known for deep federation. Choose Qeet ID when you want a single lightweight binary, transparent per-MAU pricing, a real free tier, and developer-first setup.",
   pitch: {
     headline: "Deep federation, without the heavy deploy.",
     subhead:
-      "Qeet ID covers the OAuth / OIDC / SAML / SCIM Ping is known for in one lightweight open-source binary — with pricing you can read and a free tier that's actually free.",
+      "Qeet ID covers the OAuth / OIDC / SAML / SCIM Ping is known for in one lightweight binary — with pricing you can read and a free tier that's actually free.",
     bullets: [
-      "One MIT-licensed Go binary + Postgres, not a multi-component Java stack.",
+      "One Go binary + Postgres, not a multi-component Java stack.",
       "Transparent per-MAU pricing and a real free tier — no enterprise-only quote.",
       "Developer-first setup instead of a heavyweight enterprise rollout.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Linear per-MAU" },
     { label: "Stack", value: "Go + Postgres" },
@@ -114,13 +113,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-      note: "Ping's self-managed software is licensed commercial code, not open source.",
-    },
     {
       section: "Deployment",
       feature: "Self-host without a commercial license",

@@ -1,7 +1,7 @@
 # Qeet ID — Marketing Site
 
-The public marketing website for **Qeet ID**, the passkeys-first, open-source identity &
-access platform (the OSS Auth0/Okta alternative). Ships at **[id.qeet.in](https://id.qeet.in)**.
+The public marketing website for **Qeet ID**, the passkeys-first identity &
+access platform. Ships at **[id.qeet.in](https://id.qeet.in)**.
 
 **Stack:** Next.js 16 (App Router, React Compiler) · React 19 · [`@qeetrix/ui`](https://github.com/qeetgroup) · Tailwind CSS v4 · Motion · Biome · **bun**
 

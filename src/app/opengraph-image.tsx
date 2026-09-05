@@ -112,7 +112,7 @@ export default async function Image() {
           lineHeight: 1.3,
         }}
       >
-        SSO · MFA · Passkeys · RBAC · Audit. Open-source identity for modern teams.
+        SSO · MFA · Passkeys · RBAC · Audit. Identity for modern teams.
       </div>
 
       {/* Footer */}

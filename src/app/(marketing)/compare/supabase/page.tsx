@@ -5,7 +5,7 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Supabase Auth",
   description:
-    "Qeet ID vs. Supabase Auth: both open source, but Qeet ID is a dedicated identity product — first-class multi-tenancy, a real authz engine, SSO, SCIM, and a verifiable audit log.",
+    "Qeet ID vs. Supabase Auth: Qeet ID is a dedicated identity product — first-class multi-tenancy, a real authz engine, SSO, SCIM, and a verifiable audit log.",
   alternates: { canonical: "/compare/supabase" },
 };
 
@@ -14,9 +14,9 @@ const data: ComparisonData = {
   competitorBlurb:
     "Supabase Auth (GoTrue) is the open-source, self-hostable authentication layer of the Supabase Postgres platform — cheap, generous on free MAU, and tightly integrated with your database. Choose Qeet ID when identity is a product in its own right: first-class multi-tenancy, a real authorization engine, enterprise SSO and SCIM, and a verifiable audit trail.",
   pitch: {
-    headline: "Open source too — but identity is the whole product.",
+    headline: "Identity is the whole product.",
     subhead:
-      "Supabase Auth is a genuinely open-source, self-hostable component of the Supabase platform. Qeet ID competes on the same ground, then goes further where auth is your core concern: multi-tenancy, a real authorization engine, SSO without a paywall, and a verifiable audit trail.",
+      "Supabase Auth is a genuinely open-source, self-hostable component of the Supabase platform. Qeet ID goes further where auth is your core concern: multi-tenancy, a real authorization engine, SSO without a paywall, and a verifiable audit trail.",
     bullets: [
       "First-class multi-tenancy, not one user pool per project.",
       "A dedicated RBAC + ABAC engine with /check and explainable grant paths — not just RLS policies.",
@@ -24,7 +24,6 @@ const data: ComparisonData = {
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Linear per-MAU" },
     { label: "Stack", value: "Go + Postgres" },
@@ -112,13 +111,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code",
-      qeetid: true,
-      competitor: true,
-      note: "Both are open source — Qeet ID is MIT, Supabase Auth (GoTrue) is Apache-2.0.",
-    },
     {
       section: "Deployment",
       feature: "Self-host on Postgres",
@@ -220,7 +212,7 @@ const data: ComparisonData = {
     },
   ],
   cta: {
-    headline: "Both open source. One is built for identity.",
+    headline: "Built for identity, end to end.",
     subhead:
       "Start free on our hosted plan or self-host the Qeet ID binary — with multi-tenancy, SSO, and a verifiable audit log built in.",
   },

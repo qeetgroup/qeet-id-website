@@ -5,7 +5,7 @@ import { FaqJsonLd } from "@/components/marketing/structured-data";
 const faq: FaqItem[] = [
   {
     q: "What is Qeet ID?",
-    a: "A complete authentication and identity platform — SSO, MFA, passkeys, RBAC, and stateful sessions backed by a single, audit-ready identity graph. It's an open-source-core alternative to Auth0, Clerk, and WorkOS that you can self-host or run fully managed.",
+    a: "A complete authentication and identity platform — SSO, MFA, passkeys, RBAC, and stateful sessions backed by a single, audit-ready identity graph. You can self-host it or run it fully managed.",
   },
   {
     q: "How long does it take to integrate?",
@@ -21,7 +21,7 @@ const faq: FaqItem[] = [
   },
   {
     q: "Can I self-host, and where does my data live?",
-    a: "The core is open-source and self-hostable down to air-gapped deployments on Enterprise. Managed hosting is available in the US, EU, and APAC, with custom data residency on Enterprise contracts.",
+    a: "Yes — Qeet ID is self-hostable down to air-gapped deployments on Enterprise. Managed hosting is available in the US, EU, and APAC, with custom data residency on Enterprise contracts.",
   },
   {
     q: "How are you priced?",

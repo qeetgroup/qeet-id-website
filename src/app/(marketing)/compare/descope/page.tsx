@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Descope",
   description:
-    "Qeet ID vs. Descope: open-source, self-hostable identity with the same passkeys and enterprise SSO — from $25/mo instead of $249, plus a tamper-evident audit log.",
+    "Qeet ID vs. Descope: self-hostable identity with the same passkeys and enterprise SSO — from $25/mo instead of $249, plus a tamper-evident audit log.",
   alternates: { canonical: "/compare/descope" },
 };
 
 const data: ComparisonData = {
   competitor: "Descope",
   competitorBlurb:
-    "Descope is a passwordless-first CIAM platform best known for its no-code, drag-and-drop authentication flow builder. It's a polished managed service; choose Qeet ID when you want open-source code, self-hosting, and transparent per-MAU pricing that starts at a fraction of Descope's entry plan.",
+    "Descope is a passwordless-first CIAM platform best known for its no-code, drag-and-drop authentication flow builder. It's a polished managed service; choose Qeet ID when you want self-hosting and transparent per-MAU pricing that starts at a fraction of Descope's entry plan.",
   pitch: {
-    headline: "Open-source auth without the enterprise entry price.",
+    headline: "Self-hostable auth without the enterprise entry price.",
     subhead:
-      "Descope's no-code flow builder is genuinely slick — but it's managed-only and paid plans start at $249/mo. Qeet ID ships the same passkeys, magic links, and SSO as source you can self-host, from $25/mo.",
+      "Descope's no-code flow builder is genuinely slick — but it's managed-only and paid plans start at $249/mo. Qeet ID ships the same passkeys, magic links, and SSO, self-hostable, from $25/mo.",
     bullets: [
-      "MIT-licensed core you can self-host on your own Postgres — Descope is managed-only.",
+      "Self-host the core on your own Postgres — Descope is managed-only.",
       "Enterprise SSO included from the free tier; no per-connection fees and no $249 floor to start.",
       "Tamper-evident, hash-chained audit log with a /verify endpoint, plus ABAC and explainable authz.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Entry price", value: "$25 / mo" },
     { label: "Pricing", value: "Linear per-MAU" },
@@ -101,12 +100,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",
@@ -200,7 +193,7 @@ const data: ComparisonData = {
     },
   ],
   cta: {
-    headline: "Move from Descope to code you own",
+    headline: "Move from Descope to infrastructure you own",
     subhead:
       "Start free on our hosted plan, or self-host with one Docker command — the same auth methods, on your infrastructure, without the $249 floor.",
   },

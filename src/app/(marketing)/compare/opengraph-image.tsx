@@ -7,8 +7,7 @@ export const contentType = OG_CONTENT_TYPE;
 export default async function Image() {
   return ogCard({
     eyebrow: "Compare",
-    title: "How Qeet ID stacks up against the alternatives",
-    description:
-      "Open-source and self-hostable, with passkeys-first auth and a tamper-evident audit log.",
+    title: "How Qeet ID stacks up",
+    description: "Self-hostable, with passkeys-first auth and a tamper-evident audit log.",
   });
 }

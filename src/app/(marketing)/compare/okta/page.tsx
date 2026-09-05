@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Okta",
   description:
-    "How Qeet ID compares to Okta: open-source and self-hostable, with transparent per-MAU pricing and no SSO tax — versus Okta's mature but proprietary, tier-gated platform.",
+    "How Qeet ID compares to Okta: self-hostable, with transparent per-MAU pricing and no SSO tax — versus Okta's mature but proprietary, tier-gated platform.",
   alternates: { canonical: "/compare/okta" },
 };
 
 const data: ComparisonData = {
   competitor: "Okta",
   competitorBlurb:
-    "Okta is the workforce + customer identity market leader (and Auth0's parent), with a huge integration catalog and mature compliance. Choose Qeet ID when you want open-source code, self-hosting, and transparent per-MAU pricing without the well-known SSO tax.",
+    "Okta is the workforce + customer identity market leader (and Auth0's parent), with a huge integration catalog and mature compliance. Choose Qeet ID when you want self-hosting and transparent per-MAU pricing without the well-known SSO tax.",
   pitch: {
     headline: "Enterprise-grade identity, minus the Okta tax.",
     subhead:
       "Qeet ID speaks the same SAML / OIDC / SCIM Okta does and includes enterprise SSO on the free tier — no per-connection fees, no opaque per-user quote.",
     bullets: [
-      "MIT-licensed core you can self-host on a single Go binary + Postgres.",
+      "Self-host the core on a single Go binary + Postgres.",
       "SSO, MFA, and audit logs included — never gated behind a pricier tier.",
       "Transparent per-MAU pricing you can read on the page, not a sales quote.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Linear per-MAU" },
     { label: "Stack", value: "Go + Postgres" },
@@ -114,12 +113,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",

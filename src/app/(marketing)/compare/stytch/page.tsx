@@ -5,7 +5,7 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Stytch",
   description:
-    "Qeet ID vs. Stytch: open-source identity with the same passwordless-first methods, plus a built-in admin and self-hosting.",
+    "Qeet ID vs. Stytch: identity with the same passwordless-first methods, plus a built-in admin and self-hosting.",
   alternates: { canonical: "/compare/stytch" },
 };
 
@@ -16,7 +16,7 @@ const data: ComparisonData = {
   pitch: {
     headline: "Passwordless. Plus everything around it.",
     subhead:
-      "Get the same modern auth methods Stytch ships — and an admin dashboard, RBAC, audit logs, and a self-hosted deployment, in one open-source binary.",
+      "Get the same modern auth methods Stytch ships — and an admin dashboard, RBAC, audit logs, and a self-hosted deployment, in one binary.",
     bullets: [
       "Passkeys, magic links, and OTP as first-class methods.",
       "Admin UI ships with the product — no need to build your own.",
@@ -24,7 +24,6 @@ const data: ComparisonData = {
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Admin UI", value: "Included" },
     { label: "Stack", value: "Go + Postgres" },

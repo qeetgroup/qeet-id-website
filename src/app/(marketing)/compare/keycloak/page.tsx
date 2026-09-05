@@ -14,7 +14,7 @@ const data: ComparisonData = {
   competitorBlurb:
     "Keycloak is the canonical open-source identity and access server — CNCF-backed, battle-tested, and the most widely deployed self-hosted IdP there is. It genuinely beats Qeet ID on maturity, community, and protocol breadth (LDAP/Kerberos, fine-grained Authorization Services). Choose Qeet ID when you want a lightweight Go runtime, a first-party managed cloud, and a more modern developer experience.",
   pitch: {
-    headline: "The open-source IdP, minus the JVM sprawl.",
+    headline: "The battle-tested IdP feature set, minus the JVM sprawl.",
     subhead:
       "Keycloak is the battle-tested, CNCF-backed open-source identity server — and it is genuinely more mature at self-hosting than we are. Qeet ID trades some of that maturity for a lighter Go runtime, a first-party managed cloud, and a modern developer experience.",
     bullets: [
@@ -24,7 +24,6 @@ const data: ComparisonData = {
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Managed cloud", value: "EU / US" },
     { label: "Runtime", value: "Go + Postgres" },
@@ -120,13 +119,6 @@ const data: ComparisonData = {
     // ---- Deployment ----
     {
       section: "Deployment",
-      feature: "Open-source core",
-      qeetid: "MIT",
-      competitor: "Apache-2.0",
-      note: "Both are permissively licensed open source.",
-    },
-    {
-      section: "Deployment",
       feature: "Self-host first-class",
       qeetid: true,
       competitor: true,
@@ -144,7 +136,7 @@ const data: ComparisonData = {
     {
       section: "Pricing",
       feature: "Self-host cost",
-      qeetid: "Free (MIT)",
+      qeetid: "Free",
       competitor: "Free (Apache-2.0)",
     },
     {

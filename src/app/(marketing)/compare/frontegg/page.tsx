@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Frontegg",
   description:
-    "Qeet ID vs. Frontegg: open-source, self-hostable B2B identity with published per-MAU pricing instead of opaque usage-based billing.",
+    "Qeet ID vs. Frontegg: self-hostable B2B identity with published per-MAU pricing instead of opaque usage-based billing.",
   alternates: { canonical: "/compare/frontegg" },
 };
 
 const data: ComparisonData = {
   competitor: "Frontegg",
   competitorBlurb:
-    "Frontegg is a B2B user-management platform known for its polished self-serve admin and login box. Qeet ID covers the same enterprise auth surface as MIT-licensed software you can self-host, with published per-MAU pricing instead of opaque usage-based billing.",
+    "Frontegg is a B2B user-management platform known for its polished self-serve admin and login box. Qeet ID covers the same enterprise auth surface as software you can self-host, with published per-MAU pricing instead of opaque usage-based billing.",
   pitch: {
     headline: "The same B2B toolkit — with pricing you can actually see.",
     subhead:
-      "Frontegg's self-serve admin box is polished, but its pricing is opaque PAYG and self-hosting is enterprise-only. Qeet ID is MIT-licensed, self-hostable, and priced in public at $0.02/MAU.",
+      "Frontegg's self-serve admin box is polished, but its pricing is opaque PAYG and self-hosting is enterprise-only. Qeet ID is self-hostable and priced in public at $0.02/MAU.",
     bullets: [
-      "MIT-licensed core you can self-host on your own Postgres — Frontegg self-host is enterprise-deal only.",
+      "Self-host the core on your own Postgres — Frontegg self-host is enterprise-deal only.",
       "Published, linear per-MAU pricing — no “call us” for the per-unit rate.",
       "Tamper-evident hash-chained audit log + /verify, ABAC, and explainable authz built in.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Published per-MAU" },
     { label: "Entry price", value: "$25 / mo" },
@@ -101,12 +100,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",
@@ -203,7 +196,7 @@ const data: ComparisonData = {
   cta: {
     headline: "Transparent, self-hostable B2B identity",
     subhead:
-      "Start free or self-host in minutes — with a price you can read before you sign, and code you can run on your own infrastructure.",
+      "Start free or self-host in minutes — with a price you can read before you sign, and a deployment you can run on your own infrastructure.",
   },
 };
 

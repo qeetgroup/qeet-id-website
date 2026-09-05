@@ -8,7 +8,6 @@ export default async function Image() {
   return ogCard({
     eyebrow: "Features",
     title: "Everything you need to ship secure auth",
-    description:
-      "SSO, MFA, passkeys, RBAC, and a tamper-evident audit log — in one open-source platform.",
+    description: "SSO, MFA, passkeys, RBAC, and a tamper-evident audit log — in one platform.",
   });
 }

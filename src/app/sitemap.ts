@@ -70,7 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Competitor comparison landing pages — SEO bait for "Qeet ID vs X" and
-  // "<competitor> alternative" queries. Keep in lock-step with the page files
+  // high-intent competitor-comparison queries. Keep in lock-step with the page files
   // under app/(marketing)/compare/<slug>/.
   const compareSlugs = [
     "auth0",

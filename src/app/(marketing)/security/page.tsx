@@ -153,7 +153,7 @@ export default function SecurityPage() {
         eyebrow="Security & compliance"
         title="Security isn't a feature."
         titleAccent="It's the architecture."
-        subtitle="Qeet ID is built for teams that have to prove their controls. Tamper-evident audit, asymmetric token signing, passkeys, and an encrypted vault — secure by default, and open enough to verify yourself."
+        subtitle="Qeet ID is built for teams that have to prove their controls. Tamper-evident audit, asymmetric token signing, passkeys, and an encrypted vault — secure by default, and verifiable end to end."
       />
 
       {/* Architectural pillars */}

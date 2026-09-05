@@ -5,7 +5,7 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. WorkOS",
   description:
-    "Qeet ID vs. WorkOS: complete identity for B2B SaaS — user store, SSO, SCIM, audit, and a brandable admin, in one open-source binary.",
+    "Qeet ID vs. WorkOS: complete identity for B2B SaaS — user store, SSO, SCIM, audit, and a brandable admin, in one binary.",
   alternates: { canonical: "/compare/workos" },
 };
 
@@ -20,11 +20,10 @@ const data: ComparisonData = {
     bullets: [
       "Built-in user store with sessions, MFA, social, and passkeys.",
       "Multi-tenant by default — organisations are first-class.",
-      "Open source and self-hostable, including air-gapped deployments.",
+      "Self-hostable, including air-gapped deployments.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "What it ships", value: "Full IdP + admin" },
     { label: "User store", value: "Yes (Postgres)" },
     { label: "Self-host", value: "First-class" },

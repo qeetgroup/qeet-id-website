@@ -33,14 +33,14 @@ const competitors = [
     name: "Microsoft Entra External ID",
     category: "Enterprise CIAM",
     tagline:
-      "Azure's CIAM, formerly Azure AD B2C. Compare on open-source code, portable deployment, and pricing you can read without a calculator.",
+      "Azure's CIAM, formerly Azure AD B2C. Compare on portable deployment and pricing you can read without a calculator.",
   },
   {
     slug: "ping",
     name: "Ping Identity",
     category: "Enterprise CIAM",
     tagline:
-      "Enterprise federation and access management. Compare on a lighter footprint, an open-source core, and linear per-MAU pricing.",
+      "Enterprise federation and access management. Compare on a lighter footprint, self-hosting, and linear per-MAU pricing.",
   },
   {
     slug: "clerk",
@@ -53,22 +53,20 @@ const competitors = [
     slug: "descope",
     name: "Descope",
     category: "Developer-first auth",
-    tagline:
-      "Drag-and-drop, no-code auth flows. Compare on open-source code, self-hosting, and a lower entry price.",
+    tagline: "Drag-and-drop, no-code auth flows. Compare on self-hosting and a lower entry price.",
   },
   {
     slug: "propelauth",
     name: "PropelAuth",
     category: "B2B auth",
     tagline:
-      "B2B-first auth with org management. Compare on open-source code, self-hosting, and a tamper-evident audit trail.",
+      "B2B-first auth with org management. Compare on self-hosting and a tamper-evident audit trail.",
   },
   {
     slug: "frontegg",
     name: "Frontegg",
     category: "B2B auth",
-    tagline:
-      "A B2B user-management platform. Compare on transparent pricing, open-source code, and self-hosting.",
+    tagline: "A B2B user-management platform. Compare on transparent pricing and self-hosting.",
   },
   {
     slug: "workos",
@@ -138,7 +136,7 @@ const competitors = [
     name: "FusionAuth",
     category: "Open source",
     tagline:
-      "Source-available auth, free to self-host. Compare on a fully open-source (MIT) core and transparent pricing.",
+      "Source-available auth, free to self-host. Compare on built-in enterprise SSO and transparent pricing.",
   },
   {
     slug: "supertokens",
@@ -150,7 +148,7 @@ const competitors = [
 ];
 
 const edges = [
-  "Open-source core, self-hostable down to air-gapped — you own your data and deployment.",
+  "Self-hostable down to air-gapped — you own your data and deployment.",
   "Both an OIDC and a SAML IdP, with SCIM Users + Groups, and no “SSO tax.”",
   "A tamper-evident, hash-chained audit log with a /verify endpoint most platforms don't ship.",
   "Refresh-token theft detection, per-account lockout, and a prod boot-gate — secure by default.",
@@ -214,7 +212,7 @@ export default function ComparePage() {
             eyebrow="Positioning"
             title="Where Qeet ID"
             titleAccent="wins"
-            subtitle="The developer experience of Clerk, the enterprise model of WorkOS, and an audit log nobody else ships — open-source and without the SSO tax."
+            subtitle="The developer experience of Clerk, the enterprise model of WorkOS, and an audit log nobody else ships — self-hostable and without the SSO tax."
           />
           <Stagger staggerDelay={0.07} className="grid gap-3 sm:grid-cols-2">
             {edges.map((e) => (

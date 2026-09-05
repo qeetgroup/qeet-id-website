@@ -5,7 +5,7 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Clerk",
   description:
-    "Qeet ID vs. Clerk: open-source identity for full-stack teams who want self-hosting, multi-tenant defaults, and the same drop-in DX.",
+    "Qeet ID vs. Clerk: identity for full-stack teams who want self-hosting, multi-tenant defaults, and the same drop-in DX.",
   alternates: { canonical: "/compare/clerk" },
 };
 
@@ -20,11 +20,10 @@ const data: ComparisonData = {
     bullets: [
       "Multi-tenant by design — tenants, members, invitations are first-class.",
       "Self-host on Postgres. No proprietary database.",
-      "Open-source. Audit our code, fork if you need.",
+      "Run it on your own infrastructure, with your data in your Postgres.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Stack", value: "Go + Postgres" },
     { label: "Multi-tenant", value: "Built-in" },

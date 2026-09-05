@@ -5,26 +5,25 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Zitadel",
   description:
-    "How Qeet ID compares to Zitadel: per-MAU (not per-DAU) pricing, a permissive MIT license, ABAC, and a tamper-evident audit chain — with an honest look at where Zitadel's GA maturity wins.",
+    "How Qeet ID compares to Zitadel: per-MAU (not per-DAU) pricing, ABAC, and a tamper-evident audit chain — with an honest look at where Zitadel's GA maturity wins.",
   alternates: { canonical: "/compare/zitadel" },
 };
 
 const data: ComparisonData = {
   competitor: "Zitadel",
   competitorBlurb:
-    "Zitadel is a modern, passwordless-first identity platform available self-hosted (AGPL-3.0) or as a managed cloud. It is fully GA with an event-sourced audit trail and a SOC 2 / ISO-certified cloud — more mature than Qeet ID today. Choose Qeet ID for MAU-based (not DAU) billing, a permissive MIT license, an ABAC policy engine, and a tamper-evident hash-chained audit log.",
+    "Zitadel is a modern, passwordless-first identity platform available self-hosted (AGPL-3.0) or as a managed cloud. It is fully GA with an event-sourced audit trail and a SOC 2 / ISO-certified cloud — more mature than Qeet ID today. Choose Qeet ID for MAU-based (not DAU) billing, an ABAC policy engine, and a tamper-evident hash-chained audit log.",
   pitch: {
-    headline: "MAU billing, a permissive license, and ABAC.",
+    headline: "MAU billing and ABAC.",
     subhead:
-      "Zitadel is a fully-GA, passwordless-first identity platform with a slick cloud — and honestly it is more mature than Qeet ID today. Where we differ: we bill per MAU (not DAU), ship under permissive MIT (not AGPL), and add an ABAC policy engine plus a tamper-evident audit chain.",
+      "Zitadel is a fully-GA, passwordless-first identity platform with a slick cloud — and honestly it is more mature than Qeet ID today. Where we differ: we bill per MAU (not DAU), and add an ABAC policy engine plus a tamper-evident audit chain.",
     bullets: [
       "Per-MAU pricing that is easier to forecast than Zitadel's per-DAU model.",
-      "Permissive MIT license — no AGPL copyleft to reason about.",
+      "No AGPL copyleft obligations to reason about.",
       "ABAC + explainable authz and a hash-chained /verify audit endpoint.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Billing", value: "Per MAU" },
     { label: "Self-host", value: "First-class" },
     { label: "Runtime", value: "Go + Postgres" },
@@ -118,13 +117,6 @@ const data: ComparisonData = {
     // ---- Deployment ----
     {
       section: "Deployment",
-      feature: "Open-source license",
-      qeetid: "MIT",
-      competitor: "AGPL-3.0",
-      note: "Qeet ID is permissive MIT; Zitadel relicensed from Apache-2.0 to AGPL-3.0 in 2025, which can carry copyleft obligations.",
-    },
-    {
-      section: "Deployment",
       feature: "Self-host first-class",
       qeetid: true,
       competitor: true,
@@ -212,9 +204,9 @@ const data: ComparisonData = {
     },
   ],
   cta: {
-    headline: "Try MAU-priced, MIT-licensed identity",
+    headline: "Try MAU-priced identity",
     subhead:
-      "Start free up to 25,000 MAU, or self-host the MIT core. If Zitadel's DAU model and AGPL license already work for you, that is a fine choice too.",
+      "Start free up to 25,000 MAU, or self-host. If Zitadel's DAU model and AGPL license already work for you, that is a fine choice too.",
   },
 };
 

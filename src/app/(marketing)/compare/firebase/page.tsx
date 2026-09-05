@@ -5,14 +5,14 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Firebase Auth",
   description:
-    "Qeet ID vs. Firebase Auth: the same fast auth methods plus built-in RBAC/ABAC, enterprise SSO without a pricing gate, an admin UI, and open-source self-hosting.",
+    "Qeet ID vs. Firebase Auth: the same fast auth methods plus built-in RBAC/ABAC, enterprise SSO without a pricing gate, an admin UI, and self-hosting.",
   alternates: { canonical: "/compare/firebase" },
 };
 
 const data: ComparisonData = {
   competitor: "Firebase Auth",
   competitorBlurb:
-    "Firebase Auth is Google's developer-friendly authentication service — generous on its free basic tier and backed by mature client SDKs. Choose Qeet ID when you need built-in authorization, enterprise SSO without a pricing gate, a dedicated admin UI, and open-source self-hosting.",
+    "Firebase Auth is Google's developer-friendly authentication service — generous on its free basic tier and backed by mature client SDKs. Choose Qeet ID when you need built-in authorization, enterprise SSO without a pricing gate, a dedicated admin UI, and self-hosting.",
   pitch: {
     headline: "More than a login box bolted to a database.",
     subhead:
@@ -20,11 +20,10 @@ const data: ComparisonData = {
     bullets: [
       "Built-in RBAC + ABAC with /check and explainable grant paths — no custom-claims plumbing.",
       "Enterprise SAML / OIDC SSO included, not gated behind Identity Platform's paid tier.",
-      "Open-source and self-hostable — no Google Cloud lock-in.",
+      "Self-hostable — no Google Cloud lock-in.",
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "First-class" },
     { label: "Pricing", value: "Linear per-MAU" },
     { label: "Stack", value: "Go + Postgres" },
@@ -112,13 +111,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source code (MIT)",
-      qeetid: true,
-      competitor: false,
-      note: "Firebase client SDKs are open; the auth service is not.",
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",

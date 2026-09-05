@@ -102,7 +102,7 @@ export function ProductJsonLd() {
         "@id": `${BASE}/#product`,
         name: "Qeet ID",
         description:
-          "Identity platform for modern teams. SSO, MFA, passkeys, RBAC, and session management — open source and self-hostable.",
+          "Identity platform for modern teams. SSO, MFA, passkeys, RBAC, and session management — managed or self-hostable.",
         brand: { "@type": "Brand", name: "Qeet ID" },
         offers: buildAggregateOffer(),
       }}

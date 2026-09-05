@@ -5,7 +5,7 @@ import { type ComparisonData, ComparisonPage } from "@/components/marketing/comp
 export const metadata: Metadata = {
   title: "Qeet ID vs. Ory",
   description:
-    "Qeet ID vs. Ory: an all-in-one open-source identity product — admin UI, hosted login, and SAML/SCIM included — versus Ory's composable, build-it-yourself primitives.",
+    "Qeet ID vs. Ory: an all-in-one identity product — admin UI, hosted login, and SAML/SCIM included — versus Ory's composable, build-it-yourself primitives.",
   alternates: { canonical: "/compare/ory" },
 };
 
@@ -24,7 +24,6 @@ const data: ComparisonData = {
     ],
   },
   factsQeetid: [
-    { label: "License", value: "MIT (open source)" },
     { label: "Self-host", value: "Single binary" },
     { label: "Admin UI", value: "Included" },
     { label: "Billing", value: "Per-MAU (prod free tier)" },
@@ -117,13 +116,6 @@ const data: ComparisonData = {
     },
 
     // ---- Deployment ----
-    {
-      section: "Deployment",
-      feature: "Open-source core",
-      qeetid: true,
-      competitor: true,
-      note: "Both are truly open source — Qeet ID is MIT, Ory is Apache-2.0.",
-    },
     {
       section: "Deployment",
       feature: "Self-host (single binary + Postgres)",
