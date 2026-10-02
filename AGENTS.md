@@ -46,7 +46,8 @@ qeet-context (L0)  →  qeet-id-context (L1)  →  qeet-id-website (L2 — this 
 ### 1. No backend, no auth, no secrets
 This site calls no API and holds no credential. Only `NEXT_PUBLIC_*` variables exist, and those are
 **inlined at build time — treat every value as public**. If a change needs a secret or a session, it
-does not belong here.
+does not belong here. The one exception is the container image (test kit): it reads two **public**
+URLs at runtime, `CONSOLE_URL` and `DOCS_URL`, for its `/go/…` redirects (`src/lib/go.ts`).
 
 ### 2. Never make a product claim you cannot verify
 Marketing copy is a **public statement about a security product**. Before writing that Qeet ID
@@ -77,13 +78,16 @@ bun run typecheck
 bun run lint           # biome
 bun run check          # biome check
 bun run format
-bun test               # 1 test file: src/lib/pricing/pricing.test.ts
+bun test               # src/lib/pricing/pricing.test.ts, src/lib/go.test.ts
+docker build -t qeet-id-website:dev .   # container image for the qeet-id-deploy test kit
 ```
 
 ## What CI enforces
 
-**Nothing — this repository has no CI workflow.** The Vercel build is the only gate. Run
-`bun run typecheck`, `bun run check` and `bun run build` yourself.
+`.github/workflows/ci.yml` — job `verify` on `develop`, `release/**` and PRs: install →
+`typecheck` → `check` (biome) → `bun test` → `build`. On `release/**` only, job `image` then publishes
+`ghcr.io/qeetgroup/qeet-id-website:sha-<commit>` (amd64 + arm64) for the `qeet-id-deploy` test kit.
+Production still deploys from `deploy.yml` (Vercel) on `main`; the image is never used there.
 
 ## Before you finish
 

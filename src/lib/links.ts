@@ -1,16 +1,20 @@
 // Cross-app links from the marketing site to the dashboard (qeetid-admin), which
 // hosts the real /sign-in and /sign-up pages. Marketing only links to them.
 // Override the base with NEXT_PUBLIC_DASHBOARD_URL (e.g. http://localhost:3002
-// in local dev); defaults to the production dashboard domain.
-const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "https://console.id.qeet.in";
+// in local dev); defaults to the production dashboard domain. Container images set
+// it to /go/console, resolved when the container starts (src/lib/go.ts).
+export const DEFAULT_DASHBOARD_URL = "https://console.id.qeet.in";
+const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? DEFAULT_DASHBOARD_URL;
 
 export const SIGN_IN_URL = `${DASHBOARD_URL}/sign-in`;
 export const SIGN_UP_URL = `${DASHBOARD_URL}/sign-up`;
 
 // Developer documentation lives in its own portal (`qeet-id-docs`, deployed at
 // docs.qeet.in) — the marketing site links out to it rather than hosting docs
-// pages of its own. Override the origin with NEXT_PUBLIC_DOCS_URL in dev.
-const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? "https://docs.qeet.in";
+// pages of its own. Override the origin with NEXT_PUBLIC_DOCS_URL in dev
+// (container images: /go/docs).
+export const DEFAULT_DOCS_URL = "https://docs.qeet.in";
+const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? DEFAULT_DOCS_URL;
 
 export const DOCS_BASE_URL = `${DOCS_URL}/docs`;
 export const DOCS_QUICKSTART_URL = `${DOCS_URL}/docs/getting-started/quickstart`;

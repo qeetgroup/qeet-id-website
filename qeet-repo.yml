@@ -41,12 +41,20 @@ commands:
   check: bun run check
   typecheck: bun run typecheck
 ci:
-  workflows: [deploy.yml]                # no ci.yml yet; deploy.yml gates before shipping
+  workflows: [ci.yml, deploy.yml]
+  verify: "ci.yml: typecheck -> biome check -> bun test -> build (develop, release/**, PRs)"
+  image: "ci.yml `image` on release/**: ghcr.io/qeetgroup/qeet-id-website:sha-<commit> for the qeet-id-deploy test kit"
   runner: ubuntu-latest
   deploy: push main -> gate -> vercel build/deploy --prod -> tag vX.Y.Z + GitHub release
+container:
+  dockerfile: Dockerfile                 # test kit only; production stays on Vercel
+  port: 3000
+  health: GET /healthz
+  runtime_env: [CONSOLE_URL, DOCS_URL]   # /go/console|docs/... redirects (src/lib/go.ts); not secrets
+  build_env: "NEXT_OUTPUT=standalone, NEXT_PUBLIC_DASHBOARD_URL=/go/console, NEXT_PUBLIC_DOCS_URL=/go/docs"
 security:
   no_auth: true
-  no_secrets: true                       # NEXT_PUBLIC_* only, inlined at build
+  no_secrets: true                       # NEXT_PUBLIC_* inlined at build; container: CONSOLE_URL/DOCS_URL (public URLs)
   finding: "POST /api/contact has no rate limiting, captcha, or origin check"
 llm_context:
   primary_instructions: AGENTS.md
