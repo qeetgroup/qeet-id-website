@@ -1,5 +1,5 @@
+import { ArrowRightIcon } from "@qeetrix/icons";
 import { cn } from "@qeetrix/ui";
-import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 import { caseStudySlug } from "@/components/marketing/blocks/case-study-card";

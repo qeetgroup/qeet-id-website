@@ -1,5 +1,5 @@
+import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon } from "@qeetrix/icons";
 import { cn } from "@qeetrix/ui";
-import { ArrowRightIcon, CheckIcon, MinusIcon, XIcon } from "lucide-react";
 
 import { ButtonLink } from "@/components/marketing/button-link";
 import { Reveal, Stagger, StaggerItem } from "@/components/marketing/motion";

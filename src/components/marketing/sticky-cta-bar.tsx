@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowRightIcon, SparklesIcon, XIcon } from "@qeetrix/icons";
 import { Button } from "@qeetrix/ui";
-import { ArrowRightIcon, SparklesIcon, XIcon } from "lucide-react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
 import { SIGN_UP_URL } from "@/lib/links";

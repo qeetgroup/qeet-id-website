@@ -1,4 +1,4 @@
-import { CheckCircle2Icon } from "lucide-react";
+import { CircleCheckIcon } from "@qeetrix/icons";
 
 import { ArrowCta } from "@/components/marketing/blocks/arrow-cta";
 import { Eyebrow } from "@/components/marketing/blocks/eyebrow";
@@ -89,7 +89,7 @@ export function CTA() {
                         key={t}
                         className="flex items-center gap-1.5 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur-sm"
                       >
-                        <CheckCircle2Icon aria-hidden className="size-3.5 text-brand" />
+                        <CircleCheckIcon aria-hidden className="size-3.5 text-brand" />
                         {t}
                       </li>
                     ))}

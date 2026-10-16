@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon } from "@qeetrix/icons";
 
 import { ButtonLink } from "@/components/marketing/button-link";
 import { Reveal, Stagger, StaggerItem } from "@/components/marketing/motion";

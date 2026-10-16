@@ -1,5 +1,5 @@
+import { CheckIcon } from "@qeetrix/icons";
 import { cn } from "@qeetrix/ui";
-import { CheckIcon } from "lucide-react";
 
 import { BezelCard } from "@/components/marketing/blocks/bezel-card";
 import { ButtonLink } from "@/components/marketing/button-link";

@@ -1,14 +1,14 @@
-import { cn } from "@qeetrix/ui";
 import {
-  IconAuditLog,
-  IconCrossDevice,
-  IconMfaShield,
-  IconPasskey,
-  IconSamlConnector,
-  IconScimSync,
-  IconTenant,
-  type QeetIconProps,
-} from "@qeetrix/ui/brand";
+  BuildingComplexIcon,
+  FingerprintPatternIcon,
+  type IconProps,
+  MonitorSmartphoneIcon,
+  PlugIcon,
+  RefreshCwIcon,
+  ScrollTextIcon,
+  ShieldCheckIcon,
+} from "@qeetrix/icons";
+import { cn } from "@qeetrix/ui";
 import type { ComponentType } from "react";
 
 import { SpotlightCard } from "@/components/marketing/effects/spotlight-card";
@@ -17,7 +17,7 @@ import { Reveal, Stagger, StaggerItem, Tilt, WordReveal } from "@/components/mar
 type Accent = "brand" | "violet" | "cyan" | "emerald" | "amber" | "rose" | "indigo";
 
 type FeatureCard = {
-  icon: ComponentType<QeetIconProps>;
+  icon: ComponentType<IconProps<"outline">>;
   title: string;
   body: string;
   accent: Accent;
@@ -37,44 +37,44 @@ const spotlightColors: Record<Accent, string> = {
 
 const cards: FeatureCard[] = [
   {
-    icon: IconSamlConnector,
+    icon: PlugIcon,
     title: "Single sign-on",
     body: "SAML 2.0, OIDC, Google, Microsoft, Apple, GitHub, and 40+ more — one config away. Toggle providers from the dashboard, no deploys.",
     accent: "brand",
     span: "wide",
   },
   {
-    icon: IconPasskey,
+    icon: FingerprintPatternIcon,
     title: "Passkeys & MFA",
     body: "WebAuthn passkeys, TOTP, SMS, and email OTP — phishing-resistant by default.",
     accent: "violet",
   },
   {
-    icon: IconMfaShield,
+    icon: ShieldCheckIcon,
     title: "RBAC & ABAC",
     body: "Hot-path permission checks in under 30 ms, cached at the edge globally.",
     accent: "cyan",
   },
   {
-    icon: IconCrossDevice,
+    icon: MonitorSmartphoneIcon,
     title: "Stateful sessions",
     body: "Cluster-wide revocation. One click signs a user out across every device.",
     accent: "emerald",
   },
   {
-    icon: IconTenant,
+    icon: BuildingComplexIcon,
     title: "Multi-tenant",
     body: "Hard isolation per organization. Per-tenant branding, domains, and residency.",
     accent: "rose",
   },
   {
-    icon: IconAuditLog,
+    icon: ScrollTextIcon,
     title: "Audit & compliance",
     body: "Immutable logs to your SIEM. SOC 2, ISO 27001, GDPR, HIPAA — all ready.",
     accent: "amber",
   },
   {
-    icon: IconScimSync,
+    icon: RefreshCwIcon,
     title: "Runs at the edge",
     body: "30+ regions worldwide. Sub-50 ms p99 sign-in latency for every user.",
     accent: "indigo",

@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowRightIcon } from "@qeetrix/icons";
 import { Slider } from "@qeetrix/ui";
-import { ArrowRightIcon } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { ButtonLink } from "@/components/marketing/button-link";

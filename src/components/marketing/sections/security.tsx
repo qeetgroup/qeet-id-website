@@ -1,5 +1,10 @@
-import { IconAuditLog, IconMfaShield } from "@qeetrix/ui/brand";
-import { FileCheckIcon, GlobeIcon, LockIcon, ShieldCheckIcon } from "lucide-react";
+import {
+  FileCheckIcon,
+  GlobeIcon,
+  LockIcon,
+  ScrollTextIcon,
+  ShieldCheckIcon,
+} from "@qeetrix/icons";
 import type { ComponentType } from "react";
 
 import { BezelCard } from "@/components/marketing/blocks/bezel-card";
@@ -30,12 +35,12 @@ const items: TrustItem[] = [
     body: "Host in the US, EU, or APAC — with custom regions and single-tenant isolation available on Enterprise.",
   },
   {
-    icon: IconAuditLog,
+    icon: ScrollTextIcon,
     title: "Tamper-evident audit log",
     body: "A hash-chained, append-only audit trail with a /verify endpoint — proof of integrity most platforms don't ship.",
   },
   {
-    icon: IconMfaShield,
+    icon: ShieldCheckIcon,
     title: "Secure by default",
     body: "Refresh-token theft detection, per-account lockout, phishing-resistant passkeys, and a production boot-gate.",
   },
