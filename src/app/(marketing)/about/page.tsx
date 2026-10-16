@@ -1,4 +1,4 @@
-import { CompassIcon, HeartHandshakeIcon, ShieldCheckIcon, ZapIcon } from "lucide-react";
+import { CompassIcon, HeartHandshakeIcon, ShieldCheckIcon, ZapIcon } from "@qeetrix/icons";
 import type { Metadata } from "next";
 import { InitialsAvatar } from "@/components/marketing/blocks/initials-avatar";
 import { Reveal, Stagger, StaggerItem } from "@/components/marketing/motion";

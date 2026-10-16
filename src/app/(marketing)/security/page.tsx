@@ -1,21 +1,17 @@
-import { Badge } from "@qeetrix/ui";
 import {
-  IconApiKey,
-  IconAuditLog,
-  IconMfaShield,
-  IconPasskey,
-  IconScimSync,
-  IconTenant,
-  IconWebhook,
-} from "@qeetrix/ui/brand";
-import {
-  CheckCircle2Icon,
-  FingerprintIcon,
+  BuildingComplexIcon,
+  CircleCheckIcon,
+  FingerprintPatternIcon,
   GlobeIcon,
   KeyRoundIcon,
   LockKeyholeIcon,
+  RefreshCwIcon,
+  ScrollTextIcon,
   ShieldAlertIcon,
-} from "lucide-react";
+  ShieldCheckIcon,
+  WebhookIcon,
+} from "@qeetrix/icons";
+import { Badge } from "@qeetrix/ui";
 import type { Metadata } from "next";
 import { Reveal, Stagger, StaggerItem } from "@/components/marketing/motion";
 import { PageHero } from "@/components/marketing/page-hero";
@@ -32,7 +28,7 @@ export const metadata: Metadata = {
 /** The architectural pillars — every one is implemented and verified in source. */
 const pillars = [
   {
-    icon: IconAuditLog,
+    icon: ScrollTextIcon,
     title: "Tamper-evident audit log",
     body: "Every audit event is append-only and SHA-256 hash-chained to the one before it. A /verify endpoint recomputes the chain, so any altered or deleted row is provably detectable — a genuine differentiator over mainstream CIAM.",
     badge: "Hash-chained",
@@ -44,7 +40,7 @@ const pillars = [
     badge: "ES256 · JWKS",
   },
   {
-    icon: IconPasskey,
+    icon: FingerprintPatternIcon,
     title: "Passkeys / WebAuthn",
     body: "Phishing-resistant FIDO2 passwordless login and registration, plus WebAuthn as a second factor and step-up verification gating sensitive actions. Built on go-webauthn with full credential management.",
     badge: "FIDO2",
@@ -62,19 +58,19 @@ const pillars = [
     badge: "AES-256-GCM",
   },
   {
-    icon: IconTenant,
+    icon: BuildingComplexIcon,
     title: "RBAC + ABAC authorization",
     body: "Per-tenant roles and groups with a single-call /check API, effective-permissions queries, and an ABAC policy engine. Explainable authorization returns the exact grant-path trace — which role or group allowed it, or why it was denied.",
     badge: "Explainable",
   },
   {
-    icon: IconScimSync,
+    icon: RefreshCwIcon,
     title: "Enterprise federation",
     body: "Be a SAML IdP and SP, an OIDC provider, and a SCIM 2.0 Users + Groups endpoint — RSA-SHA256-signed assertions, JIT provisioning, and PatchOp membership sync, none of it paywalled behind an enterprise tier.",
     badge: "SAML · OIDC · SCIM",
   },
   {
-    icon: IconMfaShield,
+    icon: ShieldCheckIcon,
     title: "Hardened by default",
     body: "Refresh-token rotation with theft detection, per-account lockout, distributed Redis rate limiting, CSRF + security headers, and a production boot-gate that refuses to start with insecure defaults.",
     badge: "Secure defaults",
@@ -123,17 +119,17 @@ const dataHandling = [
     body: "Choose a hosted EU or US region, or run the single Go binary on your own infrastructure. When you self-host, customer data never leaves your boundary — the strongest residency guarantee there is.",
   },
   {
-    icon: IconTenant,
+    icon: BuildingComplexIcon,
     title: "Tenant isolation",
     body: "Everything is partitioned by tenant_id across the user, auth, RBAC, audit, and platform schemas. Switching tenants re-mints a freshly scoped token.",
   },
   {
-    icon: IconWebhook,
+    icon: WebhookIcon,
     title: "Signed event delivery",
     body: "Webhooks are HMAC-SHA256 signed and delivered through a transactional outbox with exponential-backoff retries and a dead-letter queue, so downstream systems get a verifiable, durable event stream.",
   },
   {
-    icon: IconApiKey,
+    icon: KeyRoundIcon,
     title: "Machine identities",
     body: "Scoped, expirable, hashed API keys plus OAuth client_credentials for service-to-service auth — every machine principal is auditable and revocable.",
   },
@@ -261,7 +257,7 @@ export default function SecurityPage() {
               href="mailto:security@qeet.in"
               className="inline-flex w-fit items-center gap-2 text-sm font-medium text-brand-text underline focus-ring-brand"
             >
-              <FingerprintIcon className="size-4" aria-hidden />
+              <FingerprintPatternIcon className="size-4" aria-hidden />
               security@qeet.in
             </a>
           </Reveal>
@@ -269,7 +265,7 @@ export default function SecurityPage() {
             {disclosure.map((d) => (
               <StaggerItem key={d}>
                 <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-background p-4 text-sm">
-                  <CheckCircle2Icon className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
+                  <CircleCheckIcon className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
                   <span>{d}</span>
                 </div>
               </StaggerItem>

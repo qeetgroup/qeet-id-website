@@ -1,9 +1,11 @@
 import {
-  IconOidcConnector,
-  IconSamlConnector,
-  IconScimSync,
-  type QeetIconProps,
-} from "@qeetrix/ui/brand";
+  ArrowRightIcon,
+  type IconProps,
+  IdCardIcon,
+  NetworkIcon,
+  PlugIcon,
+  RefreshCwIcon,
+} from "@qeetrix/icons";
 import {
   Apple,
   Auth0,
@@ -19,7 +21,6 @@ import {
   Workday,
   X,
 } from "@thesvg/react";
-import { ArrowRightIcon, NetworkIcon } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { Eyebrow } from "@/components/marketing/blocks/eyebrow";
 import { Reveal, Stagger, StaggerItem, WordReveal } from "@/components/marketing/motion";
@@ -33,14 +34,14 @@ type ProviderItem = {
 
 type Group = {
   group: string;
-  icon: ComponentType<QeetIconProps>;
+  icon: ComponentType<IconProps<"outline">>;
   items: ProviderItem[];
 };
 
 const providers: Group[] = [
   {
     group: "Social",
-    icon: IconOidcConnector,
+    icon: IdCardIcon,
     items: [
       { name: "Google", icon: Google },
       { name: "Microsoft", icon: Microsoft },
@@ -54,22 +55,22 @@ const providers: Group[] = [
   },
   {
     group: "Enterprise SSO",
-    icon: IconSamlConnector,
+    icon: PlugIcon,
     items: [
       { name: "Okta SAML", icon: Okta },
       { name: "Azure AD", icon: Microsoft },
       { name: "Auth0", icon: Auth0 },
       { name: "OneLogin", icon: Onelogin },
       { name: "PingIdentity", icon: PingIdentity },
-      { name: "Generic SAML", icon: IconSamlConnector },
-      { name: "Generic OIDC", icon: IconOidcConnector },
+      { name: "Generic SAML", icon: PlugIcon },
+      { name: "Generic OIDC", icon: IdCardIcon },
     ],
   },
   {
     group: "Directory",
-    icon: IconScimSync,
+    icon: RefreshCwIcon,
     items: [
-      { name: "SCIM 2.0", icon: IconScimSync },
+      { name: "SCIM 2.0", icon: RefreshCwIcon },
       { name: "LDAP", icon: NetworkIcon },
       { name: "Active Directory", icon: Microsoft },
       { name: "Workday", icon: Workday },

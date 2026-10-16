@@ -1,15 +1,15 @@
 import {
-  BarChart3Icon,
-  Building2Icon,
+  BuildingComplexIcon,
+  ChartColumnIcon,
   CodeIcon,
-  FingerprintIcon,
+  FingerprintPatternIcon,
   KeyRoundIcon,
   LockKeyholeIcon,
   ScrollTextIcon,
   ShieldCheckIcon,
   UsersIcon,
   ZapIcon,
-} from "lucide-react";
+} from "@qeetrix/icons";
 import type { Metadata } from "next";
 import { CTA } from "@/components/marketing/sections/cta";
 import { Features } from "@/components/marketing/sections/features";
@@ -34,7 +34,7 @@ const deepDive = [
     ],
   },
   {
-    icon: FingerprintIcon,
+    icon: FingerprintPatternIcon,
     title: "Passkeys & MFA",
     points: [
       "WebAuthn passkeys with platform & cross-device support",
@@ -64,7 +64,7 @@ const deepDive = [
     ],
   },
   {
-    icon: Building2Icon,
+    icon: BuildingComplexIcon,
     title: "Multi-tenancy",
     points: [
       "Hard isolation per organization at the data layer",
@@ -104,7 +104,7 @@ const deepDive = [
     ],
   },
   {
-    icon: BarChart3Icon,
+    icon: ChartColumnIcon,
     title: "Insights",
     points: [
       "Login funnels and MFA adoption analytics",

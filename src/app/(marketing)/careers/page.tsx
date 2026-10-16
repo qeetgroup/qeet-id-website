@@ -1,4 +1,3 @@
-import { Badge } from "@qeetrix/ui";
 import {
   ArrowRightIcon,
   CompassIcon,
@@ -11,7 +10,8 @@ import {
   SproutIcon,
   UsersIcon,
   WalletIcon,
-} from "lucide-react";
+} from "@qeetrix/icons";
+import { Badge } from "@qeetrix/ui";
 import type { Metadata } from "next";
 
 import { ButtonLink } from "@/components/marketing/button-link";

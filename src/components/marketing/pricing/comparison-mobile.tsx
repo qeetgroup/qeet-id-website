@@ -1,7 +1,7 @@
 "use client";
 
+import { ChevronDownIcon } from "@qeetrix/icons";
 import { NativeSelect } from "@qeetrix/ui";
-import { ChevronDownIcon } from "lucide-react";
 import { useId, useState } from "react";
 
 import { track } from "@/lib/analytics";

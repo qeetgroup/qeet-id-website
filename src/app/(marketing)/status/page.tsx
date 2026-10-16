@@ -1,5 +1,5 @@
+import { CircleCheckIcon, InfoIcon } from "@qeetrix/icons";
 import { cn, StatusPill } from "@qeetrix/ui";
-import { CheckCircle2Icon, InfoIcon } from "lucide-react";
 import type { Metadata } from "next";
 
 import { Reveal, Stagger, StaggerItem } from "@/components/marketing/motion";
@@ -78,7 +78,7 @@ export default function StatusPage() {
           <Reveal delay={0.08}>
             <div className="mt-8 flex items-center gap-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5">
               <span className="grid size-10 shrink-0 place-items-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-                <CheckCircle2Icon className="size-5" aria-hidden />
+                <CircleCheckIcon className="size-5" aria-hidden />
               </span>
               <div className="flex flex-col">
                 <span className="font-display text-lg font-semibold tracking-tight">

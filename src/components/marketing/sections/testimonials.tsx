@@ -1,3 +1,4 @@
+import { QuoteIcon } from "@qeetrix/icons";
 import { cn } from "@qeetrix/ui";
 import {
   Datadog,
@@ -11,7 +12,6 @@ import {
   Stripe,
   Supabase,
 } from "@thesvg/react";
-import { QuoteIcon } from "lucide-react";
 import { Eyebrow } from "@/components/marketing/blocks/eyebrow";
 import { InitialsAvatar } from "@/components/marketing/blocks/initials-avatar";
 import { LogoLockup } from "@/components/marketing/blocks/logo-wall";

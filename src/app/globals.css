@@ -5,10 +5,11 @@
  *
  * This file is imported AFTER `@qeetrix/ui/styles.css` (see app/layout.tsx),
  * so everything here is scoped to THIS app — the admin/login apps that consume
- * the same `@qeetrix/ui` package are untouched. `@qeetrix/ui` ships a neutral
- * grayscale `--primary`; below we re-point the semantic `--primary` runtime
- * token (which `@theme inline { --color-primary: var(--primary) }` maps to) at
- * the warm Qeet brand so existing Buttons/links/accents pick up brand orange.
+ * the same `@qeetrix/ui` package are untouched. `@qeetrix/ui` 2.x ships Qeet
+ * Ember (#D04800, white label) as `--primary` in both themes; below we re-point
+ * the semantic `--primary` runtime token (which
+ * `@theme inline { --color-primary: var(--primary) }` maps to) at this site's
+ * own brand ramp, so Buttons/links/accents use the shades documented here.
  *
  * Contrast notes (WCAG 2.2 AA, sRGB):
  *   - Pure brand #F26D0E is only ~3.0:1 on white → good for FILLS / large text /

@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon } from "@qeetrix/icons";
 import Link from "next/link";
 
 import { ButtonLink } from "@/components/marketing/button-link";

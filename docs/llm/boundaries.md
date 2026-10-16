@@ -68,7 +68,7 @@ changelog entries · SEO metadata · accessibility improvements · pricing-calcu
 | Pricing figures | A commercial commitment, not a UI change |
 | Legal pages | Not an engineering decision |
 | Extending `/api/contact` | Needs rate limiting, origin checks and a secret story first |
-| `@qeetrix/ui` major upgrade | `qeetrix-ui` — pinned `^1.0.2` against npm `2.0.0` |
+| `@qeetrix/ui` / `@qeetrix/icons` upgrade | `qeetrix-ui`, `qeetrix-icons` — pinned exactly to `2.1.5` / `1.0.11` (patch releases have removed exports and replaced the icon catalogue, so bump deliberately) |
 | Hostname change | DNS, `qeet-id-deploy`, and the org domain standard |
 
 Product-level fan-out: `qeet-id-context/CHANGE-MATRIX.md`.
