@@ -79,14 +79,14 @@ bun run lint           # biome
 bun run check          # biome check
 bun run format
 bun test               # src/lib/pricing/pricing.test.ts, src/lib/go.test.ts
-docker build -t qeet-id-website:dev .   # container image for the qeet-id-deploy test kit
+docker build -t qeet-id-website:dev .   # container image for the Qeet ID Kit (qeet-id-kit)
 ```
 
 ## What CI enforces
 
 `.github/workflows/ci.yml` — job `verify` on `develop`, `release/**` and PRs: install →
 `typecheck` → `check` (biome) → `bun test` → `build`. On `release/**` only, job `image` then publishes
-`ghcr.io/qeetgroup/qeet-id-website:sha-<commit>` (amd64 + arm64) for the `qeet-id-deploy` test kit.
+`ghcr.io/qeetgroup/qeet-id-website:sha-<commit>` (amd64 + arm64) for the Qeet ID Kit (`qeet-id-kit`).
 Production still deploys from `deploy.yml` (Vercel) on `main`; the image is never used there.
 
 ## Before you finish

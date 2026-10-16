@@ -1,8 +1,8 @@
 # Container image for the marketing site (Next.js standalone server).
 #
 # Production is deployed by Vercel (deploy.yml) and does not use this file. The
-# image is built by ci.yml on release/** branches and run by the qeet-id-deploy
-# test kit (DEV / TEST / STAGING). Runtime configuration (no rebuild per
+# image is built by ci.yml on release/** branches and run by the Qeet ID Kit
+# (qeet-id-kit; DEV / TEST / STAGING). Runtime configuration (no rebuild per
 # environment):
 #   CONSOLE_URL      where "Sign in" / "Start free" go   (src/lib/go.ts)
 #   DOCS_URL         where the documentation links go

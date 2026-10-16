@@ -43,7 +43,7 @@ commands:
 ci:
   workflows: [ci.yml, deploy.yml]
   verify: "ci.yml: typecheck -> biome check -> bun test -> build (develop, release/**, PRs)"
-  image: "ci.yml `image` on release/**: ghcr.io/qeetgroup/qeet-id-website:sha-<commit> for the qeet-id-deploy test kit"
+  image: "ci.yml `image` on release/**: ghcr.io/qeetgroup/qeet-id-website:sha-<commit> for the Qeet ID Kit (qeet-id-kit)"
   runner: ubuntu-latest
   deploy: push main -> gate -> vercel build/deploy --prod -> tag vX.Y.Z + GitHub release (release/x.y.z merge -> exactly vx.y.z; job runs only on main)
 container:
