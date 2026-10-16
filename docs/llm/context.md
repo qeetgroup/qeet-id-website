@@ -7,7 +7,7 @@ Comparison-page count taken from the tree.
 ## Identity
 
 The **marketing site for Qeet ID**, served at `id.qeet.in`. Next.js 16.2.6 App Router, React 19 with
-the React Compiler, Tailwind v4, `@qeetrix/ui ^1.0.2`, Biome, bun. 143 source files, ~17.7k LOC.
+the React Compiler, Tailwind v4, `@qeetrix/ui 2.1.5` + `@qeetrix/icons 1.0.11`, Biome, bun. 143 source files, ~17.7k LOC.
 
 ## Context inheritance
 
@@ -117,7 +117,7 @@ No auth, no session, no secret, no backend access.
 ## Known constraints
 
 - **No CI, no meaningful test coverage** — one test file for 17.7k LOC.
-- `@qeetrix/ui ^1.0.2` is a **major version behind** npm's `2.0.0`.
+- `@qeetrix/ui 2.1.5` and `@qeetrix/icons 1.0.11` are pinned exactly. Every icon comes from `@qeetrix/icons` (no `lucide-react`); third-party brand logos come from `@thesvg/react`.
 - `NEXT_PUBLIC_SITE_URL` is documented but unused; the origin is hardcoded in four places.
 - `API_REFERENCE_URL` points at a host that is not the API — QID-015.
 - The README's comparison list (4) does not match the tree (19).

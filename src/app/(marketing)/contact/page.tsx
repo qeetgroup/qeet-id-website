@@ -1,4 +1,4 @@
-import { BuildingIcon, ClockIcon, LifeBuoyIcon, MailIcon, NewspaperIcon } from "lucide-react";
+import { BuildingIcon, ClockIcon, LifeBuoyIcon, MailIcon, NewspaperIcon } from "@qeetrix/icons";
 import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/marketing/contact-form";

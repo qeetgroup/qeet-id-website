@@ -1,11 +1,11 @@
 import {
-  Building2Icon,
-  FileCheck2Icon,
+  BuildingComplexIcon,
+  FileCheckCornerIcon,
   HeadsetIcon,
   KeyRoundIcon,
   ScrollTextIcon,
   ShieldCheckIcon,
-} from "lucide-react";
+} from "@qeetrix/icons";
 
 import { Reveal, Stagger, StaggerItem } from "@/components/marketing/motion";
 import { Section } from "@/components/marketing/section";
@@ -19,7 +19,7 @@ import { ContactSalesButton } from "./contact-sales-button";
  */
 const pillars = [
   {
-    icon: Building2Icon,
+    icon: BuildingComplexIcon,
     title: "Federation at scale",
     body: "SAML 2.0 and OIDC SSO, SCIM provisioning, and LDAP/AD directory sync via a self-serve Admin Portal.",
   },
@@ -39,7 +39,7 @@ const pillars = [
     body: "Bring your own key (AWS KMS envelope encryption) for the secrets and token vaults, or self-host entirely.",
   },
   {
-    icon: FileCheck2Icon,
+    icon: FileCheckCornerIcon,
     title: "Compliance evidence",
     body: "GDPR export & erasure today, plus live SOC 2 / ISO 27001 control evidence. Independent audits are in progress.",
   },

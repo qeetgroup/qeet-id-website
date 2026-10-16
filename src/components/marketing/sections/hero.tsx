@@ -1,19 +1,16 @@
 "use client";
 
-import { cn } from "@qeetrix/ui";
-import {
-  IconMfaShield,
-  IconPasskey,
-  IconSamlConnector,
-  type QeetIconProps,
-} from "@qeetrix/ui/brand";
 import {
   ArrowRightIcon,
-  CheckCircle2Icon,
-  FingerprintIcon,
+  CircleCheckIcon,
+  FingerprintPatternIcon,
+  type IconProps,
+  PlugIcon,
+  ShieldCheckIcon,
   SparklesIcon,
   ZapIcon,
-} from "lucide-react";
+} from "@qeetrix/icons";
+import { cn } from "@qeetrix/ui";
 import type { ComponentType, ReactNode } from "react";
 import { ArrowCta } from "@/components/marketing/blocks/arrow-cta";
 import { InitialsAvatar } from "@/components/marketing/blocks/initials-avatar";
@@ -122,7 +119,7 @@ function AuthMockup() {
             <div className="flex flex-col gap-1.5">
               <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-muted-foreground">
                 <span className="grid size-6 place-items-center rounded-md bg-foreground text-background">
-                  <IconMfaShield size={14} />
+                  <ShieldCheckIcon size={14} />
                 </span>
                 Acme · Sign in
               </div>
@@ -139,7 +136,7 @@ function AuthMockup() {
               aria-label="Continue with passkey"
             >
               <span className="flex items-center gap-2.5">
-                <IconPasskey size={16} className="text-brand" />
+                <FingerprintPatternIcon size={16} className="text-brand" />
                 Continue with passkey
               </span>
               <span className="rounded-md bg-brand/15 px-1.5 py-0.5 font-mono text-[10px] text-brand-text">
@@ -190,12 +187,12 @@ function AuthMockup() {
         </div>
       </Tilt>
 
-      {/* Floating chips — reuse @qeetrix/brand feature icons. Decorative `animate-float`
+      {/* Floating chips — @qeetrix/icons feature icons. Decorative `animate-float`
           self-disables under prefers-reduced-motion (see globals.css). */}
       <FloatingChip
         className="absolute -left-3 top-12 sm:-left-10 sm:top-20"
         delay={0}
-        icon={IconPasskey}
+        icon={FingerprintPatternIcon}
         iconClassName="text-brand"
         label="Passkey"
         sub="Phishing-resistant"
@@ -203,7 +200,7 @@ function AuthMockup() {
       <FloatingChip
         className="absolute -right-3 top-2 sm:-right-12 sm:top-6"
         delay={1.5}
-        icon={IconSamlConnector}
+        icon={PlugIcon}
         iconClassName="text-violet-500"
         label="SAML 2.0"
         sub="Enterprise SSO"
@@ -219,7 +216,7 @@ function AuthMockup() {
       <FloatingChip
         className="absolute -bottom-3 left-6 sm:-bottom-6 sm:left-10"
         delay={2}
-        icon={CheckCircle2Icon}
+        icon={CircleCheckIcon}
         iconClassName="text-emerald-500"
         label="SOC 2 · GDPR"
         sub="Audit-ready"
@@ -228,7 +225,7 @@ function AuthMockup() {
   );
 }
 
-type ChipIcon = ComponentType<QeetIconProps> | ComponentType<{ className?: string }>;
+type ChipIcon = ComponentType<IconProps<"outline">>;
 
 function FloatingChip({
   className,
@@ -377,10 +374,10 @@ export function Hero() {
 
             <StaggerItem className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-start">
               <StatBadge>
-                <CheckCircle2Icon className="size-3.5 text-emerald-500" /> SOC 2 Type II
+                <CircleCheckIcon className="size-3.5 text-emerald-500" /> SOC 2 Type II
               </StatBadge>
               <StatBadge>
-                <FingerprintIcon className="size-3.5 text-brand" /> FIDO2 / WebAuthn
+                <FingerprintPatternIcon className="size-3.5 text-brand" /> FIDO2 / WebAuthn
               </StatBadge>
               <StatBadge>
                 <ZapIcon className="size-3.5 text-amber-500" /> 99.99% uptime

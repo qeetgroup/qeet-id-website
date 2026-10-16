@@ -1,5 +1,5 @@
+import { ArrowRightIcon, QuoteIcon } from "@qeetrix/icons";
 import { cn } from "@qeetrix/ui";
-import { ArrowRightIcon, QuoteIcon } from "lucide-react";
 
 import { InitialsAvatar } from "@/components/marketing/blocks/initials-avatar";
 import { ButtonLink } from "@/components/marketing/button-link";

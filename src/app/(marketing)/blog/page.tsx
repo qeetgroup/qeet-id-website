@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon } from "@qeetrix/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { InitialsAvatar } from "@/components/marketing/blocks/initials-avatar";

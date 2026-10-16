@@ -1,5 +1,6 @@
 "use client";
 
+import { MonitorIcon, MoonIcon, SunIcon } from "@qeetrix/icons";
 import {
   Button,
   DropdownMenu,
@@ -8,7 +9,6 @@ import {
   DropdownMenuTrigger,
   useTheme,
 } from "@qeetrix/ui";
-import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();

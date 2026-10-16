@@ -1,7 +1,7 @@
 "use client";
 
+import { CircleCheckIcon } from "@qeetrix/icons";
 import { Button, cn, Input, Label, Textarea } from "@qeetrix/ui";
-import { CheckCircle2Icon } from "lucide-react";
 import { type FormEvent, useId, useState } from "react";
 
 type FieldName = "firstName" | "lastName" | "email" | "topic" | "message";
@@ -89,7 +89,7 @@ export function ContactForm() {
         className="flex flex-col items-start gap-4 rounded-2xl border border-border/60 bg-card p-6 lg:p-8"
       >
         <span className="grid size-11 place-items-center rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-          <CheckCircle2Icon className="size-6" aria-hidden />
+          <CircleCheckIcon className="size-6" aria-hidden />
         </span>
         <h2 className="font-display text-2xl font-semibold tracking-tight">Message sent</h2>
         <p className="text-muted-foreground">

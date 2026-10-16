@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon, QuoteIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon, QuoteIcon } from "@qeetrix/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";

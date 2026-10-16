@@ -1,4 +1,4 @@
-import { ArrowRightIcon, CheckIcon } from "lucide-react";
+import { ArrowRightIcon, CheckIcon } from "@qeetrix/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 

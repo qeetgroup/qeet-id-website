@@ -1,5 +1,5 @@
+import { CheckIcon, MinusIcon, PlusIcon, XIcon } from "@qeetrix/icons";
 import { cn } from "@qeetrix/ui";
-import { CheckIcon, MinusIcon, PlusIcon, XIcon } from "lucide-react";
 
 import {
   AVAILABILITY_LABEL,
