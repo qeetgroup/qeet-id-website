@@ -18,16 +18,15 @@ careers and legal pages · SEO artifacts · the pricing calculator · a contact 
 | The operator console | `qeet-id-console` |
 | Product documentation | `qeet-id-docs` |
 | The API | `qeet-id-server` |
-| The design system | `qeetrix-ui` |
+| The design system | `qeetrix-react` (Qeetrix) |
 
 ## Consumes
 
-`@qeetrix/ui` and its pinned peers. **Nothing else at runtime** — no API, no database, no session.
+`@qeetrix/react`, `@qeetrix/tokens` and `@qeetrix/icons` (and `@base-ui/react`, which `@qeetrix/react` needs). **Nothing else at runtime** — no API, no database, no session.
 
 ## Provides
 
-Public HTML, plus one unauthenticated `POST /api/contact` endpoint. It provides no package and no
-API to any other Qeet repository.
+Public HTML only. It provides no package and no API to any other Qeet repository.
 
 ## Security boundaries
 
@@ -36,17 +35,16 @@ different kind:
 
 | Surface | Risk |
 |---|---|
-| `POST /api/contact` | Public, unauthenticated, **no rate limit / captcha / origin check** |
 | `NEXT_PUBLIC_*` | Inlined at build — **every value is public** |
 | Marketing copy | A **false security claim** about a security product is a real problem |
-| `compare/` pages | Factual assertions about 19 named third parties |
+| `compare/` pages | Factual assertions about eight named third parties — only from dated research (`src/config/compare.ts`) |
 
 **The most likely harm from this repository is a wrong statement, not a wrong request.**
 
 ## Cross-repository dependencies
 
 ```text
-qeetrix-ui ──@qeetrix/ui──►  qeet-id-website
+qeetrix ──@qeetrix/react · tokens · icons──►  qeet-id-website
 qeet-id-website ──deep links──►  console.id.qeet.in · docs.qeet.in
 qeet-id-context/PRODUCT.md ──is the source for──►  every capability claim on this site
 ```
@@ -67,8 +65,8 @@ changelog entries · SEO metadata · accessibility improvements · pricing-calcu
 | A new or edited comparison page | A factual claim about a third party — needs a source |
 | Pricing figures | A commercial commitment, not a UI change |
 | Legal pages | Not an engineering decision |
-| Extending `/api/contact` | Needs rate limiting, origin checks and a secret story first |
-| `@qeetrix/ui` / `@qeetrix/icons` upgrade | `qeetrix-ui`, `qeetrix-icons` — pinned exactly to `2.1.5` / `1.0.11` (patch releases have removed exports and replaced the icon catalogue, so bump deliberately) |
+| Adding a form or server route | Needs rate limiting, origin checks and a secret story first |
+| A Qeetrix upgrade | `@qeetrix/react` 0.2.2, `@qeetrix/tokens` 0.0.11, `@qeetrix/icons` 2.0.0 are pinned exactly — bump them together, deliberately, and re-run the regression |
 | Hostname change | DNS, `qeet-id-deploy`, and the org domain standard |
 
 Product-level fan-out: `qeet-id-context/CHANGE-MATRIX.md`.
@@ -80,6 +78,6 @@ Product-level fan-out: `qeet-id-context/CHANGE-MATRIX.md`.
 2. **Never add a secret.** Only `NEXT_PUBLIC_*` exists, and it is public.
 3. **Never add an authenticated flow here** — that is `qeet-id-login`'s job.
 4. **Never call the Qeet ID API from this site.** It deliberately has no client.
-5. **Never extend `/api/contact`** with a secret-bearing integration while it is unprotected.
+5. **Never add a form or server route** without a real, protected transport.
 6. **Never write a competitor claim from memory.**
 7. **Never change another repository** from a task scoped to this one.

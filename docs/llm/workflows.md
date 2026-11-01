@@ -16,11 +16,11 @@ Nothing else is required — this site has no backend dependency.
 ## Add a marketing page
 
 ```text
-1  src/app/(marketing)/<route>/page.tsx
-2  compose from src/components/marketing/{sections,blocks,effects}
-3  metadata + opengraph-image.tsx if it is a significant page
-4  add it to src/app/sitemap.ts
-5  bun run typecheck && bun run check && bun run build
+1  src/app/(marketing)/<route>/page.tsx, with its own stylesheet beside it (tokens only)
+2  its words in src/config/<page>.ts, each line annotated with its source
+3  compose from @qeetrix/react, the marketing layer (m-*) and components/site
+4  metadata + opengraph-image.tsx; add it to src/app/sitemap.ts and lib/search/build-index.ts
+5  a copy test for what it claims; bun test && bun run typecheck && bun run check && bun run build
 ```
 
 ## Write or edit product copy
@@ -42,44 +42,49 @@ Nothing else is required — this site has no backend dependency.
 ## Add or edit a comparison page
 
 ```text
-1  src/app/(marketing)/compare/<competitor>/page.tsx
-2  every claim about the competitor needs a source — do NOT write from memory
-3  every claim about Qeet ID needs qeet-id-context/PRODUCT.md
-4  add it to the sitemap
-5  bun run typecheck && bun run check && bun run build
+1  research the platform to the qeet-id-files/research/platforms/ standard (sources, freeze date)
+2  src/config/compare.ts — a Competitor: every area's cell and verdict from that research,
+   `checked` = the freeze date, `revalidate` = within three months, its sources
+3  a retired slug? take it out of RETIRED_SLUGS and the redirect in next.config.ts
+4  the Qeet ID column (AREA_GROUPS) changes only against the code, for every page at once
+5  bun test && bun run typecheck && bun run check && bun run build
 ```
 
-There are 19 of these. Each is a public, factual assertion about a named company.
+Each page is a public, factual assertion about a named company. The sitemap, the search index and
+the static params all read `COMPETITORS`, so nothing else needs listing.
 
-## Add a blog or changelog entry
+## Add a blog post
 
 ```text
-1  src/lib/blog.ts  or  src/lib/changelog.ts
-2  a changelog entry is a PRODUCT claim — verify it shipped
-3  bun run build       (blog/[slug] and og images are generated)
+1  src/lib/blog.ts — a post: title, standfirst, topic, tags, `more` (where it lives on the site)
+2  the body format: paragraphs, `## ` headings, `- ` lists, `code`, **strong**, and fenced
+   code whose info string is the language then a caption ("```go The lock each write takes")
+3  every statement about Qeet ID is checked against qeet-id-server develop — note the files
+   above the post — and `checked` is that day; `publishedAt` is the day it first goes out
+4  bun test (lib/blog.test.ts: format, dates, forbidden claims) && bun run build
 ```
+
+There is no changelog page: it was retired (2026-10-29) because its version numbers matched no
+release. Bring one back only from real tags.
 
 ## Change pricing
 
 ```text
-1  src/lib/pricing/{plans,add-ons,usage,features}.ts
-2  update src/lib/pricing/pricing.test.ts — the ONLY real test in the repo
+1  src/lib/pricing/{plans,usage,features,faq}.ts — the billing service's plan catalogue
+   (qeet-id-server internal/operations/billing/plans.go) is the source; match it. Plans only:
+   the billing service sells no add-ons, so the site offers none
+2  update src/lib/pricing/pricing.test.ts and src/config/pricing-page.test.ts
 3  bun test
 4  bun run typecheck && bun run build
 ```
 
 Pricing is a commercial commitment. Confirm the numbers before changing them.
 
-## Touch the contact route
+## Contact
 
-**Read this before extending it.**
-
-```text
-1  src/app/api/contact/route.ts
-2  it currently has NO mail transport, NO rate limiting, NO captcha, NO origin check
-3  adding an integration means adding a secret to a repo that has none
-4  address the protection gaps in the same change, or do not make it
-```
+There is no form and no server route. The contact page lists the organisation's published inboxes
+(`partnerships@`, `support@`, `press@`, `security@` qeet.in) as email links. A form needs a real
+transport, a secret and protection (rate limit, origin check) — escalate before adding one.
 
 ## Finish any task
 
@@ -93,6 +98,5 @@ git diff
 
 ### Escalate rather than proceed
 
-An unverified product claim · a GA/compliance/SDK statement · adding a secret · extending
-`/api/contact` with an integration · a competitor claim without a source · anything requiring another
-repository.
+An unverified product claim · a GA/compliance/SDK statement · adding a secret · adding a form or a
+server route · a competitor claim without a source · anything requiring another repository.

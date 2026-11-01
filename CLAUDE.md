@@ -28,9 +28,9 @@ Read them when a task needs organization or product understanding; this reposito
 1. **Never state a product capability you have not verified** against `qeet-id-context/PRODUCT.md`. This site restates claims; it never originates them.
 2. The product is **pre-1.0 (`v0.1.14`)** and **no SDK is published** — do not write "generally available" or "drop-in SDKs" (QID-009, QID-010).
 3. **No secrets.** Only `NEXT_PUBLIC_*`, which is inlined at build time and therefore public.
-4. **`POST /api/contact` is unprotected** — no rate limiting, captcha or origin check. Do not add a secret-bearing integration without fixing that.
+4. **There is no contact form or server route.** The contact page is email links; do not add a form without a real, protected transport.
 5. **Never add an authenticated flow here** — that belongs to `qeet-id-login`.
-6. **Never write a competitor claim from memory.** Each `compare/` page is a public assertion about a named company.
+6. **Never write a competitor claim from memory.** `/compare` is a public assertion about eight named companies: every cell comes from dated research in `qeet-id-files/research/platforms/`, and `src/config/compare.test.ts` fails once a platform passes its re-check date.
 
 ## Working style
 
