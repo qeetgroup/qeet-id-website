@@ -20,10 +20,10 @@ here.
 ## What this repository is
 
 The **marketing site for Qeet ID** — `id.qeet.in`. Next.js 16 App Router, React 19, Tailwind v4,
-`@qeetrix/ui`, Biome, bun. ~17.7k LOC across 143 files.
+Qeetrix (`@qeetrix/tokens`, `@qeetrix/react`, `@qeetrix/icons`), Biome, bun.
 
 > **It does not call the Qeet ID backend.** Verified: there is no API client and no reference to
-> `api.id.qeet.in` at runtime. The only server code is its own contact route.
+> `api.id.qeet.in` at runtime. The only server code is the `/go` redirects and `healthz`.
 
 ## Context hierarchy
 
@@ -46,26 +46,48 @@ qeet-context (L0)  →  qeet-id-context (L1)  →  qeet-id-website (L2 — this 
 ### 1. No backend, no auth, no secrets
 This site calls no API and holds no credential. Only `NEXT_PUBLIC_*` variables exist, and those are
 **inlined at build time — treat every value as public**. If a change needs a secret or a session, it
-does not belong here.
+does not belong here. The one exception is the container image (test kit): it reads two **public**
+URLs at runtime, `CONSOLE_URL` and `DOCS_URL`, for its `/go/…` redirects (`src/lib/go.ts`).
 
 ### 2. Never make a product claim you cannot verify
 Marketing copy is a **public statement about a security product**. Before writing that Qeet ID
 "is GA", "has SOC 2", or "ships SDKs", check `qeet-id-context/PRODUCT.md`. Several such claims are
 already recorded as drift — the product is **pre-1.0 (`v0.1.14`)** and **no SDK is published**.
-See `qeet-id-context/DRIFT-REGISTER.md` QID-009 and QID-010.
+See `qeet-id-context/DRIFT-REGISTER.md` QID-009 and QID-010. Work merged into `qeet-id-server`
+`develop` can be newer than the context record — check both. Qeet ID is **not offered
+self-hosted**. The redesigned pages keep their words in `src/config/` (`home.ts`, `capabilities.ts`,
+`product-index.ts`, `security.ts`, `migrate.ts`), each line annotated with its source; the tests
+beside them fail on the claims the record rules out, and a capability page may link only to docs
+pages that exist. The record can lag the code: `qeet-id-server` `develop` has PostgreSQL row-level
+security on 54 tables (migration 0160) although SECURITY.md and ADR-0019 say it does not — the
+Security page follows the code (approved 2026-10-30). No provider's passwords come across in an
+import; never say otherwise. What is not in 1.0 is said on the page ("Not in 1.0: …"), never implied.
 
-### 3. `POST /api/contact` is unprotected — do not extend it
-It validates fields and returns `{ ok: true }`. It has **no mail transport, no rate limiting, no
-captcha and no origin check** — the code says so itself. Do not add secret-bearing integrations to it
-without addressing that first.
+### 3. No contact form, no server route for one
+The contact page lists the organisation's published inboxes as email links. The old form posted to a
+`POST /api/contact` that sent nothing and told the visitor their message had gone; both were removed
+(2026-10-29). Do not bring a form back without a real, protected transport.
 
 ### 4. Comparison pages are competitive claims
-`src/app/(marketing)/compare/` holds **19** competitor pages. Each is a factual assertion about a
-named third party. Do not add or edit one from memory.
+`/compare` sets Qeet ID beside eight named platforms (Auth0, Okta, Microsoft Entra, Ping Identity,
+Keycloak, ZITADEL, Ory, WorkOS) in the same fifteen areas, from one template
+(`src/app/(marketing)/compare/[slug]`) and one data file, `src/config/compare.ts`. Every competitor
+cell and verdict comes from the dated research in `qeet-id-files/research/platforms/00N-*.md`; the
+Qeet ID column is written once and shared. Release status always counts against Qeet ID until 1.0.
+`src/config/compare.test.ts` fails once a platform passes its `revalidate` date — re-read the
+research, then move `checked` and `revalidate` on. Never add or edit a cell from memory. The old
+pages for platforms not compared to this standard (`RETIRED_SLUGS`) redirect to `/compare`.
 
-### 5. Style through the design system
-Compose from `@qeetrix/ui` and the local `src/components/marketing/` primitives. The `overrides`
-block in `package.json` pins `@qeetrix/ui`'s peers — do not bump them piecemeal.
+### 5. Style through Qeetrix
+Every page is on qeet.in's language: `@qeetrix/react` components, `--qx-*` tokens from
+`@qeetrix/tokens`, `@qeetrix/icons`, and the marketing layer in `src/styles/marketing.css`. Each page
+category has its own stylesheet beside its route and keeps its words in `src/config/`. Never add
+colours, type scales or utilities to `globals.css`. `@qeetrix/ui` is gone (deprecated; removed
+2026-10-30) — do not bring it, or anything like it, back. The theme is one attribute,
+`data-qx-color-scheme` on `<html>`, set before first paint in `app/layout.tsx` and switched by
+`components/site/theme-switch.tsx` (`lib/use-theme.ts`), as on qeet.in. Motion is productive, never
+decorative, and respects `prefers-reduced-motion`. The `overrides` block in `package.json` pins
+`@base-ui/react`, which `@qeetrix/react` needs — do not bump it piecemeal.
 
 ## Commands
 
@@ -77,13 +99,16 @@ bun run typecheck
 bun run lint           # biome
 bun run check          # biome check
 bun run format
-bun test               # 1 test file: src/lib/pricing/pricing.test.ts
+bun test               # src/lib/pricing/pricing.test.ts, src/lib/go.test.ts
+docker build -t qeet-id-website:dev .   # container image for the Qeet ID Kit (qeet-id-kit)
 ```
 
 ## What CI enforces
 
-**Nothing — this repository has no CI workflow.** The Vercel build is the only gate. Run
-`bun run typecheck`, `bun run check` and `bun run build` yourself.
+`.github/workflows/ci.yml` — job `verify` on `develop`, `release/**` and PRs: install →
+`typecheck` → `check` (biome) → `bun test` → `build`. On `release/**` only, job `image` then publishes
+`ghcr.io/qeetgroup/qeet-id-website:sha-<commit>` (amd64 + arm64) for the Qeet ID Kit (`qeet-id-kit`).
+Production still deploys from `deploy.yml` (Vercel) on `main`; the image is never used there.
 
 ## Before you finish
 
@@ -94,5 +119,5 @@ git diff
 
 ## Escalate rather than proceed
 
-A product claim you cannot verify against L1 · adding a secret · extending `/api/contact` with an
-integration · a competitor claim you cannot source · anything requiring another repository.
+A product claim you cannot verify against L1 · adding a secret · adding a form or a server route ·
+a competitor claim you cannot source · anything requiring another repository.

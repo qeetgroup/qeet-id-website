@@ -1,20 +1,29 @@
 // Cross-app links from the marketing site to the dashboard (qeetid-admin), which
 // hosts the real /sign-in and /sign-up pages. Marketing only links to them.
 // Override the base with NEXT_PUBLIC_DASHBOARD_URL (e.g. http://localhost:3002
-// in local dev); defaults to the production dashboard domain.
-const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "https://console.id.qeet.in";
+// in local dev); defaults to the production dashboard domain. Container images set
+// it to /go/console, resolved when the container starts (src/lib/go.ts).
+export const DEFAULT_DASHBOARD_URL = "https://console.id.qeet.in";
+const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? DEFAULT_DASHBOARD_URL;
 
 export const SIGN_IN_URL = `${DASHBOARD_URL}/sign-in`;
 export const SIGN_UP_URL = `${DASHBOARD_URL}/sign-up`;
 
-// Developer documentation lives in its own portal (`qeet-id-docs`, deployed at
-// docs.qeet.in) — the marketing site links out to it rather than hosting docs
-// pages of its own. Override the origin with NEXT_PUBLIC_DOCS_URL in dev.
-const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? "https://docs.qeet.in";
+// Developer documentation lives in the group's documentation portal,
+// docs.qeet.in, where Qeet ID's pages sit under /id (verified 2026-10-29: /id,
+// /id/quickstart, /id/authentication, /id/mfa, /id/api, /id/sdks answer 200;
+// /docs/* is a 404). The marketing site links out to it rather than hosting
+// docs pages of its own. Override the origin with NEXT_PUBLIC_DOCS_URL in dev
+// (container images: /go/docs).
+export const DEFAULT_DOCS_URL = "https://docs.qeet.in";
+const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? DEFAULT_DOCS_URL;
 
-export const DOCS_BASE_URL = `${DOCS_URL}/docs`;
-export const DOCS_QUICKSTART_URL = `${DOCS_URL}/docs/getting-started/quickstart`;
-export const DOCS_GUIDES_URL = `${DOCS_URL}/docs/guides`;
+export const DOCS_BASE_URL = `${DOCS_URL}/id`;
+export const DOCS_QUICKSTART_URL = `${DOCS_BASE_URL}/quickstart`;
+/** The portal has no guides section for Qeet ID yet — its docs home stands in. */
+export const DOCS_GUIDES_URL = DOCS_BASE_URL;
+/** A page of the Qeet ID docs, e.g. docsUrl("authentication/passkeys"). */
+export const docsUrl = (path: string) => `${DOCS_BASE_URL}/${path}`;
 
 // The OpenAPI reference is served by Scalar (not the docs portal), matching the
 // docs repo's own `links.apiReference`.

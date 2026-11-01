@@ -1,0 +1,147 @@
+/*
+ * The plan staircase (components/site/plan-ladder.tsx) — shared by the home's
+ * pricing chapter and every capability page. Tokens only.
+ */
+@layer components {
+  /* ---------- The plans and the staircase ----------
+   * Four equal columns, one per plan; every bar segment sits in its plan's
+   * column, so a feature reads from the plan that first includes it onwards. */
+  .pl-ladder-grid {
+    position: relative;
+    isolation: isolate;
+  }
+  /* The highlighted plan's column, faintly lit from the price to the last row. */
+  .pl-ladder-grid::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--hl) * 25%);
+    width: 25%;
+    background: var(--qx-color-surface-sunken);
+  }
+  /* On a sunken band, the lit column is raised instead, so it still shows. */
+  .m-sunken .pl-ladder-grid::before {
+    background: var(--qx-color-surface-raised);
+  }
+  .pl-ladder-plans,
+  .pl-rung,
+  .pl-rung-bar {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .pl-ladder-plans {
+    border-bottom: 1px solid var(--qx-color-border-strong);
+  }
+  .pl-ladder-plans li {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding: 1.5rem 0.75rem;
+  }
+  .pl-ladder-plans li[data-highlight]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: var(--qx-color-border-brand);
+  }
+  .pl-ladder-price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.35rem;
+  }
+  .pl-ladder-price .m-geo {
+    font-size: clamp(1.25rem, 0.7rem + 1.8vw, 2.5rem);
+    line-height: 1.05;
+    color: var(--qx-color-text-default);
+  }
+  .pl-ladder-period,
+  .pl-ladder-mau {
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pl-ladder-mau {
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+  .pl-rung {
+    row-gap: 0.625rem;
+    padding-block: 1.125rem;
+    border-bottom: 1px solid var(--qx-color-border-default);
+  }
+  .pl-rung-name {
+    grid-column: 1 / -1;
+    padding-inline: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+  @media (min-width: 760px) {
+    .pl-rung-name {
+      grid-column: var(--start) / -1;
+    }
+  }
+  .pl-rung-bar {
+    grid-column: 1 / -1;
+  }
+  /* Thin marks with rounded ends and a 2px gap between plans; the words
+   * (qualifiers, the legend) carry the meaning, never the fill alone. */
+  .pl-seg {
+    height: 0.5rem;
+    margin-inline: 1px;
+    border-radius: 4px;
+  }
+  .pl-seg[data-status="included"],
+  .pl-seg[data-status="custom"] {
+    background: var(--qx-color-surface-inverse);
+  }
+  .pl-seg[data-status="limited"] {
+    background: color-mix(in oklab, var(--qx-color-surface-inverse) 32%, transparent);
+  }
+  .pl-seg[data-status="unavailable"] {
+    border-radius: 0;
+    background:
+      linear-gradient(var(--qx-color-border-default), var(--qx-color-border-default)) center / 100%
+      1px no-repeat;
+  }
+  .pl-rung-notes {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    font-size: 0.8125rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pl-rung-notes span {
+    padding-inline: 0.75rem;
+  }
+  .pl-ladder-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 1.5rem;
+  }
+  .pl-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pl-legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .pl-legend .pl-seg {
+    width: 1.75rem;
+    margin: 0;
+  }
+}

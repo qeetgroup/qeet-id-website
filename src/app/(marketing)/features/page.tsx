@@ -1,189 +1,209 @@
-import {
-  BarChart3Icon,
-  Building2Icon,
-  CodeIcon,
-  FingerprintIcon,
-  KeyRoundIcon,
-  LockKeyholeIcon,
-  ScrollTextIcon,
-  ShieldCheckIcon,
-  UsersIcon,
-  ZapIcon,
-} from "lucide-react";
+import { ArrowRightIcon, ArrowUpRightIcon } from "@qeetrix/icons";
+import { Badge } from "@qeetrix/react/badge";
 import type { Metadata } from "next";
-import { CTA } from "@/components/marketing/sections/cta";
-import { Features } from "@/components/marketing/sections/features";
-import { Integrations } from "@/components/marketing/sections/integrations";
+import NextLink from "next/link";
+import "../product/[slug]/capability.css";
+import "./features.css";
+import { Chapter } from "@/components/home/chapter";
+import { ButtonLink } from "@/components/site/button-link";
+import { Reveal } from "@/components/site/reveal";
+import { vars } from "@/components/site/vars";
+import { CAPABILITIES, CAPABILITY_PAGES } from "@/config/capabilities";
+import { STATUS } from "@/config/home";
+import { PRODUCT_INDEX as P } from "@/config/product-index";
+import { DOCS_BASE_URL } from "@/lib/links";
 
 export const metadata: Metadata = {
-  title: "Features",
-  description:
-    "SSO, MFA, passkeys, RBAC, sessions, and audit — every primitive you need to ship secure auth at scale.",
+  title: P.meta.title,
+  description: P.meta.description,
   alternates: { canonical: "/features" },
 };
 
-const deepDive = [
-  {
-    icon: KeyRoundIcon,
-    title: "Sign-in & SSO",
-    points: [
-      "Email + password with strong defaults (Argon2id, breach checks)",
-      "Social: Google, Microsoft, Apple, GitHub, GitLab, Facebook, Twitter",
-      "Enterprise: SAML 2.0, OIDC, Azure AD, Okta, generic IdPs",
-      "Magic link and email-code passwordless flows",
-    ],
-  },
-  {
-    icon: FingerprintIcon,
-    title: "Passkeys & MFA",
-    points: [
-      "WebAuthn passkeys with platform & cross-device support",
-      "TOTP authenticator apps with recovery codes",
-      "SMS and email OTP with rate limits and abuse detection",
-      "Step-up auth on sensitive actions",
-    ],
-  },
-  {
-    icon: UsersIcon,
-    title: "RBAC & ABAC",
-    points: [
-      "Hierarchical roles with permission inheritance",
-      "Attribute policies evaluated in under 30ms p99",
-      "Group assignments with time-bounded grants",
-      "Per-tenant role catalogs",
-    ],
-  },
-  {
-    icon: ShieldCheckIcon,
-    title: "Sessions",
-    points: [
-      "Stateful sessions with cluster-wide revocation",
-      "Per-device session inventory for end users",
-      "Concurrent session limits and idle timeouts",
-      "JWT bridge for stateless edge use cases",
-    ],
-  },
-  {
-    icon: Building2Icon,
-    title: "Multi-tenancy",
-    points: [
-      "Hard isolation per organization at the data layer",
-      "Per-tenant branding, domains, and email templates",
-      "Configurable data residency (US, EU, APAC)",
-      "Tenant-scoped API keys and webhooks",
-    ],
-  },
-  {
-    icon: LockKeyholeIcon,
-    title: "Threat protection",
-    points: [
-      "Adaptive rate limiting and bot detection",
-      "Credential stuffing and breach password checks",
-      "Suspicious IP geolocation and impossible-travel alerts",
-      "Account lockout and recovery workflows",
-    ],
-  },
-  {
-    icon: ScrollTextIcon,
-    title: "Audit & observability",
-    points: [
-      "Immutable audit log with tamper-evident hashes",
-      "Streaming export to Splunk, Datadog, S3, Kafka",
-      "OpenTelemetry traces and metrics out of the box",
-      "Per-request structured logs with PII redaction",
-    ],
-  },
-  {
-    icon: CodeIcon,
-    title: "Developer experience",
-    points: [
-      "React, Node, and Go SDKs — all first-class",
-      "Prebuilt React components, headless hooks, and hosted pages",
-      "Local dev mode with a single-binary emulator",
-      "Codegen for OpenAPI clients and Terraform",
-    ],
-  },
-  {
-    icon: BarChart3Icon,
-    title: "Insights",
-    points: [
-      "Login funnels and MFA adoption analytics",
-      "Conversion attribution per provider",
-      "Anomaly dashboards for security teams",
-      "Cohort-level retention by sign-in method",
-    ],
-  },
-  {
-    icon: ZapIcon,
-    title: "Performance",
-    points: [
-      "Sub-50ms p99 sign-in across 30+ edge regions",
-      "Permission cache with 30s TTL and proactive invalidation",
-      "Async fan-out via Kafka for downstream systems",
-      "Postgres-backed durability with Redis hot path",
-    ],
-  },
-];
+/** A display heading, one authored line per line, the second quieter. */
+function Title({
+  lines,
+  id,
+  dark = false,
+}: {
+  lines: readonly string[];
+  id: string;
+  dark?: boolean;
+}) {
+  return (
+    <h2 id={id} className={dark ? "m-geo m-display-m m-title-dark" : "m-geo m-display-m"}>
+      {lines.map((l, i) => (
+        <span key={l} className={i > 0 ? "block ih-tone" : "block"}>
+          {l}
+          {i < lines.length - 1 && " "}
+        </span>
+      ))}
+    </h2>
+  );
+}
 
+/** A capability's own items — the names of its tabs, read from its page. */
+function itemsOf(slug: keyof typeof CAPABILITY_PAGES) {
+  const tabs = CAPABILITY_PAGES[slug].sections.find((s) => s.kind === "tabs");
+  return tabs && tabs.kind === "tabs" ? tabs.items.map((t) => t.name) : [];
+}
+
+/**
+ * /features — the product's index: every capability (each row read from its
+ * page), the standards Qeet ID implements, and what is not in 1.0, said once.
+ * The capability pages' language (their hero, chapters and bands).
+ */
 export default function FeaturesPage() {
   return (
-    <>
-      <section className="border-b border-border/60">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-medium uppercase tracking-widest text-primary">Features</p>
-            <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-              Every primitive you need.
-              <br />
-              <span className="text-primary">None you don&apos;t.</span>
+    <div className="mk" id="features" data-qx-density="comfortable">
+      <Reveal scope="#features" />
+      <section className="cp-hero" data-qx-color-scheme="dark" aria-labelledby="features-title">
+        <div className="mhero-grid m-wrap" aria-hidden="true">
+          {Array.from({ length: 12 }, (_, i) => (
+            <span key={i} />
+          ))}
+        </div>
+        <div className="m-wrap cp-hero-inner">
+          <p className="cp-crumbs m-in">
+            <span className="m-caps m-kicker-dark">{P.kicker}</span>
+            <Badge tone="info" size="sm">
+              {STATUS.label}
+            </Badge>
+          </p>
+          <div className="cp-hero-head">
+            <h1 id="features-title" className="m-geo m-display-l cp-title">
+              {P.title.map((line, i) => (
+                <span key={line} className="m-line" style={vars({ "--i": i })}>
+                  <span className={i > 0 ? "cp-title-tone" : undefined}>{line}</span>
+                  {i < P.title.length - 1 && " "}
+                </span>
+              ))}
             </h1>
-            <p className="mt-5 text-muted-foreground text-balance sm:text-lg">
-              Qeet ID is built around a small set of opinionated primitives: identity, sign-in,
-              permissions, sessions, and audit. Compose them however your product needs.
-            </p>
+            <div className="cp-hero-side m-in" style={vars({ "--d": "420ms" })}>
+              <p className="m-lede cp-lede">{P.lede}</p>
+              <div className="flex flex-wrap gap-3">
+                <ButtonLink size="lg" href={DOCS_BASE_URL} icon={ArrowUpRightIcon}>
+                  Read the docs
+                </ButtonLink>
+                <ButtonLink size="lg" variant="soft" href="/contact">
+                  Talk to us
+                </ButtonLink>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <Features />
-
-      <section className="border-b border-border/60 bg-muted/30">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-medium uppercase tracking-widest text-primary">Deep dive</p>
-            <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              The whole platform, in detail
-            </h2>
+      {/* 01 — the six capabilities, each row read from its page. */}
+      <section className="m-sec" aria-labelledby="fx-caps-title">
+        <div className="m-wrap">
+          <div className="space-y-5" data-reveal>
+            <Chapter n="01" label={P.capabilities.kicker} />
+            <Title lines={P.capabilities.title} id="fx-caps-title" />
           </div>
-          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {deepDive.map(({ icon: Icon, title, points }) => (
-              <div
-                key={title}
-                className="flex flex-col gap-4 rounded-2xl border border-border/60 bg-background p-6"
-              >
-                <span className="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary">
-                  <Icon className="size-5" />
-                </span>
-                <h3 className="font-display text-lg font-semibold tracking-tight">{title}</h3>
-                <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-                  {points.map((p) => (
-                    <li key={p} className="flex gap-2">
-                      <span
-                        aria-hidden
-                        className="mt-1.5 size-1 shrink-0 rounded-full bg-primary"
-                      />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
+          <ul className="fx-caps">
+            {CAPABILITIES.map(({ slug, name, line, icon: Icon }, i) => (
+              <li key={slug} data-reveal style={vars({ "--i": i % 2 })}>
+                <NextLink href={`/product/${slug}`} className="fx-cap">
+                  <span className="ih-icon">
+                    <Icon size={22} aria-hidden />
+                  </span>
+                  <span className="fx-cap-head">
+                    <span className="m-geo fx-cap-name">{name}</span>
+                    <span className="fx-cap-line">{line}</span>
+                  </span>
+                  <span className="fx-cap-items">
+                    {itemsOf(slug).map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </span>
+                  <span className="fx-cap-go">
+                    Explore <ArrowRightIcon size={16} aria-hidden />
+                  </span>
+                </NextLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 02 — the standards, as a reference table. */}
+      <section className="m-sec m-sunken" aria-labelledby="fx-std-title">
+        <div className="m-wrap">
+          <div className="m-sec-head" data-reveal>
+            <div className="space-y-5">
+              <Chapter n="02" label={P.standards.kicker} />
+              <Title lines={P.standards.title} id="fx-std-title" />
+            </div>
+            <p className="m-lede m-sec-note">{P.standards.lede}</p>
+          </div>
+          <div className="fx-std">
+            {P.standards.groups.map((g) => (
+              <div key={g.name} className="cp-table-wrap" data-reveal>
+                <table className="cp-table fx-std-table">
+                  <caption className="m-caps">{g.name}</caption>
+                  <thead className="sr-only">
+                    <tr>
+                      <th scope="col">Standard</th>
+                      <th scope="col">What it is for</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {g.rows.map(([spec, use]) => (
+                      <tr key={spec}>
+                        <th scope="row" className="m-geo">
+                          {spec}
+                        </th>
+                        <td>{use}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <Integrations />
-      <CTA />
-    </>
+      {/* 03 — what is not in 1.0, once, plainly. */}
+      <section className="m-sec m-band" data-qx-color-scheme="dark" aria-labelledby="fx-not-title">
+        <div className="m-wrap">
+          <div className="space-y-5" data-reveal>
+            <Chapter n="03" label={P.notYet.kicker} dark />
+            <Title lines={P.notYet.title} id="fx-not-title" dark />
+          </div>
+          <ul className="cp-points fx-not" data-reveal>
+            {P.notYet.items.map((p) => (
+              <li key={p.name}>
+                <h3 className="m-geo m-heading m-title-dark">{p.name}</h3>
+                <p className="m-body m-note-dark">{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="m-sec" aria-labelledby="fx-close-title">
+        <div className="m-wrap">
+          <div className="pcta cp-close" data-reveal>
+            <h2 id="fx-close-title" className="m-geo m-display-m">
+              {P.close.map((l, i) => (
+                <span key={l} className={i > 0 ? "block ih-tone" : "block"}>
+                  {l}
+                  {i < P.close.length - 1 && " "}
+                </span>
+              ))}
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink size="lg" href={DOCS_BASE_URL} icon={ArrowUpRightIcon}>
+                Read the docs
+              </ButtonLink>
+              <ButtonLink size="lg" variant="soft" href="/contact">
+                Talk to us
+              </ButtonLink>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

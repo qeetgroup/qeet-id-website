@@ -1,0 +1,155 @@
+/*
+ * /about — its own page category, short: a light cover, the one line on why
+ * Qeet ID exists set large on a dark band, then Qeet Group's four words as a
+ * row of initials, and its vision and mission. Tokens only.
+ */
+@layer components {
+  /* ---------- Cover ---------- */
+  .ab-cover {
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  }
+  .ab-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ab-cover-head {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .ab-cover-head {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: clamp(3rem, 2rem + 3vw, 5rem);
+    }
+  }
+  .ab-title {
+    font-size: clamp(2.5rem, 1rem + 4.2vw, 5.25rem);
+  }
+  .ab-cover-side {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .ab-status {
+    padding-top: 1rem;
+    border-top: 1px solid var(--qx-color-border-default);
+    font-size: 0.9375rem;
+    color: var(--qx-color-text-subtle);
+  }
+
+  /* ---------- 01 The line ---------- */
+  .ab-quote {
+    display: grid;
+    gap: 2rem;
+    max-inline-size: 62rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  .ab-quote p {
+    font-size: clamp(1.875rem, 1rem + 2.6vw, 3.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .ab-quote p::before {
+    content: "“";
+    margin-inline-start: -0.45em;
+    color: var(--qx-color-bg-brand-bold);
+  }
+  .ab-quote p::after {
+    content: "”";
+  }
+
+  /* ---------- 02 Qeet Group ---------- */
+  .ab-group-head {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .ab-group-head {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: clamp(3rem, 2rem + 3vw, 5rem);
+    }
+  }
+  .ab-framing-line {
+    display: block;
+    margin-top: 0.75rem;
+    color: var(--qx-color-text-default);
+    font-weight: 500;
+  }
+  .ab-words {
+    display: grid;
+    gap: 1px;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    background: var(--qx-color-border-default);
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-surface);
+    overflow: hidden;
+  }
+  @media (min-width: 700px) {
+    .ab-words {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .ab-words {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .ab-words li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    background: var(--qx-color-surface-default);
+  }
+  .ab-letter {
+    margin-bottom: 1rem;
+    font-size: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+    line-height: 1;
+    color: var(--qx-color-text-brand);
+  }
+  .ab-muted {
+    color: var(--qx-color-text-subtle);
+  }
+  .ab-purpose {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  @media (min-width: 800px) {
+    .ab-purpose {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(2.5rem, 1.5rem + 3vw, 5rem);
+    }
+  }
+  .ab-purpose > div {
+    display: grid;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 3px solid var(--qx-color-bg-neutral-bold);
+  }
+  .ab-purpose dt {
+    color: var(--qx-color-text-subtle);
+  }
+  .ab-purpose dd {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  .ab-source {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .ab-source a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--qx-color-text-default);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}

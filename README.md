@@ -1,9 +1,9 @@
 # Qeet ID — Marketing Site
 
-The public marketing website for **Qeet ID**, the passkeys-first, open-source identity &
-access platform (the OSS Auth0/Okta alternative). Ships at **[id.qeet.in](https://id.qeet.in)**.
+The public marketing website for **Qeet ID**, the passkeys-first identity &
+access platform. Ships at **[id.qeet.in](https://id.qeet.in)**.
 
-**Stack:** Next.js 16 (App Router, React Compiler) · React 19 · [`@qeetrix/ui`](https://github.com/qeetgroup) · Tailwind CSS v4 · Motion · Biome · **bun**
+**Stack:** Next.js 16 (App Router, React Compiler) · React 19 · Qeetrix (`@qeetrix/react`, `@qeetrix/tokens`, `@qeetrix/icons`) · Tailwind CSS v4 · Biome · **bun**
 
 > This is the marketing site only. It has no login of its own — the **Sign in / Sign up**
 > buttons deep-link to the Qeet ID admin console, which hosts the real auth flows. The site
@@ -22,23 +22,19 @@ All marketing routes live under the `src/app/(marketing)` route group; metadata 
 | `/features` | Product features |
 | `/pricing` | Pricing + interactive calculator |
 | `/security` | Security & compliance |
-| `/customers` · `/customers/[slug]` | Customer stories index + dynamic case studies |
-| `/compare` · `/compare/{auth0,clerk,stytch,workos}` | Competitor comparison landing pages |
+| `/compare` · `/compare/<competitor>` | Eight comparisons in the same fifteen areas, from dated research (`src/config/compare.ts`) |
 | `/blog` · `/blog/[slug]` | Blog index + dynamic posts |
-| `/changelog` | Product changelog |
 | `/about` | About / company |
-| `/careers` | Careers |
-| `/status` | Status page |
-| `/contact` | Contact form (posts to `/api/contact`) |
+| `/contact` | Contact — the organisation's published inboxes, as email links |
 | `/docs` | Docs entry point |
 | `/legal/{privacy,terms,dpa,subprocessors}` | Legal pages |
 
-**API route:** `POST /api/contact` — validates the contact form and acknowledges it.
-No mail transport is wired up yet (it accepts and returns `{ ok: true }`); swap in a real
-transport before launch.
+**Retired (2026-10-29), with permanent redirects in `next.config.ts`:** `/customers` (invented
+"representative" stories), `/status` (an "illustrative" status page while production is stopped),
+`/changelog` (version numbers no release ever had) → `/`; `/careers` → `qeet.in/careers`.
+`POST /api/contact` is gone with the form it served (it sent nothing and reported success).
 
-Content for the blog, changelog and customer stories is authored in-repo under `src/lib/`
-(`blog.ts`, `changelog.ts`, `customers.ts`), which also drives the sitemap.
+Blog posts are authored in-repo in `src/lib/blog.ts`, which also drives the sitemap.
 
 ---
 
@@ -69,7 +65,6 @@ site **:3001** (and `.env.example` uses that) — run `bun run dev -- -p 3001` t
 | `bun run lint` | `biome lint` | Lint (errors only) |
 | `bun run format` | `biome format --write` | Auto-format |
 | `bun run check` | `biome check` | Lint + format check |
-| `bun run generate:tree` | `struct …` | Regenerate `project.tree` |
 
 ---
 

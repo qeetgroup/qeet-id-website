@@ -1,15 +1,15 @@
 import type { MetadataRoute } from "next";
 
-import { caseStudySlug } from "@/components/marketing/blocks/case-study-card";
+import { CAPABILITIES } from "@/config/capability-index";
+import { COMPETITORS } from "@/config/compare";
+import { LEGAL_DOCS } from "@/config/legal";
 import { listPosts } from "@/lib/blog";
-import { listEntries } from "@/lib/changelog";
-import { stories } from "@/lib/customers";
 
 /**
  * Marketing-site sitemap (Next 16 `MetadataRoute.Sitemap`).
  *
  * Enumerates every public marketing route — including the dynamic
- * `blog/[slug]` and `customers/[slug]` pages, whose slugs are read from the
+ * `product/[slug]` and `blog/[slug]` pages, whose slugs are read from the
  * in-repo data modules so the sitemap stays in lock-step with the content.
  * The hand-maintained static list keeps non-public paths (drafts, `/api/`)
  * out by construction.
@@ -45,8 +45,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const posts = listPosts();
   const latestPost = posts[0]?.publishedAt ?? now;
-  const changelog = listEntries();
-  const latestRelease = changelog[0]?.date ?? now;
 
   // Static marketing routes, highest-value first.
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -54,58 +52,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/features", "monthly", 0.9, now),
     entry("/pricing", "monthly", 0.9, now),
     entry("/security", "monthly", 0.8, now),
-    entry("/customers", "weekly", 0.8, now),
-    entry("/compare", "monthly", 0.7, now),
+    entry("/migrate", "monthly", 0.7, now),
     entry("/blog", "weekly", 0.7, latestPost),
-    entry("/changelog", "weekly", 0.6, latestRelease),
     entry("/about", "monthly", 0.6, now),
-    entry("/careers", "weekly", 0.6, now),
-    entry("/status", "daily", 0.4, now),
     entry("/contact", "yearly", 0.5, now),
     // Legal — important for trust/compliance, low crawl cadence.
-    entry("/legal/privacy", "yearly", 0.3, now),
-    entry("/legal/terms", "yearly", 0.3, now),
-    entry("/legal/dpa", "yearly", 0.3, now),
-    entry("/legal/subprocessors", "yearly", 0.3, now),
+    ...LEGAL_DOCS.map((d) => entry(`/legal/${d.slug}`, "yearly", 0.3, new Date(d.updated))),
   ];
 
-  // Competitor comparison landing pages — SEO bait for "Qeet ID vs X" and
-  // "<competitor> alternative" queries. Keep in lock-step with the page files
-  // under app/(marketing)/compare/<slug>/.
-  const compareSlugs = [
-    "auth0",
-    "okta",
-    "entra",
-    "ping",
-    "clerk",
-    "descope",
-    "propelauth",
-    "frontegg",
-    "workos",
-    "stytch",
-    "cognito",
-    "firebase",
-    "supabase",
-    "keycloak",
-    "zitadel",
-    "authentik",
-    "ory",
-    "fusionauth",
-    "supertokens",
-  ];
-  const compareRoutes: MetadataRoute.Sitemap = compareSlugs.map((slug) =>
-    entry(`/compare/${slug}`, "monthly", 0.6, now),
+  // The six capability pages, from the same list the Product menu reads.
+  const productRoutes: MetadataRoute.Sitemap = CAPABILITIES.map((c) =>
+    entry(`/product/${c.slug}`, "monthly", 0.85, now),
   );
+
+  // The comparisons, each dated by the day its facts were read.
+  const compareRoutes: MetadataRoute.Sitemap = [
+    entry("/compare", "monthly", 0.6, now),
+    ...COMPETITORS.map((c) => entry(`/compare/${c.slug}`, "monthly", 0.6, new Date(c.checked))),
+  ];
 
   // Dynamic blog posts.
   const blogRoutes: MetadataRoute.Sitemap = posts.map((post) =>
     entry(`/blog/${post.slug}`, "yearly", 0.6, post.publishedAt),
   );
 
-  // Dynamic customer stories.
-  const customerRoutes: MetadataRoute.Sitemap = stories.map((story) =>
-    entry(`/customers/${caseStudySlug(story.company)}`, "monthly", 0.6, now),
-  );
-
-  return [...staticRoutes, ...compareRoutes, ...blogRoutes, ...customerRoutes];
+  return [...staticRoutes, ...productRoutes, ...compareRoutes, ...blogRoutes];
 }

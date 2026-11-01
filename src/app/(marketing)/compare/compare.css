@@ -1,0 +1,548 @@
+/*
+ * /compare and /compare/[slug] — their own page category: a ledger. A light
+ * cover whose centre is the verdict strip (one mark per area, in the order of
+ * the table), the choice in two columns, the areas as a ruled list, then the
+ * sources with their dates. On the index the strips line up into a matrix.
+ * Type, colour and rules are the marketing layer's; tokens only.
+ */
+@layer components {
+  /* ---------- The marks ---------- */
+  .cx-mark {
+    --cx-w: 0.875rem;
+    --cx-h: 0.875rem;
+    display: inline-block;
+    flex-shrink: 0;
+    inline-size: var(--cx-w);
+    block-size: var(--cx-h);
+    border-radius: 2px;
+    vertical-align: -0.1em;
+  }
+  .cx-mark[data-lead="them"] {
+    background: var(--qx-color-bg-neutral-bold);
+  }
+  .cx-mark[data-lead="qeet"] {
+    background: var(--qx-color-bg-brand-bold);
+  }
+  .cx-mark[data-lead="even"] {
+    box-shadow: inset 0 0 0 2px var(--qx-color-border-strong);
+  }
+  .cx-mark[data-lead="split"] {
+    background: linear-gradient(
+      135deg,
+      var(--qx-color-bg-neutral-bold) 0 50%,
+      var(--qx-color-bg-brand-bold) 50% 100%
+    );
+  }
+  .cx-mark[data-lead="none"] {
+    background: linear-gradient(
+      transparent calc(50% - 1px),
+      var(--qx-color-border-strong) calc(50% - 1px) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+  }
+  @media (forced-colors: active) {
+    .cx-mark {
+      forced-color-adjust: none;
+      border: 1px solid CanvasText;
+    }
+    .cx-mark[data-lead="them"] {
+      background: CanvasText;
+    }
+    .cx-mark[data-lead="qeet"] {
+      background: Highlight;
+    }
+    .cx-mark[data-lead="split"] {
+      background: linear-gradient(135deg, CanvasText 0 50%, Highlight 50% 100%);
+    }
+  }
+
+  /* ---------- Cover ---------- */
+  .cx-cover {
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  }
+  .cx-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+  .cx-crumb {
+    color: inherit;
+    text-decoration: none;
+  }
+  .cx-crumb:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+  .cx-cover-head {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .cx-cover-head {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: clamp(3rem, 2rem + 3vw, 5rem);
+    }
+  }
+  .cx-title {
+    font-size: clamp(2.5rem, 1rem + 4.2vw, 5.25rem);
+  }
+  .cx-cover-side {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .cx-status {
+    display: flex;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-status svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* ---------- The strip ---------- */
+  .cx-scale {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: clamp(2.75rem, 2rem + 2vw, 3.75rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  .cx-strip {
+    display: flex;
+    gap: clamp(0.5rem, 0.25rem + 1vw, 1.25rem);
+  }
+  .cx-strip-group {
+    display: grid;
+    gap: 0.625rem;
+    flex-basis: 0;
+    min-inline-size: 0;
+  }
+  .cx-strip-marks {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 3px;
+  }
+  .cx-strip-marks .cx-mark {
+    --cx-w: 100%;
+    --cx-h: 0.5rem;
+  }
+  .cx-scale .cx-strip-marks .cx-mark {
+    --cx-h: clamp(2.25rem, 1.5rem + 2vw, 3.5rem);
+  }
+  .cx-strip-name {
+    overflow: hidden;
+    font-size: 0.8125rem;
+    color: var(--qx-color-text-subtle);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .cx-legend,
+  .cx-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    font-size: 0.9375rem;
+  }
+  .cx-legend li,
+  .cx-key li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .cx-legend-n {
+    font-size: 1.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- 01 Choose ---------- */
+  .cx-choose {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  @media (min-width: 800px) {
+    .cx-choose {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(2.5rem, 1.5rem + 3vw, 5rem);
+    }
+  }
+  .cx-choice {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+    padding-top: 1.25rem;
+    border-top: 3px solid var(--qx-color-bg-neutral-bold);
+  }
+  .cx-choice[data-side="qeet"] {
+    border-top-color: var(--qx-color-bg-brand-bold);
+  }
+  .cx-choice ul {
+    display: grid;
+  }
+  .cx-choice li {
+    padding-block: 0.875rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  .cx-choice li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  /* ---------- 02 Areas ---------- */
+  .cx-areas {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  .cx-row {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  .cx-head {
+    display: none;
+  }
+  .cx-group-name {
+    padding-block: 2rem 0.75rem;
+  }
+  .cx-group:first-of-type .cx-group-name {
+    padding-top: 0;
+  }
+  .cx-area {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+  .cx-cell {
+    display: grid;
+    gap: 0.25rem;
+    align-content: start;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .cx-col {
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-lead-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+  }
+  .cx-none {
+    font-weight: 400;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-note {
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+  @media (min-width: 900px) {
+    .cx-row {
+      grid-template-columns: minmax(0, 2.5fr) minmax(0, 4fr) minmax(0, 4fr) minmax(0, 2.75fr);
+      gap: clamp(1.25rem, 0.5rem + 1.5vw, 2rem);
+    }
+    .cx-head {
+      display: grid;
+      padding-block: 0 0.875rem;
+      border-top: 0;
+    }
+    .cx-head .m-caps {
+      color: var(--qx-color-text-subtle);
+    }
+    .cx-group-name {
+      border-top: 1px solid var(--qx-color-border-strong);
+      padding-block: 1.5rem 0.5rem;
+    }
+    .cx-group:first-of-type .cx-group-name {
+      padding-top: 1.5rem;
+    }
+    /* The column labels move into the header row; readers still get them. */
+    .cx-col {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .cx-group-name + .cx-row {
+      border-top: 0;
+    }
+  }
+
+  /* ---------- 03 Moving across ---------- */
+  .cx-move {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 900px) {
+    .cx-move {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: clamp(3rem, 2rem + 3vw, 5rem);
+    }
+  }
+  .cx-move-side {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+
+  /* ---------- Sources ---------- */
+  .cx-sources {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .cx-sources {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(3rem, 2rem + 3vw, 5rem);
+    }
+  }
+  .cx-source-list {
+    display: grid;
+    counter-reset: cx-src;
+  }
+  .cx-source-list li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+    padding-block: 0.875rem;
+    border-top: 1px solid var(--qx-color-border-default);
+    counter-increment: cx-src;
+  }
+  .cx-source-list li::before {
+    content: counter(cx-src, decimal-leading-zero);
+    grid-row: span 2;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.7;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-source-title {
+    font-weight: 500;
+  }
+  .cx-source-meta {
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-source-note {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-source-note a {
+    color: var(--qx-color-text-default);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* ---------- Other comparisons, and the index on a phone ---------- */
+  .cx-others,
+  .cx-cards {
+    display: grid;
+    gap: 1px;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    background: var(--qx-color-border-default);
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-surface);
+    overflow: hidden;
+  }
+  @media (min-width: 640px) {
+    .cx-others {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    /* Seven cards in two or four columns: the last row closes on a filler. */
+    .cx-others::after {
+      content: "";
+      background: var(--qx-color-surface-sunken);
+    }
+  }
+  @media (min-width: 1100px) {
+    .cx-others {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .cx-other {
+    display: grid;
+    gap: 0.75rem;
+    block-size: 100%;
+    padding: 1.5rem;
+    color: inherit;
+    text-decoration: none;
+    background: var(--qx-color-surface-default);
+    transition: background-color var(--qx-motion-duration-fast, 120ms) ease;
+  }
+  .m-sunken .cx-other {
+    background: var(--qx-color-surface-sunken);
+  }
+  .cx-other:hover {
+    background: var(--qx-color-bg-neutral-subtle);
+  }
+  .cx-other:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: -2px;
+  }
+  .cx-other-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .cx-other-arrow {
+    color: var(--qx-color-text-subtle);
+    transition: transform var(--qx-motion-duration-fast, 120ms) ease;
+  }
+  .cx-other:hover .cx-other-arrow {
+    transform: translateX(3px);
+  }
+  .cx-other-kind,
+  .cx-other-count {
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-other .cx-strip {
+    margin-top: 0.5rem;
+  }
+
+  /* ---------- The matrix (index, wide screens) ---------- */
+  .cx-key {
+    margin-top: clamp(2.75rem, 2rem + 2vw, 3.75rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-matrix-wrap {
+    display: none;
+  }
+  @media (min-width: 1100px) {
+    .cx-matrix-wrap {
+      display: block;
+      margin-top: 2rem;
+    }
+    .cx-cards {
+      display: none;
+    }
+  }
+  /* Fixed layout: the name and total columns are set, the fifteen share the rest. */
+  .cx-matrix {
+    inline-size: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .cx-col-name {
+    inline-size: 17rem;
+  }
+  .cx-matrix-groups th {
+    padding-bottom: 0.625rem;
+    text-align: start;
+    color: var(--qx-color-text-subtle);
+    border-bottom: 1px solid var(--qx-color-border-strong);
+  }
+  .cx-matrix-groups th {
+    padding-inline-start: 0.625rem;
+  }
+  .cx-matrix-areas th {
+    padding: 0.875rem 0 0.875rem;
+    vertical-align: bottom;
+    text-align: start;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-matrix-areas th:first-child {
+    font-weight: 600;
+  }
+  /* Area names stand upright, reading bottom to top, one per column. */
+  .cx-matrix-areas th:has(.cx-up) {
+    text-align: center;
+  }
+  .cx-matrix-areas .cx-up {
+    display: inline-block;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    line-height: 1.25;
+  }
+  .cx-matrix tbody td,
+  .cx-matrix tbody th {
+    padding-block: 1rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  .cx-matrix tbody th {
+    padding-inline-end: 1.5rem;
+    text-align: start;
+    font-weight: 400;
+  }
+  .cx-matrix tbody td {
+    text-align: center;
+  }
+  /* Each group opens on a hairline, so the six read as six. */
+  .cx-matrix [data-first] {
+    border-inline-start: 1px solid var(--qx-color-border-default);
+  }
+  .cx-matrix tbody .cx-mark {
+    --cx-w: 1.375rem;
+    --cx-h: 1.375rem;
+  }
+  .cx-matrix tbody tr:hover > * {
+    background: var(--qx-color-bg-neutral-subtle);
+  }
+  .cx-matrix-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.0625rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .cx-matrix-name:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .cx-matrix-name:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .cx-matrix-kind {
+    display: block;
+    margin-top: 0.125rem;
+    font-size: 0.8125rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .cx-notyet {
+    display: flex;
+    gap: 0.625rem;
+    margin-top: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .cx-notyet svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* The strip's marks arrive left to right, once (§18). */
+  @media (prefers-reduced-motion: no-preference) {
+    .cx-scale .cx-mark {
+      animation: cx-rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      animation-delay: calc(560ms + var(--cx-i, 0) * 28ms);
+      transform-origin: bottom;
+    }
+  }
+  @keyframes cx-rise {
+    from {
+      transform: scaleY(0);
+    }
+  }
+}

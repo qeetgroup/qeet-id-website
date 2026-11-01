@@ -7,10 +7,9 @@
  * website, console, docs and a future billing service consume one definition.
  *
  * To change pricing, edit the config modules (`plans`, `features`, `usage`,
- * `add-ons`, `faq`) — not the components. See `docs/PRICING.md`.
+ * `faq`) — not the components. See docs/llm/workflows.md, "Change pricing".
  */
 
-export * from "./add-ons";
 export * from "./calculator";
 export * from "./cta";
 export * from "./display";

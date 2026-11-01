@@ -1,8 +1,8 @@
 /**
- * The five public Qeet ID plans — the authoritative launch configuration.
+ * The four public Qeet ID plans — the authoritative launch configuration.
  *
  * Prices and MAU allowances live here and nowhere else; components read this
- * config so a price change is a one-line edit (see `docs/PRICING.md`). Feature
+ * config so a price change is a one-line edit (see docs/llm/workflows.md, "Change pricing"). Feature
  * availability per plan lives in `./features`; usage dimensions in `./usage`.
  */
 
@@ -29,14 +29,14 @@ export const plans: PricingPlan[] = [
     tagline: "Start building with Qeet ID.",
     audience: "For developers and early experimentation.",
     price: { monthly: 0, yearly: 0, currency: "INR" },
-    mau: 1_000,
+    mau: 10_000,
     cta: { label: "Start building free", target: "signup" },
     highlights: [
-      "1,000 monthly active users",
+      "10,000 monthly active users",
       "Passkeys, social & password sign-in",
       "Email magic links + TOTP MFA",
       "1 organization · RBAC with 3 roles",
-      "REST API, OIDC & first-class SDKs",
+      "7-day audit log",
       "Community support",
     ],
   },
@@ -46,34 +46,15 @@ export const plans: PricingPlan[] = [
     tagline: "For startups running production applications.",
     audience: "For startups and small production apps.",
     price: { monthly: 2_400, yearly: null, currency: "INR" },
-    mau: 10_000,
+    mau: 25_000,
     cta: { label: "Get started", target: "signup-plan" },
     highlights: [
-      "10,000 monthly active users",
+      "25,000 monthly active users",
       "All MFA methods (passkey, TOTP, OTP)",
       "Unlimited organizations & roles",
       "Webhooks · 30-day audit log",
-      "Custom branding + 1 custom domain",
+      "Custom branding",
       "Email support",
-    ],
-  },
-  {
-    id: "growth",
-    name: "Growth",
-    tagline: "For products scaling their identity infrastructure.",
-    audience: "For growing SaaS companies.",
-    price: { monthly: 5_000, yearly: null, currency: "INR" },
-    mau: 50_000,
-    badge: "Most popular",
-    highlighted: true,
-    cta: { label: "Get started", target: "signup-plan" },
-    highlights: [
-      "50,000 monthly active users",
-      "Enterprise SSO (OIDC) — configurable",
-      "RBAC + ABAC policy engine",
-      "Adaptive threat protection",
-      "90-day audit log + login analytics",
-      "Priority support",
     ],
   },
   {
@@ -83,13 +64,14 @@ export const plans: PricingPlan[] = [
     audience: "For established businesses.",
     price: { monthly: 8_000, yearly: null, currency: "INR" },
     mau: 100_000,
+    highlighted: true,
     cta: { label: "Get started", target: "signup-plan" },
     highlights: [
       "100,000 monthly active users",
       "SAML & OIDC SSO included — no SSO tax",
       "Audit export · 90-day retention",
       "Session & device controls",
-      "SCIM provisioning available",
+      "Attribute and relationship policies",
       "Priority support & chat",
     ],
   },
@@ -104,10 +86,10 @@ export const plans: PricingPlan[] = [
     highlights: [
       "Custom / high-scale MAU",
       "SCIM & LDAP directory sync included",
-      "SSO/MFA enforcement & IP policies",
-      "BYOK & self-hosting / dedicated tenant",
+      "SSO & MFA enforcement",
+      "Admin portal for your customers' IT",
       "Custom retention + SIEM streaming",
-      "Dedicated support, named CSM & SLA",
+      "Dedicated support & named CSM",
     ],
   },
 ];
