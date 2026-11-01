@@ -5,7 +5,7 @@
  * are produced by Satori (`next/og` `ImageResponse`), the usual styling layers
  * are unavailable:
  *
- *   - NO Tailwind / `@qeetrix/ui` — inline `style` objects only.
+ *   - NO Tailwind or Qeetrix CSS — inline `style` objects only.
  *   - Only flexbox layout (no CSS grid), and a subset of CSS properties.
  *   - Fonts must be embedded; we deliberately do NOT fetch over the network at
  *     render time (offline build). `next/og` ships a Geist fallback font that

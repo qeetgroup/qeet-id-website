@@ -1,0 +1,1480 @@
+/*
+ * ============================================================================
+ * The marketing layer — Qeetrix tokens, marketing composition
+ * ============================================================================
+ *
+ * The same layer as qeet.in (qeet-group, src/styles/marketing.css), trimmed to
+ * what the Qeet ID site needs, so the product site and the group site read as
+ * one family. The values are Qeetrix's own — `--qx-*` colour, type families and
+ * geometry, radii and motion easings from @qeetrix/tokens — and only the
+ * composition and the display scale are marketing-specific: a marketing site
+ * runs one or two steps larger than product UI (Qeetrix rules §17).
+ *
+ * Everything here lives in the `components` layer: above Tailwind's preflight,
+ * below utilities, so a utility class at a call site still wins.
+ */
+
+@layer components {
+  /* ---------- Qeet ID additions, shared by its pages ---------- */
+  /* A two-line display heading's second line, quieter (as qeet.in's). */
+  .ih-tone {
+    color: var(--qx-color-text-subtle);
+  }
+  .m-title-dark .ih-tone {
+    color: rgb(255 255 255 / 0.62);
+  }
+  /* An icon in a ruled tile. */
+  .ih-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-control);
+    color: var(--qx-color-text-default);
+    background: var(--qx-color-surface-canvas);
+  }
+
+  /* The root of a redesigned page. Qeet Sans, Qeetrix canvas and text. */
+  .mk {
+    background: var(--qx-color-surface-canvas);
+    color: var(--qx-color-text-default);
+    font-family: var(--qx-font-family-sans);
+  }
+
+  /* The skip link: off-screen until a keyboard reaches it, then a solid tag
+     over the header. */
+  .mk-skip {
+    font-family: var(--qx-font-family-sans);
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .mk-skip:focus-visible {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: calc(var(--z-nav) + 10);
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--qx-radius-control);
+    background: var(--qx-color-text-default);
+    color: var(--qx-color-surface-canvas);
+    font: 500 0.875rem / 1.4 var(--qx-font-family-sans);
+    text-decoration: none;
+  }
+
+  /* ---------- Measure ---------- */
+  .m-wrap {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 0.6rem + 3vw, 4rem);
+  }
+
+  /* ---------- Type ----------
+   * Display type is Qeet Sans at GEOM 100 (the geometric cut Qeetrix assigns to
+   * display); headings sit at GEOM 50. Sentence case throughout — uppercase is
+   * only ever the group label (.m-caps), per Qeetrix §5. */
+  .m-geo {
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .m-display-xl {
+    font-size: clamp(3rem, 1.1rem + 5.8vw, 7.25rem);
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+  .m-display-l {
+    font-size: clamp(2.5rem, 1.3rem + 3.6vw, 5.25rem);
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .m-display-m {
+    font-size: clamp(2rem, 1.3rem + 2.1vw, 3.375rem);
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+  .m-heading {
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-heading);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);
+    line-height: 1.25;
+  }
+  .m-geo.m-heading {
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+  }
+  .m-lede {
+    font-size: clamp(1.125rem, 1rem + 0.45vw, 1.4rem);
+    line-height: 1.55;
+    color: var(--qx-color-text-subtle);
+    text-wrap: pretty;
+  }
+  .m-body {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--qx-color-text-subtle);
+  }
+  .m-caps {
+    font: var(--qx-typography-label-caps);
+    letter-spacing: var(--qx-typography-label-caps-letter-spacing);
+    text-transform: uppercase;
+    color: var(--qx-color-text-subtlest);
+  }
+
+  /* Artwork drawn for one background (the logo): shown per the nearest scheme. */
+  .on-light-only {
+    display: inline-flex;
+  }
+  .on-dark-only {
+    display: none;
+  }
+  [data-qx-color-scheme="dark"] .on-light-only {
+    display: none;
+  }
+  [data-qx-color-scheme="dark"] .on-dark-only {
+    display: inline-flex;
+  }
+
+  /* The Ember rule: a short 2px bar that opens a section or a statement. */
+  .m-rule {
+    display: block;
+    height: 2px;
+    width: 4rem;
+    background: var(--qx-color-border-brand);
+  }
+  .m-hair {
+    border-color: var(--qx-color-border-default);
+  }
+
+  /* Photography is set in monochrome, so a mixed stock set reads as one series
+   * and the only saturated colour on the page stays Ember. */
+  .m-mono {
+    filter: grayscale(1) contrast(1.06);
+  }
+
+  /* A section heading's running label: "01 —— Our businesses". */
+  .m-chapter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .m-chapter > .m-rule {
+    width: 2.5rem;
+  }
+  /* Labels on a photograph: a fixed light tint, whatever the theme. */
+  [data-tone="on-photo"] .m-caps {
+    color: rgb(255 255 255 / 0.6);
+  }
+
+  /* The ruled grid behind a dark hero: twelve hairline columns, the page's own
+   * measure made visible. Decorative; sits under the content. */
+  .mhero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .mhero-grid span {
+    border-left: 1px solid rgb(255 255 255 / 0.055);
+  }
+
+  /* An interior page's dark hero (the header floats over it — DARK_HERO_ROUTES). */
+  .phero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #0b0b0b;
+    color: var(--qx-color-text-default);
+  }
+  .phero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(120% 80% at 10% 0%, rgb(255 255 255 / 0.05), transparent 60%);
+  }
+  .phero-inner {
+    display: grid;
+    gap: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    padding-block: clamp(8rem, 6rem + 6vw, 11rem) clamp(3rem, 2rem + 3vw, 4.5rem);
+  }
+  .phero-head {
+    display: grid;
+    gap: 2rem;
+    max-width: 64rem;
+  }
+  .phero-title {
+    color: #fbfaf8;
+  }
+  .phero-kicker {
+    color: rgb(255 255 255 / 0.72);
+  }
+  .phero-lede {
+    max-width: 38rem;
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  /* Key figures at the foot of an interior hero — /products (the three states),
+     /ecosystem (the layers): a number, a label and a line, each a jump link. */
+  .phero-states {
+    display: grid;
+    border-top: 1px solid rgb(255 255 255 / 0.16);
+  }
+  /* One row of equal columns on desktop, however many figures a page has. */
+  @media (min-width: 900px) {
+    .phero-states {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+    }
+  }
+  .phero-state {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 1.5rem 1.5rem 1.5rem 0;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+  @media (min-width: 900px) {
+    .phero-state {
+      border-bottom: 0;
+    }
+    .phero-state + .phero-state {
+      border-left: 1px solid rgb(255 255 255 / 0.12);
+      padding-left: 1.5rem;
+    }
+  }
+  .phero-state::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    height: 2px;
+    background: var(--qx-color-border-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 420ms var(--qx-motion-easing-emphasized);
+  }
+  .phero-state:hover::before,
+  .phero-state:focus-visible::before {
+    transform: scaleX(1);
+  }
+  .phero-state:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  .phero-n {
+    font-size: clamp(3rem, 2.2rem + 2.4vw, 4.5rem);
+    line-height: 0.9;
+    color: #fbfaf8;
+    min-width: 2ch;
+    font-variant-numeric: tabular-nums;
+  }
+  .phero-def {
+    display: block;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: rgb(255 255 255 / 0.74);
+  }
+  .phero-arrow {
+    color: rgb(255 255 255 / 0.5);
+    transition:
+      transform 220ms var(--qx-motion-easing-emphasized),
+      color 160ms;
+  }
+  .phero-state:hover .phero-arrow {
+    transform: translateX(4px);
+    color: var(--qx-color-text-brand);
+  }
+
+  /*
+   * Interior sections (the redesigned pages after the home page): the section
+   * padding, a head of kicker + heading with an optional note beside it, the
+   * dark and sunken bands, and a card — dark on a band, light (.m-card-light)
+   * on the canvas — with the Ember bar on hover.
+   */
+  .m-sec {
+    padding-block: clamp(4.5rem, 3rem + 4vw, 7.5rem);
+  }
+  .m-sec-head {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .m-sec-head {
+      grid-template-columns: 7fr 5fr;
+      align-items: end;
+      gap: 3rem;
+    }
+  }
+  .m-sec-note {
+    max-width: 34rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .m-kicker-dark {
+    color: rgb(255 255 255 / 0.6);
+  }
+  .m-title-dark {
+    color: #fbfaf8;
+  }
+  .m-note-dark {
+    color: rgb(255 255 255 / 0.72);
+  }
+  .m-band {
+    background: #0b0b0b;
+    color: var(--qx-color-text-default);
+  }
+  .m-sunken {
+    background: var(--qx-color-surface-sunken);
+  }
+  .m-cards {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 900px) {
+    .m-cards-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .m-cards-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .m-cards > li {
+    display: grid;
+  }
+  .m-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: var(--qx-radius-surface);
+    background: rgb(255 255 255 / 0.03);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color 200ms,
+      background-color 200ms;
+  }
+  .m-card:hover {
+    border-color: rgb(255 255 255 / 0.32);
+    background: rgb(255 255 255 / 0.05);
+  }
+  .m-card:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  .m-card::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    top: -1px;
+    height: 3px;
+    background: var(--qx-color-border-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 420ms var(--qx-motion-easing-emphasized);
+  }
+  .m-card:hover::before,
+  .m-card:focus-visible::before {
+    transform: scaleX(1);
+  }
+  .m-card-light {
+    border-color: var(--qx-color-border-default);
+    background: var(--qx-color-surface-raised);
+  }
+  .m-card-light:hover {
+    border-color: var(--qx-color-border-strong);
+    background: var(--qx-color-surface-raised);
+  }
+  .m-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .m-card-name {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    line-height: 1.15;
+  }
+  .m-card-line {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--qx-color-text-default);
+  }
+  .m-card-sub {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--qx-color-text-subtle);
+  }
+  .m-card-cta {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--qx-color-text-link);
+  }
+
+  /* An interior page's closing line, with its actions. */
+  .pcta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  .pcta h2 {
+    max-width: 34rem;
+  }
+
+  /*
+   * Boxed grids (1px hairlines between cells, drawn by the grid's own
+   * background through the gaps) would show an empty cell as a grey block
+   * whenever the item count does not fill the last row. A filler cell — empty,
+   * aria-hidden, the canvas colour — closes the row; `data-fill` lists the
+   * column counts at which it is needed (lib/grid-fill.ts). Each grid shows the
+   * fillers for the column count it is at, in its own stylesheet.
+   */
+  .cell-fill {
+    display: none;
+    background: var(--qx-color-surface-canvas);
+  }
+
+  /* Anchored sections clear the fixed header. */
+  :where([data-chapter], #main [id]) {
+    scroll-margin-top: 5rem;
+  }
+
+  /* ---------- Links styled as Qeetrix buttons ----------
+   * See components/site/button-link.tsx: an <a> carrying Qeetrix's button
+   * classes, because the Button component puts role="button" on an anchor. */
+  a.qx-button {
+    text-decoration: none;
+  }
+
+  /* ======================================================================
+   * Header
+   * ====================================================================== */
+  .mh {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    color: var(--qx-color-text-default);
+    font-family: var(--qx-font-family-sans);
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 240ms var(--qx-motion-easing-standard),
+      border-color 240ms var(--qx-motion-easing-standard),
+      backdrop-filter 240ms;
+  }
+  /* The home page: the header floats over the full-bleed hero. */
+  .mh[data-overlay] {
+    position: fixed;
+    inset-inline: 0;
+  }
+  .mh[data-state="solid"] {
+    background: color-mix(in oklab, var(--qx-color-surface-canvas) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--qx-color-border-default);
+  }
+  .mh-row {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    height: 4.5rem;
+  }
+  /* ---------- The search popup (components/search/search-popup) — a Qeetrix Dialog; ⌘K / Ctrl+K opens it too ---------- */
+  .sp .sp-field {
+    padding: 0 var(--qx-space-6, 1.5rem) 0.75rem;
+  }
+  .sp .sp-field .qx-input-control {
+    min-height: 3rem;
+    font-size: 1.125rem;
+  }
+  .sp .sp-body {
+    min-height: 12rem;
+    max-height: min(55vh, 32rem);
+    padding-top: 0;
+  }
+  .sp-start {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: 0.5rem 1rem;
+  }
+  .sp-suggest {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .sp-suggest button {
+    min-height: 2.25rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: 2px;
+    background: var(--qx-color-surface-raised);
+    font: inherit;
+    font-size: 0.9375rem;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 160ms;
+  }
+  .sp-suggest button:hover {
+    border-color: var(--qx-color-border-brand);
+  }
+  .sp-suggest button:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  .sp-none {
+    padding-block: 1.5rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .sp-results {
+    display: grid;
+    gap: 2px;
+    padding-block: 0.25rem 0.5rem;
+  }
+  .sp-row {
+    position: relative;
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.75rem 0.9rem 0.8rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 120ms;
+  }
+  .sp-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 3px;
+    background: var(--qx-color-border-brand);
+    transform: scaleY(0);
+    transition: transform 200ms var(--qx-motion-easing-emphasized);
+  }
+  .sp-row[aria-selected="true"] {
+    background: var(--qx-color-surface-sunken);
+  }
+  .sp-row[aria-selected="true"]::before {
+    transform: scaleY(1);
+  }
+  .sp-row-kind {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--qx-color-text-brand);
+  }
+  .sp-row-parent {
+    color: var(--qx-color-text-subtle);
+  }
+  .sp-row-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .sp-row-desc {
+    overflow: hidden;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--qx-color-text-subtle);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sp mark {
+    background: none;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--qx-color-border-brand);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .sp .sp-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    font-size: 0.8125rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .sp-hints {
+    display: none;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .sp-hints {
+      display: inline-flex;
+    }
+  }
+  .sp-hints kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.2rem;
+    padding-inline: 0.35rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: 2px;
+    background: var(--qx-color-surface-raised);
+    /* ↵ is not in the Qeet Sans Latin subset either. */
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+  .sp-count {
+    margin-left: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sp-row::before {
+      transition: none;
+    }
+  }
+
+  /* ---------- The Product panel (qeet.in's header panels) ----------
+   * Rendered after its own button (keyboard order) but positioned against the
+   * header, full width: the destination wrapper is deliberately not a
+   * containing block. A floating layer, so it carries the overlay shadow. */
+  .mh-dest {
+    display: flex;
+  }
+  .mp {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    display: none;
+    max-height: calc(100svh - 4.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--qx-color-surface-canvas);
+    color: var(--qx-color-text-default);
+    border-top: 1px solid var(--qx-color-border-subtle);
+    box-shadow: var(--qx-shadow-overlay);
+  }
+  @media (min-width: 1080px) {
+    .mp {
+      display: block;
+    }
+  }
+  .mp-zones {
+    display: grid;
+    grid-template-columns: 17rem minmax(0, 1fr);
+  }
+  .mp-zones > * {
+    padding-block: 2.25rem 2.5rem;
+  }
+  .mp-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-right: 2.5rem;
+    border-right: 1px solid var(--qx-color-border-subtle);
+  }
+  .mp-statement {
+    font-size: 1.375rem;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .mp-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+    text-decoration: none;
+  }
+  .mp-all:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .mp-caps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem 1.5rem;
+    padding-left: 2.5rem;
+  }
+  .mp-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.875rem;
+    align-items: start;
+    padding: 0.75rem;
+    border-radius: var(--qx-radius-control);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 160ms var(--qx-motion-easing-standard);
+  }
+  .mp-item:hover,
+  .mp-item[aria-current="page"] {
+    background: var(--qx-color-surface-sunken);
+  }
+  .mp-item:focus-visible,
+  .mp-all:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  .mp-item-name {
+    display: block;
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .mp-item-line {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--qx-color-text-subtle);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mp-zones > * {
+      animation: m-in 260ms var(--qx-motion-easing-enter) both;
+    }
+    .mp-zones > :nth-child(2) {
+      animation-delay: 40ms;
+    }
+  }
+
+  .mh-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 2px;
+  }
+  .mh-brand svg {
+    width: 1.625rem;
+    height: 1.625rem;
+  }
+  .mh-brand-name {
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+    font-weight: 600;
+    font-size: 1.1875rem;
+  }
+  .mh-nav {
+    display: none;
+    gap: 0.25rem;
+  }
+  @media (min-width: 1080px) {
+    .mh-nav {
+      display: flex;
+    }
+  }
+  .mh-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    color: color-mix(in oklab, currentColor 78%, transparent);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 160ms var(--qx-motion-easing-standard);
+  }
+  .mh-link svg {
+    opacity: 0.6;
+    transition: transform 200ms var(--qx-motion-easing-standard);
+  }
+  .mh-link[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+  .mh-link:hover,
+  .mh-link:focus-visible,
+  .mh-link[aria-current="page"],
+  .mh-link[aria-expanded="true"] {
+    color: var(--qx-color-text-default);
+  }
+  /* §11: the current item carries Ember. Hover draws the same rule in. */
+  .mh-link::after {
+    content: "";
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.2rem;
+    height: 2px;
+    background: var(--qx-color-border-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms var(--qx-motion-easing-emphasized);
+  }
+  .mh-link:hover::after,
+  .mh-link:focus-visible::after,
+  .mh-link[aria-current="page"]::after,
+  .mh-link[aria-expanded="true"]::after {
+    transform: scaleX(1);
+  }
+  .mh-link:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .mh-end {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mh-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--qx-radius-control);
+    color: inherit;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: background-color 160ms;
+  }
+  .mh-icon:hover {
+    background: color-mix(in oklab, currentColor 10%, transparent);
+  }
+  .mh-icon:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  .mh-cta {
+    display: none;
+  }
+  @media (min-width: 640px) {
+    .mh-cta {
+      display: inline-flex;
+    }
+  }
+  .mh-menu {
+    display: inline-grid;
+  }
+  @media (min-width: 1080px) {
+    .mh-menu {
+      display: none;
+    }
+  }
+
+  /* Scroll progress: a 2px Ember line under the solid bar. */
+  .mh-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--qx-color-border-brand);
+    transform-origin: left;
+    transform: scaleX(var(--p, 0));
+    opacity: 0;
+    transition: opacity 240ms;
+    pointer-events: none;
+  }
+  .mh[data-state="solid"] .mh-progress {
+    opacity: 1;
+  }
+
+  /* ---------- The phone menu (components/layout/PhoneMenu) — a Qeetrix Drawer ---------- */
+  .pm .pm-body {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding-top: 0.75rem;
+  }
+  .pm-search {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-bottom-color: var(--qx-color-border-strong);
+    border-radius: 2px;
+    background: var(--qx-color-bg-neutral-subtle);
+    font: inherit;
+    font-size: 1rem;
+    color: var(--qx-color-text-subtle);
+    text-align: left;
+    cursor: pointer;
+  }
+  .pm-search svg {
+    color: var(--qx-color-text-default);
+  }
+  .pm-search:hover {
+    color: var(--qx-color-text-default);
+  }
+  .pm-search:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  /* Every top-level row the same — the accordion sections and Ecosystem, which is a plain link. */
+  .pm .qx-accordion-trigger,
+  .pm-link {
+    min-height: 3.25rem;
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .pm-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--qx-color-border-subtle);
+    color: inherit;
+    text-decoration: none;
+  }
+  .pm-link svg {
+    color: var(--qx-color-text-subtle);
+  }
+  .pm-link:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: -2px;
+  }
+  /* The drawer's Product group: the six capabilities, above the other destinations. */
+  .pm-head {
+    margin-bottom: 0.5rem;
+  }
+  .pm-caps {
+    display: grid;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--qx-color-border-subtle);
+  }
+  .pm-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-height: 2.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: inherit;
+    text-decoration: none;
+  }
+  .pm-cap svg {
+    color: var(--qx-color-icon-default);
+  }
+  .pm-cap[aria-current="page"] {
+    font-weight: 600;
+  }
+  .pm-cap:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: -2px;
+  }
+  .pm-group {
+    display: grid;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
+  }
+  .pm-group-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--qx-color-text-subtle);
+  }
+  .pm-group-label span {
+    font-variant-numeric: tabular-nums;
+  }
+  .pm-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.1rem 0.75rem;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 2px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .pm-icon {
+    display: grid;
+    place-items: center;
+    grid-row: 1 / span 2;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 2px;
+    background: var(--qx-color-bg-neutral-subtle);
+    color: var(--qx-color-text-default);
+  }
+  .pm-item-name {
+    font-weight: 600;
+  }
+  .pm-item-meta {
+    grid-column: 2;
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    color: var(--qx-color-text-subtle);
+  }
+  /* A link with no icon takes the whole row: never an empty box. */
+  .pm-item[data-plain] {
+    grid-template-columns: 1fr;
+  }
+  .pm-item[data-plain] .pm-item-meta {
+    grid-column: 1;
+  }
+  .pm-item:hover {
+    background: var(--qx-color-bg-neutral-subtle);
+  }
+  .pm-item:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: -2px;
+  }
+  .pm-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-top: 0.2rem;
+  }
+  .pm-chips a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: 2px;
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+    text-decoration: none;
+  }
+  .pm-chips a:hover {
+    color: var(--qx-color-text-default);
+    border-color: var(--qx-color-border-strong);
+  }
+  .pm-chips a:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  .pm-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+    text-decoration: underline;
+    text-decoration-color: var(--qx-color-border-brand);
+    text-underline-offset: 4px;
+    border-radius: 2px;
+  }
+  .pm-all:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  /* You are here: a brand bar, and the name in full ink. */
+  .pm [aria-current="page"] {
+    color: var(--qx-color-text-default);
+  }
+  .pm-item[aria-current="page"],
+  .pm-link[aria-current="page"] {
+    box-shadow: inset 3px 0 0 var(--qx-color-border-brand);
+  }
+  .pm-chips a[aria-current="page"] {
+    border-color: var(--qx-color-border-brand);
+    color: var(--qx-color-text-default);
+  }
+  .pm .pm-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* ---------- Icon card: a product (or anything) as icon, text and arrow ----------
+   * Shared by the products page and the product page's related rail. */
+  .dcard {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.25rem;
+    align-items: start;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    background: var(--qx-color-surface-canvas);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 200ms;
+  }
+  .dcard:hover {
+    background: var(--qx-color-surface-raised);
+  }
+  .dcard::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--qx-color-border-brand);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 420ms var(--qx-motion-easing-emphasized);
+  }
+  .dcard:hover::before,
+  .dcard:focus-visible::before {
+    transform: scaleY(1);
+  }
+  .dcard:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: -2px;
+  }
+  .pf-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-control);
+    color: var(--qx-color-text-default);
+    background: var(--qx-color-surface-raised);
+  }
+  .dcard-arrow {
+    margin-top: 0.25rem;
+    color: var(--qx-color-text-subtlest);
+    transition:
+      transform 220ms var(--qx-motion-easing-emphasized),
+      color 160ms;
+  }
+  .dcard:hover .dcard-arrow {
+    transform: translateX(4px);
+    color: var(--qx-color-text-brand);
+  }
+
+  /* ======================================================================
+   * Footer — four tiers and the wordmark signature. Always dark.
+   * ====================================================================== */
+  .ft {
+    position: relative;
+    overflow: hidden;
+    background: var(--qx-color-surface-sunken);
+    color: var(--qx-color-text-default);
+    font-family: var(--qx-font-family-sans);
+    border-top: 1px solid var(--qx-color-border-subtle);
+  }
+  .ft::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--qx-color-border-brand);
+  }
+  .ft-top {
+    display: grid;
+    gap: 3rem;
+    padding-block: clamp(4rem, 3rem + 4vw, 6.5rem) clamp(3rem, 2rem + 3vw, 5rem);
+  }
+  @media (min-width: 1000px) {
+    .ft-top {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 6rem;
+    }
+  }
+  .ft-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ft-brand svg {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .ft-news {
+    display: grid;
+    gap: 0.75rem;
+    align-items: end;
+  }
+  @media (min-width: 640px) {
+    .ft-news {
+      grid-template-columns: 1fr auto;
+    }
+  }
+  .ft-cols {
+    display: grid;
+    gap: 2.5rem 2rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-block: 3.5rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  @media (min-width: 900px) {
+    .ft-cols {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+  .ft-cols ul {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 1.25rem;
+  }
+  .ft-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--qx-color-text-subtle);
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: color 160ms;
+    white-space: nowrap;
+  }
+  a.ft-link:hover {
+    color: var(--qx-color-text-default);
+  }
+  .ft-link:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .ft-pending {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    font-size: 0.9375rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .ft-pending small {
+    font-size: 0.75rem;
+    color: var(--qx-color-text-subtlest);
+  }
+
+  /* Desktop: label and links on one row; legal on one line. */
+  .ft-follow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  .ft-follow ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+  }
+  .ft-legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.75rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--qx-color-border-default);
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtlest);
+  }
+  .ft-legal p {
+    margin: 0;
+  }
+  .ft-legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+  }
+  .ft-legal-tools {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+  }
+  .ft-legal a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .ft-legal a:hover {
+    color: var(--qx-color-text-default);
+  }
+
+  /* Mobile: the label above a 3 × 2 grid of links; copyright on its own line,
+   * legal links below it. Desktop is unchanged. */
+  @media (max-width: 759px) {
+    .ft-follow {
+      display: block;
+      padding-block: 2rem;
+    }
+    .ft-follow ul {
+      display: grid;
+      grid-template-columns: repeat(3, max-content);
+      gap: 0.9rem 2.25rem;
+      margin-top: 1.1rem;
+    }
+    .ft-legal {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 0.7rem 0.5rem;
+      padding-block: 1.75rem;
+    }
+    .ft-copy {
+      grid-area: 1 / 1;
+    }
+    .ft-based {
+      grid-area: 1 / 2;
+    }
+    .ft-based::before {
+      content: "·" / "";
+      margin-inline-end: 0.5rem;
+    }
+    .ft-legal-links {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    /* Optical: the 18px icon sits 11px inside its 40px target. */
+    .ft-legal-tools {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      margin: 0.6rem 0 0 -11px;
+    }
+  }
+
+  /* The signature: the organisation's name, set at the width of the page. */
+  .ft-mark {
+    display: block;
+    margin: 0;
+    padding: 0 0 0.04em;
+    font-size: min(17.6vw, 15.5rem);
+    line-height: 0.78;
+    white-space: nowrap;
+    color: var(--qx-color-surface-raised);
+    user-select: none;
+    letter-spacing: 0;
+  }
+  .ft-mark::before {
+    content: attr(data-text);
+  }
+  .ft-mark::after {
+    content: ".";
+    color: var(--qx-color-border-brand);
+  }
+  @media (max-width: 759px) {
+    .ft .ft-mark {
+      font-size: 15.6vw;
+    }
+  }
+}
+
+/* ==========================================================================
+ * Motion — content is VISIBLE in the HTML.
+ * ==========================================================================
+ * Entrances on first paint are CSS-only; blocks below the fold are deferred by
+ * a small observer that marks them `pending` and then `shown`. Nothing is ever
+ * hidden by the server, so a visitor without JavaScript — or with reduced
+ * motion — gets the settled page. Transform and opacity only.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  /* The mask is the line plus room for what reaches beyond it: Qeet Sans descenders
+     drop 0.243em below the baseline, which at a 0.9 line-height is 0.12em past the
+     line box (and accents rise above it). Padding gives them room inside the mask;
+     the negative margin keeps the lines exactly where the line-height puts them. */
+  .m-line {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.16em 0.26em;
+    margin-block: -0.16em -0.26em;
+  }
+  .m-line > span {
+    display: block;
+    animation: m-rise-t 900ms var(--qx-motion-easing-emphasized) both;
+    animation-delay: calc(120ms + var(--i, 0) * 90ms);
+  }
+  .m-in {
+    animation: m-in 800ms var(--qx-motion-easing-emphasized) both;
+    animation-delay: var(--d, 0ms);
+  }
+  .m-draw {
+    transform-origin: left;
+    animation: m-draw 900ms var(--qx-motion-easing-emphasized) both;
+    animation-delay: var(--d, 0ms);
+  }
+  [data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  [data-reveal="shown"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 800ms var(--qx-motion-easing-emphasized),
+      transform 900ms var(--qx-motion-easing-emphasized);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  /* The wordmark rises out of the footer's bottom edge rather than fading. */
+  .ft-mark[data-reveal="pending"] {
+    opacity: 1;
+    transform: translateY(35%);
+  }
+  .ft-mark[data-reveal="shown"] {
+    transition: transform 1200ms var(--qx-motion-easing-emphasized);
+  }
+}
+@keyframes m-rise-t {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes m-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes m-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes m-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

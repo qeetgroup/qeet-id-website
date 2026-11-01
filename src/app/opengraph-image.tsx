@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { HERO } from "@/config/home";
 
 import { OG_CONTENT_TYPE, OG_SIZE } from "@/lib/og";
 
@@ -112,7 +113,7 @@ export default async function Image() {
           lineHeight: 1.3,
         }}
       >
-        SSO · MFA · Passkeys · RBAC · Audit. Identity for modern teams.
+        {HERO.lede}
       </div>
 
       {/* Footer */}
@@ -128,11 +129,7 @@ export default async function Image() {
       >
         <div style={{ display: "flex" }}>id.qeet.in</div>
         <div style={{ display: "flex", gap: 16 }}>
-          <span>SOC 2</span>
-          <span style={{ opacity: 0.5 }}>·</span>
-          <span>GDPR</span>
-          <span style={{ opacity: 0.5 }}>·</span>
-          <span>Self-hostable</span>
+          <span>In development</span>
         </div>
       </div>
     </div>,

@@ -1,26 +1,32 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@qeetrix/icons";
+import { ArrowRightIcon } from "@qeetrix/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { InitialsAvatar } from "@/components/marketing/blocks/initials-avatar";
-import { CodeBlock } from "@/components/marketing/effects/code-block";
-import { Reveal } from "@/components/marketing/motion";
-import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/marketing/structured-data";
-import { getPost, listPosts, parseBody, relatedPosts } from "@/lib/blog";
-import { SIGN_UP_URL } from "@/lib/links";
+import "../blog.css";
+import { Prose } from "@/components/blog/prose";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/structured-data";
+import { ButtonLink } from "@/components/site/button-link";
+import { Reveal } from "@/components/site/reveal";
+import { vars } from "@/components/site/vars";
+import { BLOG_PAGE } from "@/config/blog";
+import { getPost, listPosts, parseBody, readingMinutes, relatedPosts } from "@/lib/blog";
+import { longDate } from "@/lib/dates";
 
-interface Props {
-  params: Promise<{ slug: string }>;
-}
+const A = BLOG_PAGE.article;
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return listPosts().map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const post = getPost(slug);
-  if (!post) return { title: "Not found" };
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const post = getPost((await params).slug);
+  if (!post) return {};
   return {
     title: post.title,
     description: post.description,
@@ -31,38 +37,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       url: `/blog/${post.slug}`,
       publishedTime: post.publishedAt,
+      modifiedTime: post.checked,
       authors: [post.author],
       tags: post.tags,
-      // The colocated `opengraph-image.tsx` is auto-detected by Next; this
-      // keeps the article-specific OG metadata explicit alongside it.
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
     },
   };
 }
 
-function formatDate(iso: string) {
-  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  });
-}
-
-export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
-  const post = getPost(slug);
+/**
+ * /blog/[slug] — a post: where it sits, the title and standfirst, the byline
+ * with the day the post was checked against the code; then one measured
+ * column with, on a wide screen, its contents beside it; then the end note,
+ * where its subject lives on the site, and the other posts.
+ */
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const post = getPost((await params).slug);
   if (!post) notFound();
-
   const blocks = parseBody(post.body);
-  const related = relatedPosts(slug);
+  const headings = blocks.flatMap((b) => (b.kind === "h2" ? [b] : []));
+  const related = relatedPosts(post.slug);
+  const minutes = readingMinutes(post);
 
   return (
-    <>
+    <div className="mk" id="post" data-qx-density="comfortable">
       <ArticleJsonLd
         title={post.title}
         description={post.description}
@@ -78,140 +75,135 @@ export default async function BlogPostPage({ params }: Props) {
           { name: post.title, url: `/blog/${post.slug}` },
         ]}
       />
+      <Reveal scope="#post" />
 
-      <article className="border-b border-border/60">
-        {/* Header */}
-        <header className="relative overflow-hidden border-b border-border/60">
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[image:var(--brand-gradient)]"
-          />
-          <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-            <Reveal>
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground focus-ring-brand"
-              >
-                <ArrowLeftIcon className="size-3.5" aria-hidden /> All posts
-              </Link>
-            </Reveal>
-
-            <Reveal delay={0.05}>
-              <div className="mt-8 flex flex-wrap gap-1.5">
-                {post.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full border border-brand/20 bg-brand/5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-brand-text"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl">
-                {post.title}
-              </h1>
-              <p className="mt-5 text-lg text-muted-foreground text-balance">{post.description}</p>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border/60 pt-6">
-                <InitialsAvatar name={post.author} />
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold text-foreground">{post.author}</span>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-                    <span aria-hidden className="text-brand/50">
-                      •
-                    </span>
-                    <span>{post.readingTime}</span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+      <article aria-labelledby="post-title">
+        <header className="m-wrap bp-head">
+          <p className="bp-kicker m-in">
+            <span className="m-rule" aria-hidden="true" />
+            <Link href="/blog" className="m-caps bp-crumb">
+              {A.crumb}
+            </Link>
+            <span className="m-caps bp-kind">
+              {A.kind} · {post.topic}
+            </span>
+          </p>
+          <h1 id="post-title" className="m-geo bp-title">
+            <span className="m-line">
+              <span>{post.title}</span>
+            </span>
+          </h1>
+          <p className="bp-dek m-in" style={vars({ "--d": "320ms" })}>
+            {post.description}
+          </p>
+          <dl className="bp-byline m-in" style={vars({ "--d": "460ms" })}>
+            <div>
+              <dt>{A.by}</dt>
+              <dd>{post.author}</dd>
+            </div>
+            <div>
+              <dt>{A.published}</dt>
+              <dd>
+                <time dateTime={post.publishedAt}>{longDate(post.publishedAt)}</time>
+              </dd>
+            </div>
+            <div>
+              <dt>{A.length}</dt>
+              <dd>{minutes} min read</dd>
+            </div>
+            <div>
+              <dt>{A.checked}</dt>
+              <dd>
+                <time dateTime={post.checked}>{longDate(post.checked)}</time>
+              </dd>
+            </div>
+          </dl>
         </header>
 
-        {/* Body */}
-        <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-          <div className="flex flex-col gap-7 text-foreground/90 leading-relaxed">
-            {blocks.map((b, i) => {
-              if (b.kind === "h2") {
-                return (
-                  <h2
-                    key={i}
-                    className="mt-6 scroll-mt-24 font-display text-2xl font-semibold tracking-tight text-balance sm:text-3xl"
-                  >
-                    <span className="text-gradient-brand">{b.text}</span>
-                  </h2>
-                );
-              }
-              if (b.kind === "code") {
-                return (
-                  <CodeBlock key={i} language={b.lang} className="my-2 text-[13px]">
-                    {b.text}
-                  </CodeBlock>
-                );
-              }
-              return (
-                <p key={i} className="text-base sm:text-lg">
-                  {b.text}
-                </p>
-              );
-            })}
-          </div>
-
-          {/* Footer CTA */}
-          <div className="mt-14 flex flex-col items-start gap-4 rounded-2xl border border-border/60 bg-muted/30 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-            <div className="flex flex-col gap-1">
-              <span className="font-display text-lg font-semibold tracking-tight">
-                Want auth that gets out of your way?
-              </span>
-              <span className="text-sm text-muted-foreground">
-                Free up to 25,000 MAU. No card required.
-              </span>
+        <div className="m-wrap bp-body">
+          <aside className="bp-rail" aria-label={A.contents}>
+            <div className="bp-rail-inner">
+              <p className="m-caps">{A.contents}</p>
+              <ol>
+                {headings.map((h) => (
+                  <li key={h.id}>
+                    <a href={`#${h.id}`}>{h.text}</a>
+                  </li>
+                ))}
+              </ol>
+              <p className="m-caps bp-rail-lives">{A.lives}</p>
+              <Link href={post.more.href} className="bp-rail-link">
+                {post.more.label}
+                <ArrowRightIcon size={16} aria-hidden />
+              </Link>
             </div>
-            <Link
-              href={SIGN_UP_URL}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[image:var(--brand-gradient)] px-5 py-2.5 text-sm font-medium text-brand-foreground transition-transform hover:scale-[1.02] focus-ring-brand"
-            >
-              Start free
-              <ArrowRightIcon className="size-4" aria-hidden />
-            </Link>
+          </aside>
+
+          <div className="bp-main">
+            <Prose blocks={blocks} />
+            <footer className="bp-end">
+              <span className="bp-end-mark" aria-hidden="true" />
+              <p>
+                {A.end} <time dateTime={post.checked}>{longDate(post.checked)}</time>. {A.wrong}{" "}
+                <Link href="/contact">{A.tell}</Link>.
+              </p>
+              <ButtonLink variant="soft" href={post.more.href} icon={ArrowRightIcon}>
+                {post.more.label}
+              </ButtonLink>
+            </footer>
           </div>
         </div>
+      </article>
 
-        {/* Related posts */}
-        {related.length > 0 && (
-          <div className="border-t border-border/60 bg-muted/30">
-            <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
-              <h2 className="font-display text-xl font-semibold tracking-tight">Keep reading</h2>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                {related.map((r) => (
-                  <Link
-                    key={r.slug}
-                    href={`/blog/${r.slug}`}
-                    className="group flex h-full flex-col gap-2 rounded-2xl border border-border/60 bg-background p-5 transition-colors hover:border-brand/40 focus-ring-brand"
-                  >
-                    <span className="text-xs text-muted-foreground">
-                      {formatDate(r.publishedAt)}
+      {related.length > 0 && (
+        <section className="m-sec m-sunken" aria-labelledby="bp-keep-title">
+          <div className="m-wrap">
+            <h2 id="bp-keep-title" className="m-geo m-display-m" data-reveal>
+              {A.keep}
+            </h2>
+            <ul className="bl-more" data-reveal>
+              {related.map((p) => (
+                <li key={p.slug}>
+                  <Link href={`/blog/${p.slug}`} className="bl-row">
+                    <span className="bl-row-meta">
+                      <span className="m-caps">{p.topic}</span>
+                      <span>{readingMinutes(p)} min read</span>
                     </span>
-                    <span className="font-display text-base font-semibold tracking-tight text-balance group-hover:text-brand-text">
-                      {r.title}
+                    <span className="bl-row-text">
+                      <span className="m-geo m-heading">{p.title}</span>
+                      <span className="bl-row-dek">{p.description}</span>
                     </span>
-                    <span className="mt-auto inline-flex items-center gap-1 pt-1 text-sm font-medium text-brand-text">
-                      Read
-                      <ArrowRightIcon
-                        className="size-3.5 transition-transform group-hover:translate-x-0.5"
-                        aria-hidden
-                      />
-                    </span>
+                    <ArrowRightIcon size={20} aria-hidden className="bl-row-arrow" />
                   </Link>
-                ))}
-              </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      <section className="m-sec" aria-labelledby="bp-close-title">
+        <div className="m-wrap">
+          <div className="pcta" data-reveal>
+            <h2 id="bp-close-title" className="m-geo m-display-m">
+              {BLOG_PAGE.close.map((l, i) => (
+                <span key={l} className={i > 0 ? "block ih-tone" : "block"}>
+                  {l}
+                  {i < BLOG_PAGE.close.length - 1 && " "}
+                </span>
+              ))}
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink size="lg" href="/features" icon={ArrowRightIcon}>
+                All features
+              </ButtonLink>
+              <ButtonLink size="lg" variant="soft" href="/contact">
+                Talk to us
+              </ButtonLink>
             </div>
           </div>
-        )}
-      </article>
-    </>
+        </div>
+      </section>
+    </div>
   );
 }

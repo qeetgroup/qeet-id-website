@@ -1,22 +1,16 @@
-import { ThemeProvider } from "@qeetrix/ui";
 import type { Metadata } from "next";
-import { Fira_Code } from "next/font/google";
-import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/marketing/structured-data";
+import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo/structured-data";
+import { HERO } from "@/config/home";
+import { THEME_STORAGE_KEY } from "@/lib/theme";
 import "./globals.css";
-
-const firaCode = Fira_Code({
-  subsets: ["latin"],
-  variable: "--font-fira-code",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
     default: "Qeet ID — One Identity. Every Platform.",
     template: "%s | Qeet ID",
   },
-  description:
-    "Qeet ID is the identity platform for modern teams. SSO, MFA, passkeys, RBAC, and session management — built for developers, trusted by enterprises.",
+  /* The home's approved hero (config/home.ts HERO), so every default says what the home says. */
+  description: HERO.lede,
   metadataBase: new URL("https://id.qeet.in"),
   // NOTE: no site-wide `alternates.canonical` here — Next.js inherits it to
   // every child route, which would canonicalize the whole site to "/" and drop
@@ -42,8 +36,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Qeet ID — One Identity. Every Platform.",
-    description:
-      "SSO, MFA, passkeys, RBAC, and session management — built for developers, trusted by enterprises.",
+    description: HERO.lede,
     type: "website",
     siteName: "Qeet ID",
     locale: "en_US",
@@ -52,10 +45,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Qeet ID — One Identity. Every Platform.",
-    description:
-      "SSO, MFA, passkeys, RBAC, and session management — built for developers, trusted by enterprises.",
-    site: "@qeetid",
-    creator: "@qeetid",
+    description: HERO.lede,
+    site: "@qeetgroup",
+    creator: "@qeetgroup",
   },
   robots: {
     index: true,
@@ -76,16 +68,21 @@ export const metadata: Metadata = {
     "passkeys",
     "RBAC",
     "identity and access management",
-    "self-hosted auth",
   ],
   authors: [{ name: "Qeet ID", url: "https://id.qeet.in" }],
   creator: "Qeet ID",
   publisher: "Qeet ID",
 };
 
-const STORAGE_KEY = "qeetid-web-theme";
-
-const themeBootstrap = `(function(){try{var t=localStorage.getItem('${STORAGE_KEY}')||'system';var r=t==='system'?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;document.documentElement.classList.add(r);}catch(e){}})();`;
+/*
+ * The theme follows the visitor's system setting until they choose; the
+ * switch remembers the choice (localStorage, THEME_STORAGE_KEY) and it wins
+ * from then on. Runs before first paint, so neither theme flashes the other.
+ * The theme is one attribute, `data-qx-color-scheme` on <html> — as on
+ * qeet.in. Until someone chooses, a change to the system setting is followed
+ * live. (An older stored "system" counts as no choice.)
+ */
+const themeInit = `(function(){try{var d=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');function s(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}');return t==='light'||t==='dark'?t:null}catch(e){return null}}function a(dark){d.setAttribute('data-qx-color-scheme',dark?'dark':'light')}var t=s();a(t?t==='dark':m.matches);m.addEventListener&&m.addEventListener('change',function(e){if(!s())a(e.matches)})}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -96,21 +93,19 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`h-full antialiased ${firaCode.variable}`}
+      className="h-full antialiased"
       suppressHydrationWarning
     >
       <head>
-        {/* Set theme class before first paint to avoid FOUC. */}
-        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+        {/* The theme, before first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className="font-sans">
         {/* Site-wide publisher + website schema. Emitted once in the root
             layout so it covers every route (marketing + any future surface). */}
         <OrganizationJsonLd />
         <WebSiteJsonLd />
-        <ThemeProvider defaultTheme="system" storageKey={STORAGE_KEY}>
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

@@ -13,7 +13,6 @@ import {
   ANNUAL_BILLED_MONTHS,
   ANNUAL_SAVINGS_RATE,
   AVAILABILITY_LABEL,
-  addOns,
   allFeatures,
   annualBillingAvailable,
   type FeatureAvailability,
@@ -37,40 +36,35 @@ import {
   usageDimensions,
 } from "@/lib/pricing";
 
-const VALID_STATUSES: FeatureAvailability[] = [
-  "included",
-  "limited",
-  "add-on",
-  "custom",
-  "unavailable",
-];
+const VALID_STATUSES: FeatureAvailability[] = ["included", "limited", "custom", "unavailable"];
 
 describe("plans config", () => {
-  test("has exactly the five public plans in order", () => {
+  test("has exactly the four public plans in order", () => {
     expect(plans.map((p) => p.id)).toEqual([...PLAN_IDS]);
-    expect(plans).toHaveLength(5);
+    expect(plans).toHaveLength(4);
   });
 
+  // The billing service's plan catalogue is the plan source (owner decision, QTID-348):
+  // qeet-id-server release/1.0.0, internal/operations/billing/plans.go. No Growth plan.
   test("matches the launch price + MAU spec", () => {
     const byId = Object.fromEntries(plans.map((p) => [p.id, p]));
     expect(byId.free.price.monthly).toBe(0);
-    expect(byId.free.mau).toBe(1_000);
+    expect(byId.free.mau).toBe(10_000);
     expect(byId.starter.price.monthly).toBe(2_400);
-    expect(byId.starter.mau).toBe(10_000);
-    expect(byId.growth.price.monthly).toBe(5_000);
-    expect(byId.growth.mau).toBe(50_000);
+    expect(byId.starter.mau).toBe(25_000);
     expect(byId.pro.price.monthly).toBe(8_000);
     expect(byId.pro.mau).toBe(100_000);
     expect(byId.enterprise.price.custom).toBe(true);
     expect(byId.enterprise.mau).toBeNull();
   });
 
-  test("exactly one plan is highlighted, and it is Growth", () => {
+  test("exactly one plan is highlighted, it is Pro, and no plan claims popularity", () => {
     const highlighted = plans.filter((p) => p.highlighted);
     expect(highlighted).toHaveLength(1);
-    expect(highlighted[0]?.id).toBe("growth");
-    expect(getHighlightedPlan()?.id).toBe("growth");
-    expect(highlighted[0]?.badge).toBe("Most popular");
+    expect(highlighted[0]?.id).toBe("pro");
+    expect(getHighlightedPlan()?.id).toBe("pro");
+    // Qeet ID has no customers before 1.0, so nothing is "most popular".
+    for (const p of plans) expect(p.badge).toBeUndefined();
   });
 
   test("every plan has 4–6 highlights and a CTA", () => {
@@ -157,12 +151,10 @@ describe("feature matrix", () => {
 describe("calculator recommendation", () => {
   test("buckets MAU into the smallest covering plan", () => {
     expect(recommendPlanId(500)).toBe("free");
-    expect(recommendPlanId(1_000)).toBe("free");
-    expect(recommendPlanId(1_001)).toBe("starter");
-    expect(recommendPlanId(10_000)).toBe("starter");
-    expect(recommendPlanId(10_001)).toBe("growth");
-    expect(recommendPlanId(50_000)).toBe("growth");
-    expect(recommendPlanId(50_001)).toBe("pro");
+    expect(recommendPlanId(10_000)).toBe("free");
+    expect(recommendPlanId(10_001)).toBe("starter");
+    expect(recommendPlanId(25_000)).toBe("starter");
+    expect(recommendPlanId(25_001)).toBe("pro");
     expect(recommendPlanId(100_000)).toBe("pro");
     expect(recommendPlanId(100_001)).toBe("enterprise");
     expect(recommendPlanId(1_000_000)).toBe("enterprise");
@@ -210,24 +202,17 @@ describe("CTA routing", () => {
   test("free -> signup, paid -> signup?plan=, enterprise -> contact", () => {
     expect(resolvePlanCtaHref(getPlan("free"))).toBe(SIGN_UP_URL);
     expect(resolvePlanCtaHref(getPlan("starter"))).toBe(`${SIGN_UP_URL}?plan=starter`);
-    expect(resolvePlanCtaHref(getPlan("growth"))).toBe(`${SIGN_UP_URL}?plan=growth`);
+    expect(resolvePlanCtaHref(getPlan("pro"))).toBe(`${SIGN_UP_URL}?plan=pro`);
     expect(resolvePlanCtaHref(getPlan("enterprise"))).toBe("/contact");
   });
 });
 
-describe("add-ons & usage", () => {
-  test("add-ons only attach to plans that don't already bundle them", () => {
-    const scim = addOns.find((a) => a.id === "scim");
-    expect(scim?.availableOn).toEqual(["pro"]); // Enterprise already includes SCIM
-    const saml = addOns.find((a) => a.id === "enterprise-sso-saml");
-    expect(saml?.availableOn).toEqual(["growth"]); // Pro+ already include SAML
-  });
-
+describe("usage", () => {
   test("only MAU is public at launch, and its allowance matches the plans", () => {
     const publicDims = usageDimensions.filter((d) => d.publicAtLaunch);
     expect(publicDims.map((d) => d.id)).toEqual(["mau"]);
     const mau = usageDimensions.find((d) => d.id === "mau");
-    expect(mau?.included.free).toBe(1_000);
+    expect(mau?.included.free).toBe(10_000);
     expect(mau?.included.pro).toBe(100_000);
     expect(mau?.included.enterprise).toBeNull();
   });

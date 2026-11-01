@@ -1,42 +1,43 @@
 import type { Metadata } from "next";
-import { Compare } from "@/components/marketing/sections/compare";
-import { CTA } from "@/components/marketing/sections/cta";
-import { Faq } from "@/components/marketing/sections/faq";
-import { Features } from "@/components/marketing/sections/features";
-import { Hero } from "@/components/marketing/sections/hero";
-import { HowItWorks } from "@/components/marketing/sections/how-it-works";
-import { Integrations } from "@/components/marketing/sections/integrations";
-import { LogoCloud } from "@/components/marketing/sections/logo-cloud";
-import { Pricing } from "@/components/marketing/sections/pricing";
-import { Security } from "@/components/marketing/sections/security";
-import { Stats } from "@/components/marketing/sections/stats";
-import { Testimonials } from "@/components/marketing/sections/testimonials";
-import { StickyCtaBar } from "@/components/marketing/sticky-cta-bar";
-import { ProductJsonLd } from "@/components/marketing/structured-data";
+import "./home.css";
+import { Hero } from "@/components/home/hero";
+import {
+  AuditLog,
+  Closing,
+  Enterprise,
+  Pricing,
+  Questions,
+  Security,
+  WaysIn,
+} from "@/components/home/sections";
+import { ProductJsonLd } from "@/components/seo/structured-data";
+import { Reveal } from "@/components/site/reveal";
 
-// Self-referencing canonical for the home page (root layout no longer sets one).
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+/**
+ * The Qeet ID home — the product's marketing site in qeet.in's language
+ * (Qeetrix tokens and components, Qeet Sans, the marketing layer): the
+ * photographic hero, then six chapters — what enterprise customers ask for,
+ * the audit log it is built around, every way in, security, pricing and
+ * questions — and a photographic close. Copy: config/home.ts.
+ */
 export default function HomePage() {
   return (
-    <>
+    <div className="mk" id="home" data-qx-density="comfortable">
       {/* WebSite + Organization schema live in the root layout. */}
       <ProductJsonLd />
+      <Reveal scope="#home" />
       <Hero />
-      <LogoCloud />
-      <Features />
-      <HowItWorks />
-      <Stats />
-      <Integrations />
+      <Enterprise />
+      <AuditLog />
+      <WaysIn />
       <Security />
-      <Compare />
       <Pricing />
-      <Testimonials />
-      <Faq />
-      <CTA />
-      <StickyCtaBar />
-    </>
+      <Questions />
+      <Closing />
+    </div>
   );
 }
