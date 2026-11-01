@@ -1,0 +1,8 @@
+# Qeet ID — how to report a security vulnerability (RFC 9116).
+# The channels are Qeet Group's (qeet-context SECURITY.md §11).
+Contact: mailto:security@qeet.in
+Contact: https://github.com/qeetgroup
+Expires: 2027-10-29T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://id.qeet.in/.well-known/security.txt
+Policy: https://id.qeet.in/security#report

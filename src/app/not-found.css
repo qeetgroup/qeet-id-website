@@ -1,0 +1,69 @@
+/*
+ * The 404 page: a plain sentence set large, search, and six places to go,
+ * as ruled rows. Tokens only.
+ */
+@layer components {
+  .nf {
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(4rem, 3rem + 3vw, 6rem);
+  }
+  .nf-kicker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .nf-title {
+    margin-top: 2rem;
+    font-size: clamp(2.5rem, 1rem + 4.2vw, 5.25rem);
+  }
+  .nf-act {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+    margin-top: 2rem;
+  }
+  .nf-places {
+    display: grid;
+    margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  @media (min-width: 900px) {
+    .nf-places {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(2rem, 1rem + 3vw, 4rem);
+    }
+  }
+  .nf-place {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem 1rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--qx-color-border-default);
+    color: inherit;
+    text-decoration: none;
+  }
+  .nf-note {
+    grid-column: 1;
+    font-size: 0.9375rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .nf-arrow {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    color: var(--qx-color-text-subtle);
+    transition: transform var(--qx-motion-duration-fast, 120ms) ease;
+  }
+  .nf-place:hover .m-heading {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .nf-place:hover .nf-arrow {
+    transform: translateX(3px);
+  }
+  .nf-place:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+}

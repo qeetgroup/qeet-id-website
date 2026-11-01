@@ -1,102 +1,97 @@
-import { BuildingIcon, ClockIcon, LifeBuoyIcon, MailIcon, NewspaperIcon } from "@qeetrix/icons";
+import { ArrowRightIcon, ArrowUpRightIcon } from "@qeetrix/icons";
 import type { Metadata } from "next";
-
-import { ContactForm } from "@/components/marketing/contact-form";
-import { Reveal, Stagger, StaggerItem } from "@/components/marketing/motion";
-import { PageHero } from "@/components/marketing/page-hero";
+import Link from "next/link";
+import "./contact.css";
+import { BreadcrumbJsonLd } from "@/components/seo/structured-data";
+import { Reveal } from "@/components/site/reveal";
+import { vars } from "@/components/site/vars";
+import { CONTACT_PAGE as C } from "@/config/contact";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Talk to Qeet ID sales, support, or press — or send a message and we'll route it. We reply within one business day.",
+  title: C.meta.title,
+  description: C.meta.description,
   alternates: { canonical: "/contact" },
 };
 
-const channels = [
-  {
-    icon: BuildingIcon,
-    title: "Talk to sales",
-    body: "Pricing, enterprise contracts, self-hosted deployments, and security reviews.",
-    cta: "sales@qeet.in",
-    href: "mailto:sales@qeet.in",
-  },
-  {
-    icon: LifeBuoyIcon,
-    title: "Support",
-    body: "Already building on Qeet ID? We'll respond within your plan's SLA.",
-    cta: "support@qeet.in",
-    href: "mailto:support@qeet.in",
-  },
-  {
-    icon: NewspaperIcon,
-    title: "Press & media",
-    body: "Story pitches, exec interviews, and brand assets.",
-    cta: "press@qeet.in",
-    href: "mailto:press@qeet.in",
-  },
-  {
-    icon: MailIcon,
-    title: "General",
-    body: "Anything else — we read every message.",
-    cta: "hello@qeet.in",
-    href: "mailto:hello@qeet.in",
-  },
-];
-
+/**
+ * /contact — a directory: four addresses, each with what it is for, set as
+ * ruled rows with the address large. Email only. Copy: config/contact.ts.
+ */
 export default function ContactPage() {
   return (
-    <>
-      <PageHero
-        eyebrow="Contact"
-        title="Let's talk about"
-        titleAccent="your identity layer"
-        subtitle="Whether you're evaluating Qeet ID, mid-migration, or just have a question — pick the channel that fits, or send the form and we'll route it for you."
+    <div className="mk" id="contact" data-qx-density="comfortable">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Contact", url: "/contact" },
+        ]}
       />
+      <Reveal scope="#contact" />
 
-      <section className="border-b border-border/60 bg-muted/30">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:px-8 lg:py-24">
-          {/* Channels + context */}
-          <div className="flex flex-col gap-6">
-            <Reveal>
-              <div className="flex items-start gap-3 rounded-2xl border border-border/60 bg-background p-5">
-                <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-brand/10 text-brand">
-                  <ClockIcon className="size-5" aria-hidden />
-                </span>
-                <div className="flex flex-col gap-1">
-                  <h2 className="font-medium">Response time</h2>
-                  <p className="text-sm text-muted-foreground">
-                    We reply to every message within one business day. Sales enquiries usually hear
-                    back same-day; support follows your plan&apos;s SLA.
-                  </p>
-                </div>
+      <section className="m-wrap ct-cover" aria-labelledby="contact-title">
+        <p className="ct-kicker m-in">
+          <span className="m-rule" aria-hidden="true" />
+          <span className="m-caps">{C.kicker}</span>
+        </p>
+        <div className="ct-cover-head">
+          <h1 id="contact-title" className="m-geo m-display-xl ct-title">
+            {C.title.map((line, i) => (
+              <span key={line} className="m-line" style={vars({ "--i": i })}>
+                <span className={i > 0 ? "ih-tone" : undefined}>{line}</span>
+                {i < C.title.length - 1 && " "}
+              </span>
+            ))}
+          </h1>
+          <p className="m-lede ct-lede m-in" style={vars({ "--d": "380ms" })}>
+            {C.lede}
+          </p>
+        </div>
+
+        <ul className="ct-list m-in" style={vars({ "--d": "520ms" })}>
+          {C.channels.map((c, i) => (
+            <li key={c.id} className="ct-row">
+              <span className="ct-n" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="ct-what">
+                <h2 className="m-geo m-heading">{c.name}</h2>
+                <p className="ct-body">{c.body}</p>
+                {"more" in c && (
+                  <Link href={c.more.href} className="ct-more">
+                    {c.more.label}
+                    <ArrowRightIcon size={16} aria-hidden />
+                  </Link>
+                )}
               </div>
-            </Reveal>
+              <a className="m-geo ct-email" href={`mailto:${c.email}`}>
+                {c.email}
+                <ArrowUpRightIcon size={22} aria-hidden className="ct-email-arrow" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-            <Stagger staggerDelay={0.06} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-              {channels.map(({ icon: Icon, title, body, cta, href }) => (
-                <StaggerItem key={title} className="h-full">
-                  <a
-                    href={href}
-                    className="flex h-full flex-col gap-2 rounded-2xl border border-border/60 bg-background p-5 transition-colors hover:border-brand/50 focus-ring-brand"
-                  >
-                    <span className="grid size-9 place-items-center rounded-lg bg-brand/10 text-brand">
-                      <Icon className="size-5" aria-hidden />
-                    </span>
-                    <h3 className="mt-1 font-medium">{title}</h3>
-                    <p className="text-sm text-muted-foreground">{body}</p>
-                    <span className="mt-auto pt-1 text-sm font-medium text-brand-text">{cta}</span>
-                  </a>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-
-          {/* Form */}
-          <Reveal delay={0.05}>
-            <ContactForm />
-          </Reveal>
+      <section className="m-sec m-sunken" aria-labelledby="ct-else-title">
+        <div className="m-wrap">
+          <h2 id="ct-else-title" className="m-caps ct-else-title" data-reveal>
+            {C.elsewhere.kicker}
+          </h2>
+          <ul className="ct-else" data-reveal>
+            {C.elsewhere.items.map((e) => (
+              <li key={e.href}>
+                <a href={e.href} className="ct-else-link">
+                  <span className="m-geo m-heading">
+                    {e.label}
+                    <ArrowUpRightIcon size={18} aria-hidden />
+                  </span>
+                  <span className="ct-body">{e.note}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
-    </>
+    </div>
   );
 }

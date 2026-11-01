@@ -1,0 +1,236 @@
+/*
+ * /legal/[slug] — its own page category, shared by the four documents: a
+ * plain header with the date and the draft note, the other documents and
+ * this one's contents in a rail, and numbered sections in one measured
+ * column. Tokens only.
+ */
+@layer components {
+  /* ---------- Header ---------- */
+  .lg-head {
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5rem) clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+  .lg-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+  .lg-title {
+    margin-top: 2rem;
+    font-size: clamp(2.25rem, 1rem + 3.4vw, 4.25rem);
+    line-height: 1.04;
+  }
+  .lg-updated {
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .lg-draft {
+    display: flex;
+    gap: 0.75rem;
+    max-inline-size: 46rem;
+    margin-top: 1.75rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    background: var(--qx-color-bg-warning-subtle);
+    border: 1px solid var(--qx-color-border-warning);
+    border-radius: var(--qx-radius-surface);
+  }
+  .lg-draft svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--qx-color-text-warning);
+  }
+
+  /* ---------- Body and rail ---------- */
+  .lg-body {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: clamp(4rem, 3rem + 3vw, 6rem);
+  }
+  @media (min-width: 1000px) {
+    .lg-body {
+      grid-template-columns: 14rem minmax(0, 46rem);
+      gap: clamp(3rem, 2rem + 4vw, 7rem);
+      align-items: start;
+    }
+  }
+  .lg-rail {
+    display: grid;
+    gap: 0.875rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  @media (min-width: 1000px) {
+    .lg-rail {
+      position: sticky;
+      top: 6.5rem;
+    }
+  }
+  .lg-docs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+  @media (min-width: 1000px) {
+    .lg-docs {
+      display: grid;
+      gap: 0.625rem;
+    }
+  }
+  .lg-docs a {
+    font-weight: 500;
+    color: var(--qx-color-text-subtle);
+    text-decoration: none;
+  }
+  .lg-docs a:hover {
+    color: var(--qx-color-text-default);
+  }
+  .lg-docs a[aria-current="page"] {
+    color: var(--qx-color-text-default);
+    text-decoration: underline;
+    text-decoration-color: var(--qx-color-bg-brand-bold);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+  .lg-rail-label {
+    display: none;
+  }
+  .lg-toc {
+    display: none;
+  }
+  @media (min-width: 1000px) {
+    .lg-rail-label {
+      display: block;
+      margin-top: 1rem;
+      color: var(--qx-color-text-subtle);
+    }
+    .lg-toc {
+      display: grid;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+    }
+    .lg-toc a {
+      color: var(--qx-color-text-subtle);
+      text-decoration: none;
+    }
+    .lg-toc a:hover {
+      color: var(--qx-color-text-default);
+    }
+  }
+
+  /* ---------- The text ---------- */
+  .lg-main {
+    display: grid;
+    gap: 2.5rem;
+    min-inline-size: 0;
+  }
+  .lg-intro {
+    max-inline-size: 42rem;
+  }
+  .lg-section {
+    display: grid;
+    gap: 0.875rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--qx-color-border-default);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    scroll-margin-top: 6.5rem;
+  }
+  .lg-section h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.875rem;
+    font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.5rem);
+    line-height: 1.25;
+  }
+  .lg-n {
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--qx-color-text-subtle);
+  }
+  .lg-section a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .lg-section code {
+    padding: 0.1em 0.35em;
+    font-family: var(--qx-font-family-mono, ui-monospace, monospace);
+    font-size: 0.875em;
+    font-variant-ligatures: none;
+    background: var(--qx-color-surface-sunken);
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: 4px;
+  }
+
+  /* ---------- Providers: a table on a wide screen, a list on a phone ---------- */
+  .lg-table {
+    display: none;
+  }
+  @media (min-width: 800px) {
+    .lg-table {
+      display: table;
+      inline-size: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+    .lg-cards {
+      display: none;
+    }
+  }
+  .lg-table th,
+  .lg-table td {
+    padding: 1rem 1rem 1rem 0;
+    text-align: start;
+    vertical-align: top;
+    border-bottom: 1px solid var(--qx-color-border-default);
+  }
+  .lg-table thead th {
+    padding-top: 0;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--qx-color-text-subtle);
+    border-bottom-color: var(--qx-color-border-strong);
+  }
+  .lg-table tbody th {
+    font-weight: 500;
+  }
+  .lg-table td:nth-child(2) {
+    color: var(--qx-color-text-subtle);
+  }
+  .lg-cards {
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  .lg-cards li {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--qx-color-border-default);
+  }
+  .lg-cards dl {
+    display: grid;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+  }
+  .lg-cards dl > div {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .lg-cards dt {
+    color: var(--qx-color-text-subtle);
+  }
+  .lg-state {
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+    white-space: nowrap;
+  }
+  .lg-state[data-used] {
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+}

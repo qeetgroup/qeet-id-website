@@ -1,0 +1,393 @@
+/*
+ * /pricing — its own page category. A light cover whose centre is the plan
+ * board, then the calculator, the comparison tables, the questions and the
+ * Enterprise band. Type, colour and rules are the marketing layer's; tokens only.
+ */
+@layer components {
+  /* ---------- Cover ---------- */
+  .pr-cover {
+    padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  }
+  .pr-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+  .pr-cover-head {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .pr-cover-head {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: clamp(3rem, 2rem + 3vw, 5rem);
+    }
+  }
+  .pr-title {
+    font-size: clamp(2.5rem, 1rem + 4.2vw, 5.25rem);
+  }
+  .pr-cover-side {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .pr-status {
+    display: flex;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-status svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* ---------- The plan board ---------- */
+  .pr-plans {
+    margin-top: clamp(2.75rem, 2rem + 2vw, 3.75rem);
+  }
+  .pr-period {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .pr-saving {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-board {
+    display: grid;
+    gap: 1px;
+    background: var(--qx-color-border-default);
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-surface);
+    overflow: hidden;
+  }
+  @media (min-width: 700px) {
+    .pr-board {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .pr-board {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .pr-board > li {
+    position: relative;
+    display: grid;
+    gap: 0.625rem;
+    align-content: start;
+    justify-items: start;
+    padding: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    background: var(--qx-color-surface-canvas);
+  }
+  /* §11: the highlighted plan carries the Ember bar, and a raised ground. */
+  .pr-board > li[data-highlight] {
+    background: var(--qx-color-surface-raised);
+  }
+  .pr-board > li[data-highlight]::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--qx-color-border-brand);
+  }
+  .pr-audience {
+    min-height: 2.75em;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    margin-top: 0.5rem;
+  }
+  .pr-price .m-geo {
+    font-size: clamp(2.25rem, 1.8rem + 1.2vw, 3rem);
+    line-height: 1;
+    color: var(--qx-color-text-default);
+  }
+  .pr-per {
+    font-size: 0.9375rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-sub {
+    font-size: 0.8125rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-mau {
+    margin-bottom: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+  .pr-highlights {
+    display: grid;
+    gap: 0.625rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  .pr-highlights li {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr);
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: var(--qx-color-text-default);
+  }
+  .pr-highlights svg {
+    margin-top: 0.2rem;
+    color: var(--qx-color-icon-default);
+  }
+  .pr-notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+
+  /* ---------- 01 Calculator ---------- */
+  .pr-calc-wrap {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .pr-calc-wrap {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(3rem, 2rem + 4vw, 6rem);
+      align-items: start;
+    }
+  }
+  .pr-calc {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 760px) {
+    .pr-calc {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
+  .pr-calc-in {
+    display: grid;
+    gap: 0.875rem;
+    align-content: start;
+  }
+  .pr-calc-field .qx-input-control {
+    min-height: 3.5rem;
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .pr-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .pr-presets button {
+    min-height: 2.25rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: 2px;
+    background: var(--qx-color-surface-raised);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 160ms;
+  }
+  .pr-presets button:hover,
+  .pr-presets button[aria-pressed="true"] {
+    border-color: var(--qx-color-border-brand);
+  }
+  .pr-presets button:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 2px;
+  }
+  .pr-calc-out {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-surface);
+    background: var(--qx-color-surface-raised);
+  }
+  .pr-calc-plan {
+    font-size: clamp(2.25rem, 1.8rem + 1.5vw, 3rem);
+    line-height: 1.05;
+    color: var(--qx-color-text-default);
+  }
+  .pr-calc-price {
+    font-size: 1rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-calc-price .m-geo {
+    font-size: 1.75rem;
+    color: var(--qx-color-text-default);
+  }
+  .pr-muted {
+    color: var(--qx-color-text-subtle);
+  }
+
+  /* ---------- 02 Compare ---------- */
+  .pr-compare {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  /* A phone scrolls each table sideways, its feature column held; a wide screen
+   * shows it whole, so the plan row can stick under the header. */
+  /* Positioned, so the cells' screen-reader labels (absolutely placed) stay
+   * inside the box that scrolls, rather than widening the page. */
+  .pr-table-wrap {
+    position: relative;
+  }
+  .pr-table-wrap:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: 4px;
+  }
+  @media (max-width: 999px) {
+    .pr-table-wrap {
+      overflow-x: auto;
+    }
+  }
+  .pr-table {
+    width: 100%;
+    min-width: 40rem;
+    border-collapse: collapse;
+  }
+  .pr-table caption {
+    display: grid;
+    gap: 0.375rem;
+    padding-bottom: 1rem;
+    text-align: start;
+  }
+  .pr-group {
+    font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
+    line-height: 1.15;
+    color: var(--qx-color-text-default);
+  }
+  .pr-group-note {
+    font-size: 0.9375rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-table th,
+  .pr-table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--qx-color-border-default);
+    vertical-align: top;
+  }
+  .pr-table thead th {
+    padding-block: 0.75rem;
+    border-bottom-color: var(--qx-color-border-strong);
+    background: var(--qx-color-surface-canvas);
+    text-align: center;
+  }
+  @media (min-width: 1000px) {
+    .pr-table thead th {
+      position: sticky;
+      top: 4.5rem;
+      z-index: 1;
+    }
+  }
+  .pr-table tbody th {
+    width: 36%;
+    padding-left: 0;
+    text-align: start;
+    font-weight: 400;
+  }
+  @media (max-width: 999px) {
+    .pr-table tbody th {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: var(--qx-color-surface-canvas);
+    }
+  }
+  .pr-table td {
+    text-align: center;
+    font-size: 0.9375rem;
+  }
+  .pr-table [data-highlight] {
+    background: color-mix(in oklab, var(--qx-color-surface-sunken) 70%, transparent);
+  }
+  .pr-table thead th[data-highlight] {
+    box-shadow: inset 0 3px 0 var(--qx-color-border-brand);
+  }
+  .pr-fname {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.5rem;
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+  .pr-fnote {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-yes {
+    display: inline-flex;
+    color: var(--qx-color-text-default);
+  }
+  .pr-none {
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-label {
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+  .pr-roadmap {
+    font-size: 0.875rem;
+    color: var(--qx-color-text-subtle);
+  }
+  .pr-table tr[data-maturity="roadmap"] .pr-fname {
+    color: var(--qx-color-text-subtle);
+  }
+
+  /* ---------- 03 Questions ---------- */
+  .pr-faq {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .pr-faq {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: clamp(3rem, 2rem + 4vw, 6rem);
+      align-items: start;
+    }
+  }
+
+  /* ---------- Enterprise ---------- */
+  .pr-ent {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .pr-ent {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(3rem, 2rem + 4vw, 6rem);
+      align-items: end;
+    }
+  }
+}

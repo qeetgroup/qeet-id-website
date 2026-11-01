@@ -1,0 +1,585 @@
+/*
+ * A capability page (/product/<slug>) — composition only. Type, colour, rules,
+ * cards, bands and motion are the marketing layer's; this file places them and
+ * adds the template's own pieces: the path across the hero, and the blocks a
+ * page is built from — tabs, split, ruler, points, table — and the related index. Every value is a --qx-* token, or one of the dark hero's fixed
+ * colours (the same ones the home uses).
+ */
+@layer components {
+  /* ---------- Hero: always dark, the bar floats over it ---------- */
+  .cp-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #0b0b0b;
+    color: var(--qx-color-text-default);
+  }
+  .cp-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(120% 80% at 10% 0%, rgb(255 255 255 / 0.06), transparent 60%);
+  }
+  .cp-hero-inner {
+    padding-block: clamp(7.5rem, 6rem + 4vw, 9.5rem) clamp(3.5rem, 2.5rem + 3vw, 5rem);
+  }
+  .cp-crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+  .cp-crumbs ol {
+    display: flex;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    color: rgb(255 255 255 / 0.72);
+  }
+  .cp-crumbs li + li::before {
+    content: "/";
+    margin-right: 0.625rem;
+    color: rgb(255 255 255 / 0.4);
+  }
+  .cp-crumbs a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgb(255 255 255 / 0.3);
+    text-underline-offset: 0.2em;
+  }
+  .cp-crumbs a:hover {
+    color: #fbfaf8;
+    text-decoration-color: currentColor;
+  }
+  .cp-crumbs [aria-current] {
+    color: #fbfaf8;
+  }
+  .cp-hero-head {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 1000px) {
+    .cp-hero-head {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: clamp(3rem, 2rem + 3vw, 5rem);
+    }
+  }
+  .cp-title {
+    color: #fbfaf8;
+  }
+  .cp-title-tone {
+    color: rgb(255 255 255 / 0.62);
+  }
+  .cp-hero-side {
+    display: grid;
+    gap: 1.75rem;
+    justify-items: start;
+  }
+  .cp-lede {
+    color: rgb(255 255 255 / 0.84);
+  }
+
+  /* The capability's path: one rail, a node per step. Vertical on a phone,
+   * across the page above 900px (the same language as the home's ledger). */
+  .cp-path {
+    position: relative;
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(3.5rem, 2.5rem + 3vw, 5rem);
+    padding-left: 2.25rem;
+  }
+  .cp-path::before {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: rgb(255 255 255 / 0.3);
+    transform-origin: top;
+  }
+  @media (min-width: 900px) {
+    .cp-path {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      padding-left: 0;
+      padding-top: 2.5rem;
+    }
+    .cp-path::before {
+      left: 0;
+      right: 0;
+      top: 0.5rem;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      transform-origin: left;
+    }
+  }
+  .cp-step {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding-right: 1.5rem;
+  }
+  .cp-step-node {
+    position: absolute;
+    left: -2.25rem;
+    top: 0.125rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 0.62);
+    background: #0b0b0b;
+  }
+  /* The end of the path — a session exists. */
+  .cp-step:last-child .cp-step-node {
+    border-color: #fbfaf8;
+    background: #fbfaf8;
+  }
+  @media (min-width: 900px) {
+    .cp-step-node {
+      left: 0;
+      top: -2.5rem;
+    }
+  }
+  .cp-step-n {
+    font-family: var(--qx-font-family-mono);
+    font-size: 0.8125rem;
+    color: rgb(255 255 255 / 0.55);
+  }
+  .cp-step-name {
+    font-size: clamp(1.25rem, 1rem + 0.7vw, 1.625rem);
+    line-height: 1.15;
+    color: #fbfaf8;
+  }
+  .cp-step-body {
+    max-width: 16rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgb(255 255 255 / 0.74);
+  }
+
+  /* ---------- Tabs ---------- */
+  .cp-tabs {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  /* On a phone the tab strip scrolls (Qeetrix); it runs to the screen's edge,
+   * so the next tab is seen to continue rather than stop at the margin. */
+  @media (max-width: 999px) {
+    .cp-tabs .qx-tabs-list {
+      margin-inline-end: calc(-1 * clamp(1.25rem, 0.6rem + 3vw, 4rem));
+      padding-inline-end: clamp(1.25rem, 0.6rem + 3vw, 4rem);
+    }
+  }
+  .cp-panel {
+    display: grid;
+    gap: 2.5rem;
+    padding-top: clamp(2rem, 1.5rem + 2vw, 3rem);
+  }
+  .cp-panel[hidden] {
+    display: none;
+  }
+  @media (min-width: 1000px) {
+    .cp-panel {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: clamp(3rem, 2rem + 4vw, 6rem);
+    }
+  }
+  .cp-panel-main {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+    justify-items: start;
+  }
+  .cp-statement {
+    font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+    line-height: 1.1;
+    color: var(--qx-color-text-default);
+  }
+  .cp-panel-side {
+    display: grid;
+    gap: 1.75rem;
+    align-content: start;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  @media (min-width: 1000px) {
+    .cp-panel-side {
+      padding: 0 0 0 2.5rem;
+      border-top: 0;
+      border-left: 1px solid var(--qx-color-border-default);
+    }
+  }
+  .cp-facts {
+    display: grid;
+    gap: 1rem;
+  }
+  .cp-facts li {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--qx-color-text-default);
+  }
+  .cp-facts svg {
+    margin-top: 0.125rem;
+    color: var(--qx-color-icon-default);
+  }
+  .cp-plan {
+    display: flex;
+    align-items: baseline;
+    gap: 0.875rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-default);
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+  }
+
+  /* ---------- Split: a numbered list and icon cards ---------- */
+  .cp-factors {
+    display: grid;
+    gap: 3rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  @media (min-width: 1000px) {
+    .cp-factors {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(3rem, 2rem + 4vw, 6rem);
+    }
+  }
+  .cp-factors-head {
+    margin-bottom: 1.25rem;
+  }
+  .cp-when li {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  .cp-when-n {
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--qx-color-text-subtle);
+  }
+  .cp-muted {
+    color: var(--qx-color-text-subtle);
+  }
+  .cp-how {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 640px) {
+    .cp-how {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .cp-how li {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+    padding: 1.5rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-surface);
+    background: var(--qx-color-surface-raised);
+  }
+  .cp-notes {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  @media (min-width: 900px) {
+    .cp-notes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem;
+    }
+  }
+  .cp-notes li {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    line-height: 1.3;
+    color: var(--qx-color-text-default);
+  }
+
+  /* ---------- Ruler ----------
+   * A log scale from a minute to a year; each lifetime stands on it as a stem
+   * with its value. On a phone the marks are a list and the scale is dropped. */
+  .cp-ruler {
+    margin: clamp(3rem, 2rem + 3vw, 4.5rem) 0 0;
+  }
+  .cp-marks {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .cp-marks li {
+    display: grid;
+    gap: 0.375rem;
+    padding-left: 1rem;
+    border-left: 1px solid rgb(255 255 255 / 0.5);
+  }
+  .cp-mark-value {
+    font-size: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
+    line-height: 1;
+    color: #fbfaf8;
+  }
+  .cp-mark-note {
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.72);
+  }
+  .cp-axis {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .cp-marks {
+      position: relative;
+      display: block;
+      height: 16.5rem;
+    }
+    /* Every other mark stands on a taller stem, so neighbours never meet. */
+    .cp-marks li:nth-child(even) {
+      padding-bottom: 9.75rem;
+    }
+    .cp-marks li {
+      position: absolute;
+      bottom: 0;
+      left: var(--at);
+      width: max-content;
+      max-width: 17rem;
+      padding-bottom: 1.25rem;
+    }
+    /* The last mark reads leftwards, so it never runs off the page. */
+    .cp-marks li:last-child {
+      transform: translateX(-100%);
+      padding: 0 1rem 1.25rem 0;
+      border-left: 0;
+      border-right: 1px solid rgb(255 255 255 / 0.5);
+      text-align: right;
+      justify-items: end;
+    }
+    .cp-axis {
+      position: relative;
+      display: block;
+      height: 2.25rem;
+      border-top: 1px solid rgb(255 255 255 / 0.4);
+    }
+    .cp-axis span {
+      position: absolute;
+      top: 0.625rem;
+      left: var(--at);
+      transform: translateX(-50%);
+      font-family: var(--qx-font-family-mono);
+      font-size: 0.75rem;
+      color: rgb(255 255 255 / 0.55);
+      white-space: nowrap;
+    }
+    .cp-axis span::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -0.625rem;
+      height: 0.375rem;
+      border-left: 1px solid rgb(255 255 255 / 0.4);
+    }
+    .cp-axis span:first-child {
+      transform: none;
+    }
+    .cp-axis span:first-child::before {
+      left: 0;
+    }
+    .cp-axis span:last-child {
+      transform: translateX(-100%);
+    }
+    .cp-axis span:last-child::before {
+      left: auto;
+      right: 0;
+    }
+  }
+  .cp-ends {
+    margin-top: clamp(3.5rem, 2.5rem + 3vw, 5rem);
+    padding-top: 2.25rem;
+    border-top: 1px solid rgb(255 255 255 / 0.16);
+  }
+  .cp-ends h3 {
+    margin-bottom: 1.5rem;
+  }
+  .cp-ends ul {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 900px) {
+    .cp-ends ul {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+  .cp-ends li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+  }
+  .cp-webhook {
+    margin-top: 2.25rem;
+  }
+
+  /* ---------- Points: four statements across the dark band ---------- */
+  .cp-points {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  @media (min-width: 900px) {
+    .cp-points {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+  .cp-points li {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(255 255 255 / 0.22);
+  }
+
+  /* ---------- Table: settings ---------- */
+  .cp-table-wrap {
+    overflow-x: auto;
+  }
+  .cp-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .cp-table th,
+  .cp-table td {
+    padding: 1.125rem 1.25rem 1.125rem 0;
+    border-bottom: 1px solid var(--qx-color-border-default);
+    text-align: start;
+    vertical-align: top;
+  }
+  .cp-table thead th {
+    padding-block: 0.75rem;
+    border-bottom-color: var(--qx-color-border-strong);
+  }
+  .cp-table tbody th {
+    width: 28%;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--qx-color-text-default);
+  }
+  .cp-table td {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--qx-color-text-default);
+  }
+  .cp-table .cp-default {
+    width: 18%;
+    color: var(--qx-color-text-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+  .cp-notyet {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-top: 1.5rem;
+    font-size: 0.9375rem;
+    color: var(--qx-color-text-subtle);
+  }
+
+  /* ---------- Also in Qeet ID: the related index ---------- */
+  .cp-related {
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  .cp-related li {
+    border-bottom: 1px solid var(--qx-color-border-default);
+  }
+  .cp-related-link {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.25rem 1.25rem;
+    padding-block: 1.25rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  @media (min-width: 900px) {
+    .cp-related-link {
+      grid-template-columns: 2.5rem minmax(0, 15rem) minmax(0, 1fr) auto;
+    }
+  }
+  .cp-related-icon {
+    color: var(--qx-color-icon-default);
+  }
+  .cp-related-name {
+    font-size: 1.25rem;
+    color: var(--qx-color-text-default);
+  }
+  .cp-related-line {
+    grid-column: 2;
+    color: var(--qx-color-text-subtle);
+  }
+  @media (min-width: 900px) {
+    .cp-related-line {
+      grid-column: auto;
+    }
+  }
+  .cp-related-arrow {
+    grid-column: 3;
+    grid-row: 1;
+    color: var(--qx-color-icon-default);
+    transition: transform var(--qx-motion-duration-fast, 150ms) var(--qx-motion-easing-standard);
+  }
+  @media (min-width: 900px) {
+    .cp-related-arrow {
+      grid-column: 4;
+    }
+  }
+  .cp-related-link:hover .cp-related-name {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+  .cp-related-link:hover .cp-related-arrow {
+    transform: translateX(4px);
+  }
+  .cp-related-link:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus, currentColor);
+    outline-offset: 4px;
+  }
+
+  /* ---------- The close ---------- */
+  .cp-close {
+    align-items: end;
+  }
+
+  /* The path draws once, then the steps arrive in order (§18). */
+  @media (prefers-reduced-motion: no-preference) {
+    .cp-path[data-reveal="pending"]::before {
+      transform: scale(1, 0);
+    }
+    .cp-path[data-reveal="pending"] .cp-step {
+      opacity: 0;
+    }
+    .cp-path[data-reveal="shown"]::before {
+      transition: transform 1500ms var(--qx-motion-easing-emphasized) 150ms;
+    }
+    .cp-path[data-reveal="shown"] .cp-step {
+      transition: opacity 600ms var(--qx-motion-easing-standard) calc(250ms + var(--i) * 220ms);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cp-related-arrow {
+      transition: none;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+    .cp-path[data-reveal="pending"]::before {
+      transform: scale(0, 1);
+    }
+  }
+}

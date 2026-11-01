@@ -7,7 +7,7 @@ Comparison-page count taken from the tree.
 ## Identity
 
 The **marketing site for Qeet ID**, served at `id.qeet.in`. Next.js 16.2.6 App Router, React 19 with
-the React Compiler, Tailwind v4, `@qeetrix/ui 2.1.5` + `@qeetrix/icons 1.0.11`, Biome, bun. 143 source files, ~17.7k LOC.
+the React Compiler, Tailwind v4, Qeetrix (`@qeetrix/react 0.2.2`, `@qeetrix/tokens 0.0.11`, `@qeetrix/icons 2.0.0`), Biome, bun.
 
 ## Context inheritance
 
@@ -20,9 +20,9 @@ this repository does not consume the API.
 
 ## Responsibilities
 
-Public marketing: product pages, pricing (with a calculator), 19 competitor comparisons, blog,
-changelog, customers, careers, legal pages, SEO artifacts (robots, sitemap, OpenGraph images,
-structured data), and a contact form.
+Public marketing: product pages, pricing (with a calculator), a blog, legal pages, a contact page
+of email links, and SEO artifacts (robots, sitemap, OpenGraph images, structured data). The 19
+competitor comparisons are offline until re-verified.
 
 ## Non-responsibilities
 
@@ -32,10 +32,9 @@ structured data), and a contact form.
 ## Architecture
 
 A static-first Next.js App Router site. Everything sits in the `(marketing)` route group with a
-shared layout. Content lives in `src/lib/{blog,changelog,customers}.ts` and the pricing model in
-`src/lib/pricing/`.
+shared layout. Content lives in `src/lib/blog.ts` and the pricing model in `src/lib/pricing/`.
 
-**The only server code is `POST /api/contact`.**
+**There is no server code besides the `/go` redirects and `healthz`.**
 
 ## It does not call the backend — verified
 
@@ -46,28 +45,23 @@ the tree confirms it. What exists instead:
 |---|---|---|
 | `NEXT_PUBLIC_DASHBOARD_URL` | `https://console.id.qeet.in` | `/sign-in`, `/sign-up` deep links |
 | `NEXT_PUBLIC_DOCS_URL` | `https://docs.qeet.in` | documentation links |
-| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | — | analytics |
+| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | — | read by nothing — no analytics is wired |
 
 Two things worth knowing:
 
 - **`NEXT_PUBLIC_SITE_URL` is documented but read by nothing.** The canonical origin is hardcoded as
   `https://id.qeet.in` in `layout.tsx`, `robots.ts`, `sitemap.ts` and `structured-data.tsx`.
 - **`API_REFERENCE_URL` is a hardcoded constant** pointing at `https://api.qeet.in/reference#qeet-id`
-  — a host that is neither the documented API host (`api.id.qeet.in`) nor the org developer portal
-  (`apis.qeet.in`, which does not currently resolve). Recorded as
-  `qeet-id-context/DRIFT-REGISTER.md` **QID-015**.
+  — the organisation's developer portal, which is `api.qeet.in` (`qeet-apis` deploys there; the
+  org records said `apis.qeet.in`, which does not resolve — corrected in qeet-context, 2026-10-28).
+  `qeet-id-context/DRIFT-REGISTER.md` **QID-015** recorded the old mismatch and can be reviewed.
 
-## The contact route
+## Contact
 
-`src/app/(marketing)/../api/contact/route.ts` validates `firstName`, `lastName`, `email`, `message`
-and returns either `422` with a field-error map or `{ ok: true }`.
-
-> **It has no mail transport, no rate limiting, no captcha and no origin check** — the code
-> acknowledges this itself. It is a public, unauthenticated POST endpoint on the product's marketing
-> domain.
->
-> Anyone extending it — adding an email provider, a CRM webhook, a secret — must address those gaps
-> first. Right now it is harmless because it does nothing; that changes the moment it does.
+There is no contact form or route. The page lists the organisation's published inboxes as email
+links. The previous form posted to `POST /api/contact`, which sent nothing and told the visitor the
+message had gone — it was removed on 2026-10-29. A future form needs a real transport, a secret and
+protection (rate limit, origin check) in the same change.
 
 ## Marketing copy is a product claim
 
@@ -84,16 +78,19 @@ This site makes public assertions about a security product. Before writing or ed
 
 ## Comparison pages
 
-19 competitor pages under `src/app/(marketing)/compare/`. Each is a factual claim about a named
-third party, and third-party capabilities change. **The README lists only 4 — it is stale.**
+Eight comparisons under `/compare`, from `src/config/compare.ts`. Each is a factual claim about a
+named third party, from research frozen on a date; third-party capabilities change, so each page
+carries its re-check date and `compare.test.ts` fails once it passes.
 
 ## Testing and CI
 
-`bun test` with Bun's built-in runner and **one test file**
-(`src/lib/pricing/pricing.test.ts` — the pricing calculator, which is the only real logic here).
-Biome provides lint, format and check.
+`bun test` with Bun's built-in runner, ten test files. Most are **copy tests**: each page's words
+(`src/config/*`, `lib/blog.ts`) are held to their sources and kept off claims the record does not
+support; the rest cover the pricing calculator, search and the `/go` redirects. Where sibling
+repositories are checked out beside this one, the tests also read them (`qeet-context`,
+`qeet-group`, `qeet-id-context`). Biome provides lint, format and check.
 
-**There is no `.github/` directory and no CI workflow.** The Vercel build is the only automated gate.
+CI (`.github/workflows/ci.yml`) runs install (frozen lockfile), typecheck, check, test and build.
 
 ## Local development
 
@@ -107,20 +104,17 @@ run `bun run dev -- -p 3001` if you need it alongside the console and login app,
 
 | Area | Path | Risk | Note |
 |---|---|---|---|
-| Public contact endpoint | `src/app/api/contact/route.ts` | Medium | Unprotected — see above |
 | Build-time config | `NEXT_PUBLIC_*` | Low | Inlined; treat as public |
 | Product claims | marketing copy | Medium | A false security claim is a real problem |
-| Competitor claims | `compare/` | Medium | Factual assertions about third parties |
+| Competitor claims | `src/config/compare.ts` | Medium | Factual assertions about third parties — dated, re-checked by `compare.test.ts` |
 
 No auth, no session, no secret, no backend access.
 
 ## Known constraints
 
-- **No CI, no meaningful test coverage** — one test file for 17.7k LOC.
-- `@qeetrix/ui 2.1.5` and `@qeetrix/icons 1.0.11` are pinned exactly. Every icon comes from `@qeetrix/icons` (no `lucide-react`); third-party brand logos come from `@thesvg/react`.
+- The Qeetrix packages are pinned exactly. Every icon comes from `@qeetrix/icons`; there are no third-party logos.
 - `NEXT_PUBLIC_SITE_URL` is documented but unused; the origin is hardcoded in four places.
 - `API_REFERENCE_URL` points at a host that is not the API — QID-015.
-- The README's comparison list (4) does not match the tree (19).
 - `.env.example` is tracked despite `.gitignore` covering `.env*`.
 
 ## Documentation authority
