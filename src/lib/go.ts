@@ -1,6 +1,6 @@
 import { DEFAULT_DASHBOARD_URL, DEFAULT_DOCS_URL } from "@/lib/links";
 
-// Container images (the qeet-id-deploy test kit) run one build in several local
+// Container images (the Qeet ID Kit, qeet-id-kit) run one build in several local
 // environments, but these pages are static and NEXT_PUBLIC_* is fixed at build
 // time. So the image links to /go/console/... and /go/docs/... (Dockerfile), and
 // /go resolves them against CONSOLE_URL / DOCS_URL when the container starts.

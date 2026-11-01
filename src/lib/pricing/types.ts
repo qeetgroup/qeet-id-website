@@ -19,10 +19,10 @@ export type BillingPeriod = "monthly" | "yearly";
 
 /** Stable identifiers for the five public plans. Kept as a string union so the
  *  per-plan records below are exhaustively type-checked. */
-export type PlanId = "free" | "starter" | "growth" | "pro" | "enterprise";
+export type PlanId = "free" | "starter" | "pro" | "enterprise";
 
 /** The full, ordered list of public plan ids (source of truth for iteration). */
-export const PLAN_IDS = ["free", "starter", "growth", "pro", "enterprise"] as const;
+export const PLAN_IDS = ["free", "starter", "pro", "enterprise"] as const;
 
 /**
  * Availability of a capability on a given plan. Richer than a boolean so the UI
@@ -30,11 +30,10 @@ export const PLAN_IDS = ["free", "starter", "growth", "pro", "enterprise"] as co
  *
  *  - `included`     — fully available on the plan.
  *  - `limited`      — available with caps/reduced scope (pair with a label).
- *  - `add-on`       — not bundled; can be purchased separately.
  *  - `custom`       — scoped per contract (Enterprise).
  *  - `unavailable`  — not offered on the plan.
  */
-export type FeatureAvailability = "included" | "limited" | "add-on" | "custom" | "unavailable";
+export type FeatureAvailability = "included" | "limited" | "custom" | "unavailable";
 
 /**
  * A plan's value for one feature row. Either a bare {@link FeatureAvailability}
@@ -148,21 +147,6 @@ export type UsageDimension = {
   /** Whether this dimension is surfaced on the public pricing page at launch. */
   publicAtLaunch: boolean;
   included: Record<PlanId, number | null>;
-};
-
-/**
- * A purchasable add-on. Prices are intentionally omitted at launch (`price:
- * "custom"`); the shape exists so add-ons can be introduced by editing config
- * rather than rebuilding UI.
- */
-export type AddOn = {
-  id: string;
-  name: string;
-  description: string;
-  /** `"custom"` until list pricing is finalised; otherwise a `PlanPrice`-like amount. */
-  price: { custom: true } | { amount: number; currency: CurrencyCode; unit: string };
-  /** Plans this add-on can attach to. */
-  availableOn: PlanId[];
 };
 
 /** A pricing FAQ entry. Mirrors the visible accordion and the FAQ JSON-LD. */

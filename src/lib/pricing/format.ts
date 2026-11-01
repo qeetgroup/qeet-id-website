@@ -72,7 +72,6 @@ export function resolveFeatureValue(value: PlanFeatureValue): {
 export const AVAILABILITY_LABEL: Record<FeatureAvailability, string> = {
   included: "Included",
   limited: "Limited",
-  "add-on": "Available as an add-on",
   custom: "Custom",
   unavailable: "Not included",
 };

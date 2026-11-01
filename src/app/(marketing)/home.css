@@ -1,0 +1,597 @@
+/*
+ * The Qeet ID home page — composition only. Type, colour, rules, cards, bands
+ * and motion are the marketing layer's (styles/marketing.css, qeet.in's); this
+ * file places them and adds the few product-specific pieces: the hero's
+ * photographs, the capability board, the audit chain, the standards grid, the plans.
+ * Every value is a --qx-* token, or one of the dark hero's fixed colours that
+ * scripts in qeet.in already gate for contrast.
+ */
+@layer components {
+  /* ---------- Hero: always dark, the bar floats over it ---------- */
+  .ih-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: max(40rem, 100svh);
+    background: #0b0b0b;
+    color: var(--qx-color-text-default);
+  }
+  .ih-hero-copy {
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .ih-title {
+    color: #fbfaf8;
+    font-size: clamp(3rem, 1rem + 5vw, 6.25rem);
+  }
+  .ih-lede {
+    max-width: 36rem;
+    color: rgb(255 255 255 / 0.84);
+  }
+  .ih-status {
+    font-size: 0.9375rem;
+    color: rgb(255 255 255 / 0.74);
+  }
+  .ih-caption {
+    font-size: 0.8125rem;
+    color: rgb(255 255 255 / 0.6);
+  }
+
+  /* ---------- The gateway: qeet.in's photographic hero ----------
+   * The photograph is set off-centre on a wide screen (it starts a fifth of the
+   * way in and fades into the dark ground), so the gate stands clear of the
+   * headline; on a phone it fills the top and fades into the words below. */
+  .ih-photo {
+    position: absolute;
+    inset: 0 0 auto;
+    height: min(74svh, 46rem);
+    z-index: -1;
+  }
+  .ih-photo-img {
+    object-fit: cover;
+    object-position: 50% 30%;
+  }
+  .ih-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      0deg,
+      #0b0b0b 0%,
+      rgb(11 11 11 / 0.72) 30%,
+      rgb(11 11 11 / 0.2) 62%,
+      rgb(11 11 11 / 0.5) 100%
+    );
+  }
+  .ih-gate {
+    padding-block: clamp(16rem, 44svh, 24rem) clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  /* The photograph's caption, bottom-right beside the words (wide screens). */
+  .ih-gate-caption {
+    display: none;
+  }
+  @media (min-width: 1000px) {
+    .ih-photo {
+      inset: 0 0 0 20%;
+      height: auto;
+    }
+    .ih-photo-img {
+      object-position: 50% 50%;
+    }
+    .ih-photo::after {
+      background:
+        linear-gradient(
+          90deg,
+          #0b0b0b 0%,
+          rgb(11 11 11 / 0.7) 18%,
+          rgb(11 11 11 / 0.18) 50%,
+          rgb(11 11 11 / 0.14) 100%
+        ),
+        linear-gradient(
+          0deg,
+          rgb(11 11 11 / 0.94) 0%,
+          rgb(11 11 11 / 0.55) 30%,
+          rgb(11 11 11 / 0) 56%
+        ),
+        linear-gradient(180deg, rgb(11 11 11 / 0.6) 0%, rgb(11 11 11 / 0) 20%);
+    }
+    .ih-gate {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 2rem;
+      padding-block: 8rem clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    }
+    .ih-gate-caption {
+      display: block;
+    }
+  }
+
+  /* The ledger: the rail draws once, then the entries arrive in order (§18). */
+  @media (prefers-reduced-motion: no-preference) {
+    .ih-ledger[data-reveal="pending"]::before {
+      transform: scale(1, 0);
+    }
+    .ih-ledger[data-reveal="pending"] .ih-entry {
+      opacity: 0;
+    }
+    .ih-ledger[data-reveal="shown"]::before {
+      transition: transform 1500ms var(--qx-motion-easing-emphasized) 150ms;
+    }
+    .ih-ledger[data-reveal="shown"] .ih-entry {
+      transition: opacity 600ms var(--qx-motion-easing-standard) calc(250ms + var(--i) * 240ms);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+    .ih-ledger[data-reveal="pending"]::before {
+      transform: scale(0, 1);
+    }
+  }
+
+  /* The photograph settles in once, as qeet.in's hero does (§18: once, on arrival). */
+  @media (prefers-reduced-motion: no-preference) {
+    .ih-photo-img {
+      animation: ih-push 2200ms var(--qx-motion-easing-emphasized) both;
+    }
+  }
+
+  /* ---------- Open standards: where customer logos would go ---------- */
+  .ih-std {
+    display: grid;
+    gap: 1rem 2.5rem;
+    padding-block: 1.75rem clamp(2.5rem, 2rem + 2vw, 4rem);
+    border-top: 1px solid rgb(255 255 255 / 0.16);
+  }
+  @media (min-width: 1000px) {
+    .ih-std {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+    }
+  }
+  .ih-std ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2.25rem;
+  }
+  .ih-std li {
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: rgb(255 255 255 / 0.78);
+  }
+
+  /* ---------- 01 Enterprise: the capability board ---------- */
+  .ih-board {
+    display: grid;
+    gap: 1px;
+    background: var(--qx-color-border-default);
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-surface);
+    overflow: hidden;
+  }
+  @media (min-width: 640px) {
+    .ih-board {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .ih-board {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .ih-board-cell {
+    position: relative;
+    background: var(--qx-color-surface-canvas);
+  }
+  .ih-board-link {
+    display: grid;
+    align-content: start;
+    gap: 0.9rem;
+    height: 100%;
+    padding: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
+    color: inherit;
+    text-decoration: none;
+  }
+  /* §11: the Ember bar marks the cell under the pointer or the focus. */
+  .ih-board-link::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: var(--qx-color-border-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms var(--qx-motion-easing-standard);
+  }
+  .ih-board-link:hover::before,
+  .ih-board-link:focus-visible::before {
+    transform: none;
+  }
+  .ih-board-link:focus-visible {
+    outline: 2px solid var(--qx-color-border-focus);
+    outline-offset: -4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ih-board-link::before {
+      transition: none;
+    }
+  }
+
+  /* ---------- 02 The record: the ledger (illustration) ----------
+   * The rail is the chain; each entry hangs from it on a node and repeats the
+   * hash of the one before. Vertical on a phone, across the page above 900px. */
+  .ih-ledger {
+    position: relative;
+    display: grid;
+    gap: 2.25rem;
+    margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+    padding-left: 2.25rem;
+  }
+  .ih-ledger::before {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: rgb(255 255 255 / 0.3);
+    transform-origin: top;
+  }
+  @media (min-width: 900px) {
+    .ih-ledger {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      padding-left: 0;
+      padding-top: 2.5rem;
+    }
+    .ih-ledger::before {
+      left: 0;
+      right: 0;
+      top: 0.5rem;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      transform-origin: left;
+    }
+  }
+  .ih-entry {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding-right: 1.5rem;
+  }
+  .ih-entry-node {
+    position: absolute;
+    left: -2.25rem;
+    top: 0.125rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 0.62);
+    background: #0b0b0b;
+  }
+  @media (min-width: 900px) {
+    .ih-entry-node {
+      left: 0;
+      top: -2.5rem;
+    }
+  }
+  .ih-entry-seq,
+  .ih-entry-hash {
+    font-family: var(--qx-font-family-mono);
+    font-size: 0.8125rem;
+    color: rgb(255 255 255 / 0.62);
+  }
+  .ih-entry-event {
+    font-size: clamp(1.25rem, 1rem + 0.7vw, 1.625rem);
+    line-height: 1.15;
+    color: #fbfaf8;
+  }
+  .ih-entry-actor {
+    font-size: 0.9375rem;
+    color: rgb(255 255 255 / 0.74);
+  }
+  .ih-entry-actor + .ih-entry-hash {
+    margin-top: 0.875rem;
+  }
+  .ih-entry-hash > span {
+    display: inline-block;
+    min-width: 2.75rem;
+    color: rgb(255 255 255 / 0.5);
+  }
+  .ih-entry-hash b {
+    font-weight: 500;
+    color: #fbfaf8;
+  }
+  /* The end of the chain: verified. Status colour, always with its icon and words. */
+  .ih-entry-verify .ih-entry-node {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: -0.25rem 0 0 -0.25rem;
+    border: 0;
+    color: var(--qx-color-text-success);
+  }
+  .ih-entry-verify .ih-entry-seq {
+    color: var(--qx-color-text-success);
+  }
+  .ih-facts {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+    padding-top: 2.25rem;
+    border-top: 1px solid rgb(255 255 255 / 0.16);
+  }
+  @media (min-width: 900px) {
+    .ih-facts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 3rem;
+    }
+  }
+  .ih-fact {
+    display: grid;
+    gap: 0.625rem;
+    align-content: start;
+    max-width: 24rem;
+  }
+
+  /* ---------- 03 Every way in: a three-column index ---------- */
+  .ih-ways {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 1000px) {
+    .ih-ways {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      align-items: stretch;
+    }
+  }
+  .ih-way {
+    padding-block: 2rem;
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  @media (min-width: 1000px) {
+    .ih-way {
+      padding: 2.25rem 2.5rem 2.5rem;
+    }
+    .ih-way:first-child {
+      padding-left: 0;
+    }
+    .ih-way + .ih-way {
+      border-left: 1px solid var(--qx-color-border-default);
+    }
+  }
+  /* Software: set dark, the part most identity products do not have. */
+  .ih-way[data-qx-color-scheme="dark"] {
+    padding-inline: 1.75rem;
+    border: 0;
+    border-radius: var(--qx-radius-surface);
+    background: #0b0b0b;
+    color: var(--qx-color-text-default);
+  }
+  :root[data-qx-color-scheme="dark"] .ih-way[data-qx-color-scheme="dark"] {
+    background: var(--qx-color-surface-raised);
+  }
+  @media (min-width: 1000px) {
+    .ih-way[data-qx-color-scheme="dark"] {
+      padding-inline: 2.5rem;
+    }
+  }
+  .ih-way-title {
+    display: flex;
+    gap: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+  .ih-way-title > span {
+    font-variant-numeric: tabular-nums;
+  }
+  .ih-way ul {
+    display: grid;
+  }
+  .ih-way-item {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--qx-color-border-default);
+  }
+  .ih-way-icon {
+    margin-top: 0.125rem;
+    color: var(--qx-color-icon-default);
+  }
+  .ih-way-name {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--qx-color-text-default);
+  }
+
+  /* ---------- 04 Security: the datasheet ---------- */
+  .ih-sheet-wrap {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .ih-sheet-wrap {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(3rem, 2rem + 4vw, 6rem);
+      align-items: start;
+    }
+    .ih-sheet-head {
+      position: sticky;
+      top: 7.5rem;
+    }
+  }
+  .ih-sheet {
+    border-top: 1px solid var(--qx-color-border-strong);
+  }
+  .ih-sheet-row {
+    display: grid;
+    gap: 0.5rem 2rem;
+    padding-block: 1.625rem;
+    border-bottom: 1px solid var(--qx-color-border-default);
+  }
+  @media (min-width: 640px) {
+    .ih-sheet-row {
+      grid-template-columns: 9.5rem minmax(0, 1fr);
+    }
+    .ih-sheet-row dt {
+      padding-top: 0.7rem;
+    }
+    .ih-sheet-value,
+    .ih-sheet-note {
+      grid-column: 2;
+    }
+  }
+  .ih-sheet-value {
+    font-size: clamp(1.625rem, 1.3rem + 1vw, 2.25rem);
+    line-height: 1.1;
+    color: var(--qx-color-text-default);
+  }
+  .ih-sheet-note {
+    max-width: 34rem;
+    color: var(--qx-color-text-subtle);
+  }
+
+  /* ---------- 06 Questions ---------- */
+  .ih-faq {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 1000px) {
+    .ih-faq {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(3rem, 2rem + 4vw, 6rem);
+      align-items: start;
+    }
+    .ih-faq-head {
+      position: sticky;
+      top: 7.5rem;
+    }
+  }
+  .ih-ask {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 26rem;
+    padding: 1.5rem;
+    border: 1px solid var(--qx-color-border-default);
+    border-radius: var(--qx-radius-surface);
+    background: var(--qx-color-surface-raised);
+  }
+  .ih-ask ul {
+    display: grid;
+    gap: 1rem;
+  }
+  .ih-ask li {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .ih-ask a {
+    justify-self: start;
+    font-weight: 600;
+    color: var(--qx-color-text-default);
+    text-decoration: underline;
+    text-decoration-color: var(--qx-color-border-strong);
+    text-underline-offset: 0.2em;
+  }
+  .ih-ask a:hover {
+    text-decoration-color: currentColor;
+  }
+  .ih-qs .qx-accordion-trigger {
+    padding-block: 1.375rem;
+  }
+  .ih-q {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    font-family: var(--qx-font-family-heading);
+    font-variation-settings: "GEOM" var(--qx-font-geometry-display);
+    font-size: clamp(1.0625rem, 0.95rem + 0.4vw, 1.3125rem);
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: start;
+  }
+  .ih-q-n {
+    min-width: 1.5rem;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--qx-color-text-subtle);
+  }
+  .ih-a {
+    max-width: 40rem;
+    padding-left: 2.75rem;
+    color: var(--qx-color-text-subtle);
+  }
+
+  /* ---------- The close: qeet.in's photographic closing band ---------- */
+  .ih-close {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #0b0b0b;
+    color: var(--qx-color-text-default);
+  }
+  .ih-close-img {
+    z-index: -2;
+    object-fit: cover;
+  }
+  .ih-close::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(
+        90deg,
+        rgb(10 10 10 / 0.9) 0%,
+        rgb(10 10 10 / 0.72) 36%,
+        rgb(10 10 10 / 0.16) 100%
+      ),
+      linear-gradient(0deg, rgb(10 10 10 / 0.55) 0%, rgb(10 10 10 / 0) 40%);
+  }
+  @media (max-width: 760px) {
+    .ih-close::before {
+      background: linear-gradient(
+        0deg,
+        rgb(10 10 10 / 0.9) 0%,
+        rgb(10 10 10 / 0.7) 50%,
+        rgb(10 10 10 / 0.3) 100%
+      );
+    }
+  }
+  .ih-close-inner {
+    display: grid;
+    align-content: end;
+    gap: 3rem;
+    min-height: min(50rem, 92svh);
+    padding-block: clamp(6rem, 4rem + 8vw, 11rem) 2.5rem;
+  }
+  .ih-close-copy {
+    max-width: 54rem;
+  }
+  .ih-close-title {
+    color: #fbfaf8;
+  }
+  .ih-close-tone {
+    color: rgb(255 255 255 / 0.64);
+  }
+  .ih-close-caption {
+    justify-self: end;
+  }
+}
+
+@keyframes ih-push {
+  from {
+    transform: scale(1.09);
+  }
+  to {
+    transform: none;
+  }
+}
